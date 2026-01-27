@@ -125,7 +125,7 @@ describe('DAL - Hashtags', () => {
       expect(db.hashtag.findUnique).toHaveBeenCalledWith({
         where: { tag: 'fyp' },
         include: {
-          videoHashtags: {
+          videos: {
             include: {
               video: true,
             },

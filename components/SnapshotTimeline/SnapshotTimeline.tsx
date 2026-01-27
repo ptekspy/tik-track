@@ -64,7 +64,7 @@ export function SnapshotTimeline({ video, className = '' }: SnapshotTimelineProp
     // Snapshot is expected but not completed
     // Determine if it's "upcoming" (recently expected) or "missed" (overdue)
     const now = new Date();
-    const timeSincePost = (now.getTime() - video.postDate.getTime()) / (1000 * 60 * 60); // hours
+    const timeSincePost = (now.getTime() - video.postDate!.getTime()) / (1000 * 60 * 60); // hours
     
     // Grace period: snapshot is "upcoming" if within 2x its expected time
     const gracePeriods: Record<SnapshotType, number> = {

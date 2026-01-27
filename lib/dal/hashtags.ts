@@ -39,14 +39,14 @@ export const findHashtagWithVideos = async (tag: string): Promise<HashtagWithVid
   return db.hashtag.findUnique({
     where: { tag: tag.toLowerCase() },
     include: {
-      videoHashtags: {
+      videos: {
         include: {
           video: true,
         },
         orderBy: { position: 'asc' },
       },
     },
-  });
+  }) as Promise<HashtagWithVideos | null>;
 };
 
 /**
