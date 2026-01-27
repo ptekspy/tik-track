@@ -1,6 +1,6 @@
 'use client';
 
-import { AnalyticsSnapshot } from '@prisma/client';
+import { AnalyticsSnapshot } from '@/lib/generated/client';
 import {
   LineChart,
   Line,
