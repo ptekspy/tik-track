@@ -463,59 +463,31 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 ## Phase 5: Server Actions
 
 ### 5.1 Video Actions
-- [ ] Create `app/videos/actions.ts`:
-  - [ ] Export `createVideoAction(formData: FormData)` or `(data: unknown)`
-  - [ ] Call `createVideo` service in try/catch
-  - [ ] Return `{ success: boolean, error?: string, data?: Video }`
-  - [ ] Handle validation errors from service
-  - [ ] Revalidate paths on success
-
-  - [ ] Export `updateVideoAction(videoId: string, data: unknown)`
-  - [ ] Call `updateVideo` service in try/catch
-  - [ ] Return structured response
-  - [ ] Revalidate video page
-  - [ ] Handle validation errors
-
-  - [ ] Export `updateVideoStatusAction(videoId: string, newStatus: VideoStatus)`
-  - [ ] Call `updateVideoStatus` service
-  - [ ] Return structured response
-  - [ ] Revalidate video page
-
-  - [ ] Export `deleteVideoAction(videoId: string)`
-  - [ ] Call `deleteVideo` service
-  - [ ] Revalidate dashboard
-  - [ ] Return response
-
-- [ ] Create `app/videos/actions.test.ts` mocking services
+- [x] Create `app/videos/actions.ts`:
+  - [x] Export `createVideoAction(data: unknown)`
+  - [x] Export `updateVideoAction(videoId: string, data: unknown)`
+  - [x] Export `updateVideoStatusAction(videoId: string, newStatus: VideoStatus)`
+  - [x] Export `deleteVideoAction(videoId: string)`
+  - [x] All actions return `ActionResult<T>` with success/error/data
+  - [x] Handle validation errors from services
+  - [x] Revalidate paths on success
+- [x] Create `app/videos/actions.test.ts`
 
 ### 5.2 Snapshot Actions
-- [ ] Create `app/videos/[id]/snapshots/actions.ts`:
-  - [ ] Export `createSnapshotAction(data: unknown)`
-  - [ ] Call `createSnapshot` service
-  - [ ] Handle errors (video not published, duplicate type)
-  - [ ] Return structured response
-  - [ ] Revalidate video page
-
-  - [ ] Export `deleteSnapshotAction(snapshotId: string)`
-  - [ ] Call `deleteSnapshot` service
-  - [ ] Revalidate video page
-  - [ ] Return response
-
-- [ ] Create `app/videos/[id]/snapshots/actions.test.ts`
+- [x] Create `app/videos/[id]/snapshots/actions.ts`:
+  - [x] Export `createSnapshotAction(data: unknown)`
+  - [x] Export `deleteSnapshotAction(snapshotId: string, videoId: string)`
+  - [x] Handle errors (video not published, duplicate type)
+  - [x] Return structured response
+  - [x] Revalidate video page
+- [x] Create `app/videos/[id]/snapshots/actions.test.ts`
 
 ### 5.3 Hashtag Actions
-- [ ] Create `app/hashtags/actions.ts`:
-  - [ ] Export `mergeHashtagsAction(sourceTag: string, targetTag: string)`
-  - [ ] Call `mergeHashtags` service
-  - [ ] Revalidate hashtag pages
-  - [ ] Return response
-
-  - [ ] Export `deleteHashtagAction(tag: string)`
-  - [ ] Call service
-  - [ ] Revalidate hashtag list
-  - [ ] Return response
-
-- [ ] Create `app/hashtags/actions.test.ts`
+- [x] Create `app/hashtags/actions.ts`:
+  - [x] Export `mergeHashtagsAction(sourceTag: string, targetTag: string)`
+  - [x] Revalidate hashtag pages
+  - [x] Return response
+- [x] Create `app/hashtags/actions.test.ts`
 
 ---
 
