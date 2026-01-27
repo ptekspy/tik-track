@@ -407,14 +407,14 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
   - [x] Export `formatDate`, `formatDateTime`, `formatRelativeTime`
 - [x] Create `lib/utils/dateUtils.test.ts`
 
-- [ ] Create `components/SnapshotTable/SnapshotTable.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `SnapshotTable`
-  - [ ] Props: `snapshots: AnalyticsSnapshot[]`
-  - [ ] Table with all metrics, sortable columns
-  - [ ] Show deltas compared to previous snapshot
-  - [ ] Actions: delete (snapshots are immutable, no edit)
-- [ ] Create `components/SnapshotTable/SnapshotTable.test.tsx`
+- [x] Create `components/SnapshotTable/SnapshotTable.tsx`:
+  - [x] Server Component
+  - [x] Export named `SnapshotTable`
+  - [x] Props: `snapshots: AnalyticsSnapshot[]`
+  - [x] Table with all metrics, sortable columns
+  - [x] Show deltas compared to previous snapshot
+  - [x] Actions: delete (snapshots are immutable, no edit)
+- [x] Create `components/SnapshotTable/SnapshotTable.test.tsx`
 
 ### 4.5 Hashtag Display Components
 - [ ] Create `components/HashtagList/HashtagList.tsx`:
