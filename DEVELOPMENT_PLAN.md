@@ -351,25 +351,25 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 - [x] Create `components/SnapshotTimeline/SnapshotTimeline.test.tsx`
 
 ### 4.3 Form Components
-- [ ] Create `components/VideoForm/VideoForm.tsx`:
-  - [ ] Client Component using react-hook-form
-  - [ ] Export named `VideoForm`
-  - [ ] Props: `defaultValues?`, `onSubmit: (data) => Promise<void>`
-  - [ ] Sections: video details, optional first analytics, hashtags
-  - [ ] Use centralized schemas for validation
-  - [ ] Status selector (DRAFT by default)
-  - [ ] PostDate required if status=PUBLISHED
-  - [ ] Analytics section only enabled if status=PUBLISHED
-- [ ] Create `components/VideoForm/VideoForm.test.tsx`
+- [x] Create `components/VideoForm/VideoForm.tsx`:
+  - [x] Client Component using react-hook-form
+  - [x] Export named `VideoForm`
+  - [x] Props: `defaultValues?`, `onSubmit: (data) => Promise<void>`
+  - [x] Sections: video details, optional first analytics, hashtags
+  - [x] Use centralized schemas for validation
+  - [x] Status selector (DRAFT by default)
+  - [x] PostDate required if status=PUBLISHED
+  - [x] Analytics section only enabled if status=PUBLISHED
+- [x] Create `components/VideoForm/VideoForm.test.tsx`
 
-- [ ] Create `components/SnapshotForm/SnapshotForm.tsx`:
-  - [ ] Client Component using react-hook-form
-  - [ ] Export named `SnapshotForm`
-  - [ ] Props: `videoId`, `availableTypes: SnapshotType[]`, `defaultValues?`, `onSubmit`
-  - [ ] Dropdown for snapshot type (only unused types)
-  - [ ] All analytics fields with TimeInput/PercentageInput
-  - [ ] Display delta from previous snapshot if available
-- [ ] Create `components/SnapshotForm/SnapshotForm.test.tsx`
+- [x] Create `components/SnapshotForm/SnapshotForm.tsx`:
+  - [x] Client Component using react-hook-form
+  - [x] Export named `SnapshotForm`
+  - [x] Props: `videoId`, `availableTypes: SnapshotType[]`, `defaultValues?`, `previousSnapshot?`, `onSubmit`
+  - [x] Dropdown for snapshot type (only unused types)
+  - [x] All analytics fields with TimeInput/PercentageInput
+  - [x] Display delta from previous snapshot if available
+- [x] Create `components/SnapshotForm/SnapshotForm.test.tsx`
 
 ### 4.4 Video Display Components
 - [ ] Create `components/VideoCard/VideoCard.tsx`:
