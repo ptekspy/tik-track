@@ -84,8 +84,8 @@ export const mockSnapshotOneHour: AnalyticsSnapshot = {
   reach: 2100,
 };
 
-// Mock AnalyticsSnapshot - 24 hours
-export const mockSnapshotOneDay: AnalyticsSnapshot = {
+// Mock AnalyticsSnapshot - 24 hours (alias for 1 day)
+export const mockSnapshotTwentyFourHours: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000002',
   videoId: '00000000-0000-4000-8000-000000000002',
   recordedAt: new Date('2026-01-21T14:30:00Z'),
@@ -102,6 +102,8 @@ export const mockSnapshotOneDay: AnalyticsSnapshot = {
   profileViews: 280,
   reach: 15800,
 };
+
+export const mockSnapshotOneDay = mockSnapshotTwentyFourHours;
 
 // Mock AnalyticsSnapshot - 7 days
 export const mockSnapshotSevenDay: AnalyticsSnapshot = {
@@ -142,11 +144,13 @@ export const mockSnapshotMinimal: AnalyticsSnapshot = {
 };
 
 // Mock Hashtag
-export const mockHashtag1: Hashtag = {
+export const mockHashtag: Hashtag = {
   id: '20000000-0000-4000-8000-000000000001',
   tag: 'productivity',
   createdAt: new Date('2026-01-15T10:00:00Z'),
 };
+
+export const mockHashtag1: Hashtag = mockHashtag;
 
 export const mockHashtag2: Hashtag = {
   id: '20000000-0000-4000-8000-000000000002',

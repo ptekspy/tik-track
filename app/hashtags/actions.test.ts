@@ -15,17 +15,11 @@ describe('Hashtag Actions', () => {
 
   describe('mergeHashtagsAction', () => {
     it('should merge hashtags successfully', async () => {
-      const result = {
-        targetHashtag: mockHashtag,
-        movedVideos: 5,
-      };
-
-      vi.spyOn(mergeHashtagsModule, 'mergeHashtags').mockResolvedValue(result);
+      vi.spyOn(mergeHashtagsModule, 'mergeHashtags').mockResolvedValue(undefined);
 
       const actionResult = await mergeHashtagsAction('oldtag', 'newtag');
 
       expect(actionResult.success).toBe(true);
-      expect(actionResult.data).toEqual(result);
       expect(actionResult.error).toBeUndefined();
       expect(mergeHashtagsModule.mergeHashtags).toHaveBeenCalledWith('oldtag', 'newtag');
     });
@@ -51,17 +45,11 @@ describe('Hashtag Actions', () => {
     });
 
     it('should handle target hashtag creation', async () => {
-      const result = {
-        targetHashtag: mockHashtag,
-        movedVideos: 3,
-      };
-
-      vi.spyOn(mergeHashtagsModule, 'mergeHashtags').mockResolvedValue(result);
+      vi.spyOn(mergeHashtagsModule, 'mergeHashtags').mockResolvedValue(undefined);
 
       const actionResult = await mergeHashtagsAction('oldtag', 'newuniquetag');
 
       expect(actionResult.success).toBe(true);
-      expect(actionResult.data).toEqual(result);
     });
 
     it('should handle unknown errors', async () => {

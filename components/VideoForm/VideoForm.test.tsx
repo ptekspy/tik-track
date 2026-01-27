@@ -208,7 +208,7 @@ describe('VideoForm', () => {
 
   it('should disable form while submitting', async () => {
     const user = userEvent.setup();
-    const onSubmit = vi.fn(() => new Promise((resolve) => setTimeout(resolve, 100)));
+    const onSubmit = vi.fn<(data: VideoFormData) => Promise<void>>(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
     render(<VideoForm onSubmit={onSubmit} />);
 
