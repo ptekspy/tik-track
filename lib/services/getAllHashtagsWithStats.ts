@@ -6,7 +6,7 @@
  */
 
 import { db } from '@/lib/database/client';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus, type Video, type AnalyticsSnapshot } from '@/lib/generated/client';
 
 export interface HashtagWithStats {
   tag: string;
@@ -42,7 +42,17 @@ export const getAllHashtagsWithStats = async (): Promise<HashtagWithStats[]> => 
     orderBy: {
       tag: 'asc',
     },
-  });
+  }) as Array<{
+    id: string;
+    tag: string;
+    createdAt: Date;
+    videos: Array<{
+      videoId: string;
+      hashtagId: string;
+      position: number;
+      video: Video & { snapshots: AnalyticsSnapshot[] };
+    }>;
+  }>;
 
   return hashtags.map((hashtag) => {
     const allVideos = hashtag.videos.map((vh) => vh.video);

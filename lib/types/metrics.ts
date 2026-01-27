@@ -17,6 +17,4 @@ export type CalculatedMetrics = EngagementMetrics & {
 };
 
 // Snapshot with calculated metrics
-export type SnapshotWithMetrics = AnalyticsSnapshot & {
-  calculated: CalculatedMetrics;
-};
+export type SnapshotWithMetrics = AnalyticsSnapshot & CalculatedMetrics;

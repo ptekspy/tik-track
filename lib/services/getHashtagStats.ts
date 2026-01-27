@@ -7,7 +7,7 @@
 
 import { findHashtagByTag } from '@/lib/dal/hashtags';
 import { db } from '@/lib/database/client';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus, type Video, type AnalyticsSnapshot } from '@/lib/generated/client';
 
 export interface HashtagStats {
   tag: string;
@@ -48,7 +48,7 @@ export const getHashtagStats = async (tag: string): Promise<HashtagStats | null>
         take: 1, // Only latest snapshot
       },
     },
-  });
+  }) as Array<Video & { snapshots: AnalyticsSnapshot[] }>;
 
   const videoCount = videos.length;
 
