@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum VideoStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SnapshotType {
+  ONE_HOUR
+  THREE_HOUR
+  SIX_HOUR
+  TWELVE_HOUR
+  ONE_DAY
+  TWO_DAY
+  SEVEN_DAY
+  FOURTEEN_DAY
+  THIRTY_DAY
+}
+
+model Video {
+  id                 String             @id @default(uuid())
+  title              String
+  script             String             @db.Text
+  description        String             @db.Text
+  videoLengthSeconds Int
+  postDate           DateTime?
+  status             VideoStatus        @default(DRAFT)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  snapshots          AnalyticsSnapshot[]
+  hashtags           VideoHashtag[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model AnalyticsSnapshot {
+  id                   String       @id @default(uuid())
+  videoId              String
+  recordedAt           DateTime     @default(now())
+  snapshotType         SnapshotType
+  views                Int?
+  totalPlayTimeSeconds Int?
+  avgWatchTimeSeconds  Int?
+  completionRate       Decimal?     @db.Decimal(5, 4)
+  newFollowers         Int?
+  likes                Int?
+  comments             Int?
+  shares               Int?
+  favorites            Int?
+  profileViews         Int?
+  reach                Int?
+  video                Video        @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@unique([videoId, snapshotType])
+  @@index([videoId])
+  @@index([recordedAt])
+}
+
+model Hashtag {
+  id        String         @id @default(uuid())
+  tag       String         @unique
+  createdAt DateTime       @default(now())
+  videos    VideoHashtag[]
+
+  @@index([tag])
+}
+
+model VideoHashtag {
+  videoId   String
+  hashtagId String
+  position  Int
+  video     Video   @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  hashtag   Hashtag @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@id([videoId, hashtagId])
+  @@index([hashtagId])
+}
+

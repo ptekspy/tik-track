@@ -14,105 +14,105 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 ## Phase 1: Project Setup & Infrastructure
 
 ### 1.1 Dependencies
-- [ ] Install production dependencies: `pnpm add prisma@^6 @prisma/client@^6 @prisma/extension-accelerate recharts react-hook-form zod date-fns lucide-react`
-- [ ] Install dev dependencies: `pnpm add -D @types/node vitest @vitejs/plugin-react @testing-library/react @testing-library/jest-dom @testing-library/user-event happy-dom`
-- [ ] Update `package.json` scripts: `db:push`, `db:generate`, `db:studio`, `test`, `test:watch`, `test:coverage`
+- [x] Install production dependencies: `pnpm add prisma@^6 @prisma/client@^6 @prisma/extension-accelerate recharts react-hook-form zod date-fns lucide-react`
+- [x] Install dev dependencies: `pnpm add -D @types/node vitest @vitejs/plugin-react @testing-library/react @testing-library/jest-dom @testing-library/user-event happy-dom`
+- [x] Update `package.json` scripts: `db:push`, `db:generate`, `db:studio`, `test`, `test:watch`, `test:coverage`
 
 ### 1.2 Configuration Files
-- [ ] Create `vitest.config.ts` with React plugin and path aliases (`@/*`)
-- [ ] Verify Tailwind CSS v4 configuration in `postcss.config.mjs`
-- [ ] Verify TypeScript paths in `tsconfig.json` match vitest config
+- [x] Create `vitest.config.ts` with React plugin and path aliases (`@/*`)
+- [x] Verify Tailwind CSS v4 configuration in `postcss.config.mjs`
+- [x] Verify TypeScript paths in `tsconfig.json` match vitest config
 
 ### 1.3 Testing Infrastructure
-- [ ] Create `lib/testing/mocks.ts` with static mock objects:
-  - [ ] `mockVideo` (DRAFT, PUBLISHED, ARCHIVED variants)
-  - [ ] `mockSnapshot` (for each SnapshotType)
-  - [ ] `mockHashtag`
-  - [ ] `mockVideoWithSnapshots`
-  - [ ] `mockHashtagWithVideos`
+- [x] Create `lib/testing/mocks.ts` with static mock objects:
+  - [x] `mockVideo` (DRAFT, PUBLISHED, ARCHIVED variants)
+  - [x] `mockSnapshot` (for each SnapshotType)
+  - [x] `mockHashtag`
+  - [x] `mockVideoWithSnapshots`
+  - [x] `mockHashtagWithVideos`
 
 ---
 
 ## Phase 2: Database & DAL Layer
 
 ### 2.1 Prisma Setup
-- [ ] Run `pnpm prisma init` (if not already done)
-- [ ] Configure `prisma/schema.prisma`:
-  - [ ] PostgreSQL datasource with DATABASE_URL
-  - [ ] Prisma Accelerate extension configuration
-  - [ ] Generator client with `prismaClientEngine = "library"`
+- [x] Run `pnpm prisma init` (if not already done)
+- [x] Configure `prisma/schema.prisma`:
+  - [x] PostgreSQL datasource with DATABASE_URL
+  - [x] Prisma Accelerate extension configuration
+  - [x] Generator client with custom output `../lib/generated/client`
 
 ### 2.2 Database Models
-- [ ] Define `Video` model:
-  - [ ] id (UUID, @id @default(uuid()))
-  - [ ] title (String)
-  - [ ] script (Text)
-  - [ ] description (Text)
-  - [ ] videoLengthSeconds (Int)
-  - [ ] postDate (DateTime?, nullable)
-  - [ ] status (Enum: DRAFT | PUBLISHED | ARCHIVED, default DRAFT)
-  - [ ] createdAt, updatedAt (DateTime @default(now()), @updatedAt)
-  - [ ] Relations: snapshots[], hashtags[]
+- [x] Define `Video` model:
+  - [x] id (UUID, @id @default(uuid()))
+  - [x] title (String)
+  - [x] script (Text)
+  - [x] description (Text)
+  - [x] videoLengthSeconds (Int)
+  - [x] postDate (DateTime?, nullable)
+  - [x] status (Enum: DRAFT | PUBLISHED | ARCHIVED, default DRAFT)
+  - [x] createdAt, updatedAt (DateTime @default(now()), @updatedAt)
+  - [x] Relations: snapshots[], hashtags[]
 
-- [ ] Define `AnalyticsSnapshot` model:
-  - [ ] id (UUID)
-  - [ ] videoId (UUID, relation to Video)
-  - [ ] recordedAt (DateTime @default(now()))
-  - [ ] snapshotType (Enum: ONE_HOUR | THREE_HOUR | SIX_HOUR | TWELVE_HOUR | ONE_DAY | TWO_DAY | SEVEN_DAY | FOURTEEN_DAY | THIRTY_DAY)
-  - [ ] views (Int?, nullable)
-  - [ ] totalPlayTimeSeconds (Int?, nullable)
-  - [ ] avgWatchTimeSeconds (Int?, nullable)
-  - [ ] completionRate (Decimal?, nullable)
-  - [ ] newFollowers (Int?, nullable)
-  - [ ] likes (Int?, nullable)
-  - [ ] comments (Int?, nullable)
-  - [ ] shares (Int?, nullable)
-  - [ ] favorites (Int?, nullable)
-  - [ ] profileViews (Int?, nullable)
-  - [ ] reach (Int?, nullable)
-  - [ ] @@unique([videoId, snapshotType])
+- [x] Define `AnalyticsSnapshot` model:
+  - [x] id (UUID)
+  - [x] videoId (UUID, relation to Video)
+  - [x] recordedAt (DateTime @default(now()))
+  - [x] snapshotType (Enum: ONE_HOUR | THREE_HOUR | SIX_HOUR | TWELVE_HOUR | ONE_DAY | TWO_DAY | SEVEN_DAY | FOURTEEN_DAY | THIRTY_DAY)
+  - [x] views (Int?, nullable)
+  - [x] totalPlayTimeSeconds (Int?, nullable)
+  - [x] avgWatchTimeSeconds (Int?, nullable)
+  - [x] completionRate (Decimal?, nullable)
+  - [x] newFollowers (Int?, nullable)
+  - [x] likes (Int?, nullable)
+  - [x] comments (Int?, nullable)
+  - [x] shares (Int?, nullable)
+  - [x] favorites (Int?, nullable)
+  - [x] profileViews (Int?, nullable)
+  - [x] reach (Int?, nullable)
+  - [x] @@unique([videoId, snapshotType])
 
-- [ ] Define `Hashtag` model:
-  - [ ] id (UUID)
-  - [ ] tag (String @unique, lowercase)
-  - [ ] createdAt (DateTime)
-  - [ ] Relations: videos[]
+- [x] Define `Hashtag` model:
+  - [x] id (UUID)
+  - [x] tag (String @unique, lowercase)
+  - [x] createdAt (DateTime)
+  - [x] Relations: videos[]
 
-- [ ] Define `VideoHashtag` junction model:
-  - [ ] videoId (UUID)
-  - [ ] hashtagId (UUID)
-  - [ ] position (Int)
-  - [ ] @@id([videoId, hashtagId])
+- [x] Define `VideoHashtag` junction model:
+  - [x] videoId (UUID)
+  - [x] hashtagId (UUID)
+  - [x] position (Int)
+  - [x] @@id([videoId, hashtagId])
 
-- [ ] Run `pnpm db:push`
-- [ ] Run `pnpm db:generate`
+- [x] Run `pnpm db:push`
+- [x] Run `pnpm db:generate`
 
 ### 2.3 Type Definitions (Prisma-inferred)
-- [ ] Create `lib/types/video.ts`:
-  - [ ] Export Video type from Prisma
-  - [ ] Export VideoWithSnapshots using Prisma.VideoGetPayload with include
-  - [ ] Export VideoWithHashtags
-  - [ ] Export VideoWithAll (snapshots + hashtags)
+- [x] Create `lib/types/video.ts`:
+  - [x] Export Video type from Prisma
+  - [x] Export VideoWithSnapshots using Prisma.VideoGetPayload with include
+  - [x] Export VideoWithHashtags
+  - [x] Export VideoWithAll (snapshots + hashtags)
 
-- [ ] Create `lib/types/snapshot.ts`:
-  - [ ] Export AnalyticsSnapshot type from Prisma
-  - [ ] Export SnapshotWithVideo
-  - [ ] Export SnapshotType enum
+- [x] Create `lib/types/snapshot.ts`:
+  - [x] Export AnalyticsSnapshot type from Prisma
+  - [x] Export SnapshotWithVideo
+  - [x] Export SnapshotType enum
 
-- [ ] Create `lib/types/hashtag.ts`:
-  - [ ] Export Hashtag type from Prisma
-  - [ ] Export HashtagWithVideos
+- [x] Create `lib/types/hashtag.ts`:
+  - [x] Export Hashtag type from Prisma
+  - [x] Export HashtagWithVideos
 
-- [ ] Create `lib/types/metrics.ts`:
-  - [ ] Define EngagementMetrics type
-  - [ ] Define SignalResult type (positive | negative | neutral)
-  - [ ] Define CalculatedMetrics type
+- [x] Create `lib/types/metrics.ts`:
+  - [x] Define EngagementMetrics type
+  - [x] Define SignalResult type (positive | negative | neutral)
+  - [x] Define CalculatedMetrics type
 
 ### 2.4 Database Client
-- [ ] Create `lib/database/client.ts`:
-  - [ ] Export singleton PrismaClient with Accelerate extension
-  - [ ] Export named `db` instance
-  - [ ] Add proper connection lifecycle management
+- [x] Create `lib/database/client.ts`:
+  - [x] Export singleton PrismaClient with Accelerate extension
+  - [x] Export named `db` instance
+  - [x] Add proper connection lifecycle management
 
 ### 2.5 DAL - Videos
 - [ ] Create `lib/dal/videos.ts`:
@@ -751,8 +751,10 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 
 ## Progress Tracking
 
-**Started**: [Date]  
-**Current Phase**: Phase 1  
-**Completion**: 0/[total tasks]
+**Started**: January 27, 2026  
+**Current Phase**: Phase 2 (DAL Layer - Ready to start 2.5)  
+**Phase 1**: ✅ Complete  
+**Phase 2.1-2.4**: ✅ Complete  
+**Next**: Phase 2.5 (DAL - Videos)
 
 Update this document as you complete tasks by checking boxes with `[x]`.
