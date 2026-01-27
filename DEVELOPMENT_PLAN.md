@@ -251,24 +251,24 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
   - [x] Return updated video
 - [x] Create `lib/services/updateVideo.test.ts`
 
-- [ ] Create `lib/services/deleteVideo.ts`:
-  - [ ] Export `deleteVideo(videoId: string)`
-  - [ ] Handle cascade deletion (snapshots, video-hashtag relations)
-- [ ] Create `lib/services/deleteVideo.test.ts`
+- [x] Create `lib/services/deleteVideo.ts`:
+  - [x] Export `deleteVideo(videoId: string)`
+  - [x] Handle cascade deletion (snapshots, video-hashtag relations)
+- [x] Create `lib/services/deleteVideo.test.ts`
 
 ### 3.6 Snapshot Services
-- [ ] Create `lib/services/createSnapshot.ts`:
-  - [ ] Export `createSnapshot(input: unknown)`
-  - [ ] Validate with schema
-  - [ ] Check video status is PUBLISHED
-  - [ ] Check snapshot type not already exists for video
-  - [ ] Create snapshot
-- [ ] Create `lib/services/createSnapshot.test.ts`
+- [x] Create `lib/services/createSnapshot.ts`:
+  - [x] Export `createSnapshot(input: unknown)`
+  - [x] Validate with schema
+  - [x] Check video status is PUBLISHED
+  - [x] Check snapshot type not already exists for video
+  - [x] Create snapshot
+- [x] Create `lib/services/createSnapshot.test.ts`
 
-- [ ] Create `lib/services/deleteSnapshot.ts`:
-  - [ ] Export `deleteSnapshot(snapshotId: string)`
-  - [ ] Delete snapshot by ID
-- [ ] Create `lib/services/deleteSnapshot.test.ts`
+- [x] Create `lib/services/deleteSnapshot.ts`:
+  - [x] Export `deleteSnapshot(snapshotId: string)`
+  - [x] Delete snapshot by ID
+- [x] Create `lib/services/deleteSnapshot.test.ts`
 
 ### 3.7 Hashtag Services
 - [ ] Create `lib/services/getHashtagStats.ts`:

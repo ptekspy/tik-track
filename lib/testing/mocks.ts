@@ -28,7 +28,7 @@ export enum SnapshotType {
 
 // Mock Video - DRAFT
 export const mockVideoDraft: Video = {
-  id: 'draft-video-id-1',
+  id: '00000000-0000-4000-8000-000000000001',
   title: 'Draft Video Title',
   script: 'This is a draft video script for testing purposes.',
   description: 'Draft video description with #test #draft',
@@ -41,7 +41,7 @@ export const mockVideoDraft: Video = {
 
 // Mock Video - PUBLISHED
 export const mockVideoPublished: Video = {
-  id: 'published-video-id-1',
+  id: '00000000-0000-4000-8000-000000000002',
   title: 'Published Video Title',
   script: 'This is a published video script about productivity tips.',
   description: 'Learn how to be more productive! #productivity #tips #tiktok',
@@ -54,7 +54,7 @@ export const mockVideoPublished: Video = {
 
 // Mock Video - ARCHIVED
 export const mockVideoArchived: Video = {
-  id: 'archived-video-id-1',
+  id: '00000000-0000-4000-8000-000000000003',
   title: 'Archived Video Title',
   script: 'This is an archived video script.',
   description: 'Old content #archived',
@@ -67,8 +67,8 @@ export const mockVideoArchived: Video = {
 
 // Mock AnalyticsSnapshot - 1 hour
 export const mockSnapshotOneHour: AnalyticsSnapshot = {
-  id: 'snapshot-1h-id',
-  videoId: 'published-video-id-1',
+  id: '10000000-0000-4000-8000-000000000001',
+  videoId: '00000000-0000-4000-8000-000000000002',
   recordedAt: new Date('2026-01-20T15:30:00Z'),
   snapshotType: SnapshotType.ONE_HOUR,
   views: 1500,
@@ -86,8 +86,8 @@ export const mockSnapshotOneHour: AnalyticsSnapshot = {
 
 // Mock AnalyticsSnapshot - 24 hours
 export const mockSnapshotOneDay: AnalyticsSnapshot = {
-  id: 'snapshot-24h-id',
-  videoId: 'published-video-id-1',
+  id: '10000000-0000-4000-8000-000000000002',
+  videoId: '00000000-0000-4000-8000-000000000002',
   recordedAt: new Date('2026-01-21T14:30:00Z'),
   snapshotType: SnapshotType.ONE_DAY,
   views: 12500,
@@ -105,8 +105,8 @@ export const mockSnapshotOneDay: AnalyticsSnapshot = {
 
 // Mock AnalyticsSnapshot - 7 days
 export const mockSnapshotSevenDay: AnalyticsSnapshot = {
-  id: 'snapshot-7d-id',
-  videoId: 'published-video-id-1',
+  id: '10000000-0000-4000-8000-000000000003',
+  videoId: '00000000-0000-4000-8000-000000000002',
   recordedAt: new Date('2026-01-27T14:30:00Z'),
   snapshotType: SnapshotType.SEVEN_DAY,
   views: 45000,
@@ -124,8 +124,8 @@ export const mockSnapshotSevenDay: AnalyticsSnapshot = {
 
 // Mock AnalyticsSnapshot with minimal data (nulls)
 export const mockSnapshotMinimal: AnalyticsSnapshot = {
-  id: 'snapshot-minimal-id',
-  videoId: 'published-video-id-1',
+  id: '10000000-0000-4000-8000-000000000004',
+  videoId: '00000000-0000-4000-8000-000000000002',
   recordedAt: new Date('2026-01-20T15:30:00Z'),
   snapshotType: SnapshotType.THREE_HOUR,
   views: 100,
@@ -143,19 +143,19 @@ export const mockSnapshotMinimal: AnalyticsSnapshot = {
 
 // Mock Hashtag
 export const mockHashtag1: Hashtag = {
-  id: 'hashtag-id-1',
+  id: '20000000-0000-4000-8000-000000000001',
   tag: 'productivity',
   createdAt: new Date('2026-01-15T10:00:00Z'),
 };
 
 export const mockHashtag2: Hashtag = {
-  id: 'hashtag-id-2',
+  id: '20000000-0000-4000-8000-000000000002',
   tag: 'tips',
   createdAt: new Date('2026-01-15T10:00:00Z'),
 };
 
 export const mockHashtag3: Hashtag = {
-  id: 'hashtag-id-3',
+  id: '20000000-0000-4000-8000-000000000003',
   tag: 'tiktok',
   createdAt: new Date('2026-01-10T10:00:00Z'),
 };
