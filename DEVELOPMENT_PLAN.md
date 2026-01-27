@@ -320,34 +320,35 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 - [x] Create `components/FormError/FormError.test.tsx`
 
 ### 4.2 Display Components
-- [ ] Create `components/MetricCard/MetricCard.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `MetricCard`
-  - [ ] Props: `label`, `value`, `delta?`, `icon?`
-  - [ ] Display metric with optional up/down indicator
-- [ ] Create `components/MetricCard/MetricCard.test.tsx`
+- [x] Create `components/MetricCard/MetricCard.tsx`:
+  - [x] Server Component
+  - [x] Export named `MetricCard`
+  - [x] Props: `label`, `value`, `delta?`, `icon?`
+  - [x] Display metric with optional up/down indicator
+- [x] Create `components/MetricCard/MetricCard.test.tsx`
 
-- [ ] Create `components/SignalBadge/SignalBadge.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `SignalBadge`
-  - [ ] Props: `signal: SignalResult`
-  - [ ] Green (positive), Red (negative), Gray (neutral)
-- [ ] Create `components/SignalBadge/SignalBadge.test.tsx`
+- [x] Create `components/SignalBadge/SignalBadge.tsx`:
+  - [x] Server Component
+  - [x] Export named `SignalBadge`
+  - [x] Props: `signal: SignalResult`
+  - [x] Green (positive), Red (negative), Gray (neutral)
+- [x] Create `components/SignalBadge/SignalBadge.test.tsx`
 
-- [ ] Create `components/StatusBadge/StatusBadge.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `StatusBadge`
-  - [ ] Props: `status: VideoStatus`
-  - [ ] Color-coded badges (gray=draft, green=published, blue=archived)
-- [ ] Create `components/StatusBadge/StatusBadge.test.tsx`
+- [x] Create `components/StatusBadge/StatusBadge.tsx`:
+  - [x] Server Component
+  - [x] Export named `StatusBadge`
+  - [x] Props: `status: VideoStatus`
+  - [x] Color-coded badges (gray=draft, green=published, blue=archived)
+- [x] Create `components/StatusBadge/StatusBadge.test.tsx`
 
-- [ ] Create `components/SnapshotTimeline/SnapshotTimeline.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `SnapshotTimeline`
-  - [ ] Props: `video: VideoWithSnapshots`
-  - [ ] Visual timeline showing completed/missed/upcoming snapshots
-  - [ ] Color-coded: green (completed), red (missed), gray (upcoming)
-- [ ] Create `components/SnapshotTimeline/SnapshotTimeline.test.tsx`
+- [x] Create `components/SnapshotTimeline/SnapshotTimeline.tsx`:
+  - [x] Server Component
+  - [x] Export named `SnapshotTimeline`
+  - [x] Props: `video: VideoWithSnapshots`
+  - [x] Visual timeline showing completed/missed/upcoming snapshots
+  - [x] Color-coded: green (completed), red (missed), gray (upcoming)
+  - [x] Grace period logic: snapshots are "upcoming" within 2x their expected time
+- [x] Create `components/SnapshotTimeline/SnapshotTimeline.test.tsx`
 
 ### 4.3 Form Components
 - [ ] Create `components/VideoForm/VideoForm.tsx`:
