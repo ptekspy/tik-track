@@ -115,34 +115,36 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
   - [x] Add proper connection lifecycle management
 
 ### 2.5 DAL - Videos
-- [ ] Create `lib/dal/videos.ts`:
-  - [ ] Export `findVideoById(id: string)`
-  - [ ] Export `findAllVideos()`
-  - [ ] Export `findVideosByStatus(status: VideoStatus)`
-  - [ ] Export `createVideo(data: CreateVideoData)`
-  - [ ] Export `updateVideo(id: string, data: UpdateVideoData)`
-  - [ ] Export `deleteVideo(id: string)`
-- [ ] Create `lib/dal/videos.test.ts` with mocked Prisma client
+- [x] Create `lib/dal/videos.ts`:
+  - [x] Export `findVideoById(id: string)`
+  - [x] Export `findAllVideos()`
+  - [x] Export `findVideosByStatus(status: VideoStatus)`
+  - [x] Export `createVideo(data: CreateVideoData)`
+  - [x] Export `updateVideo(id: string, data: UpdateVideoData)`
+  - [x] Export `deleteVideo(id: string)`
+- [x] Create `lib/dal/videos.test.ts` with mocked Prisma client
 
 ### 2.6 DAL - Snapshots
-- [ ] Create `lib/dal/snapshots.ts`:
-  - [ ] Export `findSnapshotById(id: string)`
-  - [ ] Export `findSnapshotsByVideoId(videoId: string)`
-  - [ ] Export `findSnapshotByVideoAndType(videoId: string, type: SnapshotType)`
-  - [ ] Export `createSnapshot(data: CreateSnapshotData)`
-  - [ ] Export `updateSnapshot(id: string, data: UpdateSnapshotData)`
-  - [ ] Export `deleteSnapshot(id: string)`
-- [ ] Create `lib/dal/snapshots.test.ts`
+- [x] Create `lib/dal/snapshots.ts`:
+  - [x] Export `findSnapshotById(id: string)`
+  - [x] Export `findSnapshotsByVideoId(videoId: string)`
+  - [x] Export `findSnapshotByVideoAndType(videoId: string, type: SnapshotType)`
+  - [x] Export `createSnapshot(data: CreateSnapshotData)`
+  - [x] Export `updateSnapshot(id: string, data: UpdateSnapshotData)`
+  - [x] Export `deleteSnapshot(id: string)`
+- [x] Create `lib/dal/snapshots.test.ts`
 
 ### 2.7 DAL - Hashtags
-- [ ] Create `lib/dal/hashtags.ts`:
-  - [ ] Export `findHashtagByTag(tag: string)`
-  - [ ] Export `findOrCreateHashtag(tag: string)`
-  - [ ] Export `findAllHashtags()`
-  - [ ] Export `findHashtagWithVideos(tag: string)`
-  - [ ] Export `deleteHashtag(id: string)`
-  - [ ] Export `mergeHashtags(sourceId: string, targetId: string)`
-- [ ] Create `lib/dal/hashtags.test.ts`
+- [x] Create `lib/dal/hashtags.ts`:
+  - [x] Export `findHashtagByTag(tag: string)`
+  - [x] Export `findOrCreateHashtag(tag: string)`
+  - [x] Export `findAllHashtags()`
+  - [x] Export `findHashtagWithVideos(tag: string)`
+  - [x] Export `deleteHashtag(id: string)`
+  - [x] Export `linkHashtagToVideo(hashtagId, videoId, position)`
+  - [x] Export `unlinkHashtagFromVideo(hashtagId, videoId)`
+  - [x] Export `updateVideoHashtagPositions(videoId, hashtags[])`
+- [x] Create `lib/dal/hashtags.test.ts`
 
 ---
 
