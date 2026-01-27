@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Video, AnalyticsSnapshot } from '@/lib/generated/client';
-import { Prisma } from '@/lib/generated/client';
+import type { Video, AnalyticsSnapshot, Prisma } from '@/lib/types/prisma';
 import { StatusBadge } from '@/components/StatusBadge/StatusBadge';
 import { SnapshotTimeline } from '@/components/SnapshotTimeline/SnapshotTimeline';
 import { SignalBadge } from '@/components/SignalBadge/SignalBadge';
@@ -61,8 +60,8 @@ export function VideoDetail({
     : null;
 
   const completionRateNum = latestSnapshot?.completionRate 
-    ? (latestSnapshot.completionRate instanceof Prisma.Decimal 
-        ? latestSnapshot.completionRate.toNumber() 
+    ? (typeof latestSnapshot.completionRate === 'object' && 'toNumber' in latestSnapshot.completionRate
+        ? (latestSnapshot.completionRate as any).toNumber() 
         : latestSnapshot.completionRate)
     : null;
 
@@ -82,8 +81,8 @@ export function VideoDetail({
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl font-bold">{video.title}</h1>
-            <StatusBadge status={video.status} />
-            {signal && video.status === 'PUBLISHED' && (
+            <StatusBadge status={video.status as any} />
+            {signal && video.status === 'PUBLISHED' as any && (
               <SignalBadge signal={signal} />
             )}
           </div>

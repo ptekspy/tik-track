@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/types/prisma';
 import { TimeInput } from '@/components/TimeInput/TimeInput';
 import { PercentageInput } from '@/components/PercentageInput/PercentageInput';
 import { HashtagInput } from '@/components/HashtagInput/HashtagInput';

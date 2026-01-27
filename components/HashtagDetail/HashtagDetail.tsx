@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { HashtagWithVideos } from '@/lib/types/hashtag';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/types/prisma';
 import { StatusBadge } from '@/components/StatusBadge/StatusBadge';
 import { formatDate } from '@/lib/utils/dateUtils';
 
@@ -99,7 +99,7 @@ export function HashtagDetail({ hashtag, stats }: HashtagDetailProps) {
                     </Link>
                     
                     <div className="mt-2 flex items-center gap-2">
-                      <StatusBadge status={videoHashtag.video.status} />
+                      <StatusBadge status={videoHashtag.video.status as any} />
                       {videoHashtag.video.postDate && (
                         <span className="text-sm text-gray-500">
                           Posted {formatDate(videoHashtag.video.postDate)}

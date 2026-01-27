@@ -1,4 +1,4 @@
-import type { Video, AnalyticsSnapshot } from '@/lib/generated/client';
+import type { Video, AnalyticsSnapshot } from '@/lib/types/prisma';
 import { VideoCard } from '@/components/VideoCard/VideoCard';
 
 export interface VideoGridProps {

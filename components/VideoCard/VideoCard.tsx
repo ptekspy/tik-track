@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import type { Video, AnalyticsSnapshot } from '@/lib/generated/client';
-import { Prisma } from '@/lib/generated/client';
+import type { Video, AnalyticsSnapshot, Prisma } from '@/lib/types/prisma';
 import { StatusBadge } from '@/components/StatusBadge/StatusBadge';
 import { SignalBadge } from '@/components/SignalBadge/SignalBadge';
 import { Eye, TrendingUp } from 'lucide-react';
@@ -35,8 +34,8 @@ export function VideoCard({ video }: VideoCardProps) {
 
   // Detect signal
   const completionRateNum = latestSnapshot?.completionRate 
-    ? (latestSnapshot.completionRate instanceof Prisma.Decimal 
-        ? latestSnapshot.completionRate.toNumber() 
+    ? (typeof latestSnapshot.completionRate === 'object' && 'toNumber' in latestSnapshot.completionRate
+        ? (latestSnapshot.completionRate as any).toNumber() 
         : latestSnapshot.completionRate)
     : null;
     
@@ -57,7 +56,7 @@ export function VideoCard({ video }: VideoCardProps) {
           <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 flex-1">
             {video.title}
           </h3>
-          <StatusBadge status={video.status} />
+          <StatusBadge status={video.status as any} />
         </div>
 
         {/* Description */}

@@ -1,5 +1,5 @@
 import { findVideosByStatus } from '@/lib/dal/videos';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/types/prisma';
 import { NavigationClient } from './NavigationClient';
 
 export async function Navigation() {

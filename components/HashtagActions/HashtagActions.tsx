@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Hashtag } from '@/lib/generated/client';
+import type { Hashtag } from '@/lib/types/prisma';
 
 export interface HashtagActionsProps {
   hashtags: Hashtag[];
