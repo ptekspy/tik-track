@@ -271,21 +271,21 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 - [x] Create `lib/services/deleteSnapshot.test.ts`
 
 ### 3.7 Hashtag Services
-- [ ] Create `lib/services/getHashtagStats.ts`:
-  - [ ] Export `getHashtagStats(tag: string)`
-  - [ ] Aggregate metrics across all PUBLISHED videos with tag
-  - [ ] Calculate avg engagement, views, completion rate
-- [ ] Create `lib/services/getHashtagStats.test.ts`
+- [x] Create `lib/services/getHashtagStats.ts`:
+  - [x] Export `getHashtagStats(tag: string)`
+  - [x] Aggregate metrics across all PUBLISHED videos with tag
+  - [x] Calculate avg engagement, views, completion rate
+- [x] Create `lib/services/getHashtagStats.test.ts`
 
-- [ ] Create `lib/services/getAllHashtagsWithStats.ts`:
-  - [ ] Export `getAllHashtagsWithStats()`
-  - [ ] Return all hashtags with usage counts and avg metrics
-- [ ] Create `lib/services/getAllHashtagsWithStats.test.ts`
+- [x] Create `lib/services/getAllHashtagsWithStats.ts`:
+  - [x] Export `getAllHashtagsWithStats()`
+  - [x] Return all hashtags with usage counts and avg metrics
+- [x] Create `lib/services/getAllHashtagsWithStats.test.ts`
 
-- [ ] Create `lib/services/mergeHashtags.ts`:
-  - [ ] Export `mergeHashtags(sourceTag: string, targetTag: string)`
-  - [ ] Use transaction to update VideoHashtag relations
-- [ ] Create `lib/services/mergeHashtags.test.ts`
+- [x] Create `lib/services/mergeHashtags.ts`:
+  - [x] Export `mergeHashtags(sourceTag: string, targetTag: string)`
+  - [x] Use transaction to update VideoHashtag relations
+- [x] Create `lib/services/mergeHashtags.test.ts`
 
 ---
 
