@@ -221,34 +221,35 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 - [x] Create `lib/snapshots/getNextSuggestedSnapshot.test.ts`
 
 ### 3.5 Video Services
-- [ ] Create `lib/services/createVideo.ts`:
-  - [ ] Export `createVideo(input: unknown)`
-  - [ ] Validate with `createVideoSchema.parse(input)`
-  - [ ] Use Prisma transaction to create video + hashtags + optional snapshot
-  - [ ] Return created video
-- [ ] Create `lib/services/createVideo.test.ts`
+- [x] Create `lib/services/createVideo.ts`:
+  - [x] Export `createVideo(input: unknown)`
+  - [x] Validate with `createVideoSchema.parse(input)`
+  - [x] Use Prisma transaction to create video + hashtags
+  - [x] Return created video
+- [x] Create `lib/services/createVideo.test.ts`
 
-- [ ] Create `lib/services/updateVideoStatus.ts`:
-  - [ ] Export `updateVideoStatus(videoId: string, newStatus: VideoStatus)`
-  - [ ] Validate forward-only transitions (DRAFT→PUBLISHED→ARCHIVED)
-  - [ ] Throw error if invalid transition
-- [ ] Create `lib/services/updateVideoStatus.test.ts`
+- [x] Create `lib/services/updateVideoStatus.ts`:
+  - [x] Export `updateVideoStatus(videoId: string, newStatus: VideoStatus)`
+  - [x] Validate forward-only transitions (DRAFT→PUBLISHED→ARCHIVED)
+  - [x] Throw error if invalid transition
+- [x] Create `lib/services/updateVideoStatus.test.ts`
 
-- [ ] Create `lib/services/getVideoWithAnalytics.ts`:
-  - [ ] Export `getVideoWithAnalytics(videoId: string)`
-  - [ ] Fetch video with snapshots and hashtags
-  - [ ] Calculate all metrics for each snapshot
-  - [ ] Return enriched data
-- [ ] Create `lib/services/getVideoWithAnalytics.test.ts`
+- [x] Create `lib/services/getVideoWithAnalytics.ts`:
+  - [x] Export `getVideoWithAnalytics(videoId: string)`
+  - [x] Fetch video with snapshots
+  - [x] Calculate all metrics for each snapshot (engagement, share, retention, follower conversion)
+  - [x] Detect signals (positive/negative/neutral)
+  - [x] Return enriched data
+- [x] Create `lib/services/getVideoWithAnalytics.test.ts`
 
-- [ ] Create `lib/services/updateVideo.ts`:
-  - [ ] Export `updateVideo(videoId: string, input: unknown)`
-  - [ ] Validate with `updateVideoSchema.parse(input)`
-  - [ ] Update video metadata (title, script, description, videoLength)
-  - [ ] Handle hashtag updates (remove old, add new)
-  - [ ] Use transaction for atomic updates
-  - [ ] Return updated video
-- [ ] Create `lib/services/updateVideo.test.ts`
+- [x] Create `lib/services/updateVideo.ts`:
+  - [x] Export `updateVideo(videoId: string, input: unknown)`
+  - [x] Validate with `updateVideoSchema.parse(input)`
+  - [x] Update video metadata (title, script, description, videoLength)
+  - [x] Handle hashtag updates (remove old, add new)
+  - [x] Use transaction for atomic updates
+  - [x] Return updated video
+- [x] Create `lib/services/updateVideo.test.ts`
 
 - [ ] Create `lib/services/deleteVideo.ts`:
   - [ ] Export `deleteVideo(videoId: string)`
