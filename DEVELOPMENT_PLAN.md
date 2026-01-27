@@ -292,32 +292,32 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 ## Phase 4: UI Components
 
 ### 4.1 Form Input Components
-- [ ] Create `components/TimeInput/TimeInput.tsx`:
-  - [ ] Client Component with separate hours, minutes, seconds inputs
-  - [ ] Export named `TimeInput`
-  - [ ] Props: `value?: number`, `onChange: (seconds: number) => void`
-  - [ ] Convert between seconds and h/m/s display
-- [ ] Create `components/TimeInput/TimeInput.test.tsx`
+- [x] Create `components/TimeInput/TimeInput.tsx`:
+  - [x] Client Component with separate hours, minutes, seconds inputs
+  - [x] Export named `TimeInput`
+  - [x] Props: `value?: number`, `onChange: (seconds: number) => void`
+  - [x] Convert between seconds and h/m/s display
+- [x] Create `components/TimeInput/TimeInput.test.tsx`
 
-- [ ] Create `components/PercentageInput/PercentageInput.tsx`:
-  - [ ] Client Component
-  - [ ] Export named `PercentageInput`
-  - [ ] Props: `value?: number` (decimal), `onChange: (decimal: number) => void`
-  - [ ] Display as percentage (10.55%), store as decimal (0.1055)
-- [ ] Create `components/PercentageInput/PercentageInput.test.tsx`
+- [x] Create `components/PercentageInput/PercentageInput.tsx`:
+  - [x] Client Component
+  - [x] Export named `PercentageInput`
+  - [x] Props: `value?: number` (decimal), `onChange: (decimal: number) => void`
+  - [x] Display as percentage (10.55%), store as decimal (0.1055)
+- [x] Create `components/PercentageInput/PercentageInput.test.tsx`
 
-- [ ] Create `components/HashtagInput/HashtagInput.tsx`:
-  - [ ] Client Component with chip-based UI
-  - [ ] Export named `HashtagInput`
-  - [ ] Props: `value: string[]`, `onChange: (tags: string[]) => void`
-  - [ ] Add/remove tags, enforce lowercase
-- [ ] Create `components/HashtagInput/HashtagInput.test.tsx`
+- [x] Create `components/HashtagInput/HashtagInput.tsx`:
+  - [x] Client Component with chip-based UI
+  - [x] Export named `HashtagInput`
+  - [x] Props: `value: string[]`, `onChange: (tags: string[]) => void`
+  - [x] Add/remove tags, enforce lowercase
+- [x] Create `components/HashtagInput/HashtagInput.test.tsx`
 
-- [ ] Create `components/FormError/FormError.tsx`:
-  - [ ] Server Component for displaying validation errors
-  - [ ] Export named `FormError`
-  - [ ] Props: `error?: string | string[]`
-- [ ] Create `components/FormError/FormError.test.tsx`
+- [x] Create `components/FormError/FormError.tsx`:
+  - [x] Server Component for displaying validation errors
+  - [x] Export named `FormError`
+  - [x] Props: `error?: string | string[]`
+- [x] Create `components/FormError/FormError.test.tsx`
 
 ### 4.2 Display Components
 - [ ] Create `components/MetricCard/MetricCard.tsx`:
