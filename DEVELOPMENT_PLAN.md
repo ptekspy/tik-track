@@ -151,73 +151,74 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 ## Phase 3: Service Layer & Utilities
 
 ### 3.1 Centralized Schemas
-- [ ] Create `lib/schemas/video.ts`:
-  - [ ] Export `createVideoSchema` (zod)
-  - [ ] Export `updateVideoSchema` (zod)
-  - [ ] Export `updateVideoStatusSchema` (zod, with forward-only validation)
-  - [ ] Export inferred types using `z.infer`
+- [x] Create `lib/schemas/video.ts`:
+  - [x] Export `createVideoSchema` (zod)
+  - [x] Export `updateVideoSchema` (zod)
+  - [x] Export `updateVideoStatusSchema` (zod, with forward-only validation)
+  - [x] Export inferred types using `z.infer`
 
-- [ ] Create `lib/schemas/snapshot.ts`:
-  - [ ] Export `createSnapshotSchema` (zod)
-  - [ ] Export `updateSnapshotSchema` (zod)
-  - [ ] Export inferred types
+- [x] Create `lib/schemas/snapshot.ts`:
+  - [x] Export `createSnapshotSchema` (zod)
+  - [x] Export `updateSnapshotSchema` (zod)
+  - [x] Export inferred types
 
-- [ ] Create `lib/schemas/hashtag.ts`:
-  - [ ] Export `hashtagSchema` (zod, lowercase validation)
-  - [ ] Export inferred types
+- [x] Create `lib/schemas/hashtag.ts`:
+  - [x] Export `hashtagSchema` (zod, lowercase validation)
+  - [x] Export `hashtagArraySchema` (zod)
+  - [x] Export inferred types
 
 ### 3.2 Metric Calculations
-- [ ] Create `lib/metrics/calculateEngagementRate.ts`:
-  - [ ] Export `calculateEngagementRate(snapshot: AnalyticsSnapshot): number | null`
-  - [ ] Formula: (likes + comments + shares) / views × 100
-- [ ] Create `lib/metrics/calculateEngagementRate.test.ts`
+- [x] Create `lib/metrics/calculateEngagementRate.ts`:
+  - [x] Export `calculateEngagementRate(snapshot: AnalyticsSnapshot): number | null`
+  - [x] Formula: (likes + comments + shares) / views × 100
+- [x] Create `lib/metrics/calculateEngagementRate.test.ts`
 
-- [ ] Create `lib/metrics/calculateShareRate.ts`:
-  - [ ] Export `calculateShareRate(snapshot: AnalyticsSnapshot): number | null`
-  - [ ] Formula: shares / views × 100
-- [ ] Create `lib/metrics/calculateShareRate.test.ts`
+- [x] Create `lib/metrics/calculateShareRate.ts`:
+  - [x] Export `calculateShareRate(snapshot: AnalyticsSnapshot): number | null`
+  - [x] Formula: shares / views × 100
+- [x] Create `lib/metrics/calculateShareRate.test.ts`
 
-- [ ] Create `lib/metrics/calculateRetentionRate.ts`:
-  - [ ] Export `calculateRetentionRate(avgWatchTimeSeconds: number, videoLengthSeconds: number): number | null`
-  - [ ] Formula: avgWatchTime / videoLength × 100
-- [ ] Create `lib/metrics/calculateRetentionRate.test.ts`
+- [x] Create `lib/metrics/calculateRetentionRate.ts`:
+  - [x] Export `calculateRetentionRate(avgWatchTimeSeconds: number, videoLengthSeconds: number): number | null`
+  - [x] Formula: avgWatchTime / videoLength × 100
+- [x] Create `lib/metrics/calculateRetentionRate.test.ts`
 
-- [ ] Create `lib/metrics/calculateFollowerConversion.ts`:
-  - [ ] Export `calculateFollowerConversion(snapshot: AnalyticsSnapshot): number | null`
-  - [ ] Formula: newFollowers / views × 100
-- [ ] Create `lib/metrics/calculateFollowerConversion.test.ts`
+- [x] Create `lib/metrics/calculateFollowerConversion.ts`:
+  - [x] Export `calculateFollowerConversion(snapshot: AnalyticsSnapshot): number | null`
+  - [x] Formula: newFollowers / views × 100
+- [x] Create `lib/metrics/calculateFollowerConversion.test.ts`
 
-- [ ] Create `lib/metrics/detectSignals.ts`:
-  - [ ] Export `detectSignals(metrics: CalculatedMetrics): SignalResult`
-  - [ ] Positive: completionRate >50% OR shareRate >3% OR followerConversion >0.5%
-  - [ ] Negative: completionRate <20% OR engagementRate <1%
-  - [ ] Neutral: otherwise
-- [ ] Create `lib/metrics/detectSignals.test.ts`
+- [x] Create `lib/metrics/detectSignals.ts`:
+  - [x] Export `detectSignals(metrics: SignalMetrics): SignalResult`
+  - [x] Positive: completionRate >50% OR shareRate >3% OR followerConversion >0.5%
+  - [x] Negative: completionRate <20% OR engagementRate <1%
+  - [x] Neutral: otherwise
+- [x] Create `lib/metrics/detectSignals.test.ts`
 
 ### 3.3 Time Formatting Utilities
-- [ ] Create `lib/metrics/formatSecondsToTime.ts`:
-  - [ ] Export `formatSecondsToTime(seconds: number): string`
-  - [ ] Format: "0h:18m:56s" or "4.3s"
-- [ ] Create `lib/metrics/formatSecondsToTime.test.ts`
+- [x] Create `lib/utils/formatSecondsToTime.ts`:
+  - [x] Export `formatSecondsToTime(seconds: number): string`
+  - [x] Format: "0h:18m:56s" or "4.3s"
+- [x] Create `lib/utils/formatSecondsToTime.test.ts`
 
-- [ ] Create `lib/metrics/parseTimeToSeconds.ts`:
-  - [ ] Export `parseTimeToSeconds(hours: number, minutes: number, seconds: number): number`
-- [ ] Create `lib/metrics/parseTimeToSeconds.test.ts`
+- [x] Create `lib/utils/parseTimeToSeconds.ts`:
+  - [x] Export `parseTimeToSeconds(hours: number, minutes: number, seconds: number): number`
+- [x] Create `lib/utils/parseTimeToSeconds.test.ts`
 
 ### 3.4 Snapshot Helpers
-- [ ] Create `lib/snapshots/getExpectedSnapshots.ts`:
-  - [ ] Export `getExpectedSnapshots(postDate: Date): SnapshotType[]`
-  - [ ] Return expected snapshots based on time elapsed
-- [ ] Create `lib/snapshots/getExpectedSnapshots.test.ts`
+- [x] Create `lib/snapshots/getExpectedSnapshots.ts`:
+  - [x] Export `getExpectedSnapshots(postDate: Date): SnapshotType[]`
+  - [x] Return expected snapshots based on time elapsed
+- [x] Create `lib/snapshots/getExpectedSnapshots.test.ts`
 
-- [ ] Create `lib/snapshots/getMissedSnapshots.ts`:
-  - [ ] Export `getMissedSnapshots(postDate: Date, existingTypes: SnapshotType[]): SnapshotType[]`
-  - [ ] Compare expected vs existing
-- [ ] Create `lib/snapshots/getMissedSnapshots.test.ts`
+- [x] Create `lib/snapshots/getMissedSnapshots.ts`:
+  - [x] Export `getMissedSnapshots(postDate: Date, existingTypes: SnapshotType[]): SnapshotType[]`
+  - [x] Compare expected vs existing
+- [x] Create `lib/snapshots/getMissedSnapshots.test.ts`
 
-- [ ] Create `lib/snapshots/getNextSuggestedSnapshot.ts`:
-  - [ ] Export `getNextSuggestedSnapshot(postDate: Date, existingTypes: SnapshotType[]): SnapshotType | null`
-- [ ] Create `lib/snapshots/getNextSuggestedSnapshot.test.ts`
+- [x] Create `lib/snapshots/getNextSuggestedSnapshot.ts`:
+  - [x] Export `getNextSuggestedSnapshot(postDate: Date, existingTypes: SnapshotType[]): SnapshotType | null`
+- [x] Create `lib/snapshots/getNextSuggestedSnapshot.test.ts`
 
 ### 3.5 Video Services
 - [ ] Create `lib/services/createVideo.ts`:
