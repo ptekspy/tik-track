@@ -150,7 +150,7 @@ describe('HashtagActions', () => {
 
   it('should disable form during submission', async () => {
     const user = userEvent.setup();
-    const onMerge = vi.fn(() => new Promise((resolve) => setTimeout(resolve, 100)));
+    const onMerge = vi.fn<(sourceTag: string, targetTag: string) => Promise<void>>(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
     render(<HashtagActions hashtags={[mockHashtag1]} onMerge={onMerge} />);
 
