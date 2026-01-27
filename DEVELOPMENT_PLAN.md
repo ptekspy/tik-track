@@ -372,37 +372,40 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 - [x] Create `components/SnapshotForm/SnapshotForm.test.tsx`
 
 ### 4.4 Video Display Components
-- [ ] Create `components/VideoCard/VideoCard.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `VideoCard`
-  - [ ] Props: `video: VideoWithSnapshots`
-  - [ ] Display: title, status badge, latest metrics, signal badge
-  - [ ] Link to video detail page
-- [ ] Create `components/VideoCard/VideoCard.test.tsx`
+- [x] Create `components/VideoCard/VideoCard.tsx`:
+  - [x] Server Component
+  - [x] Export named `VideoCard`
+  - [x] Props: `video: VideoWithSnapshots`
+  - [x] Display: title, status badge, latest metrics, signal badge
+  - [x] Link to video detail page
+- [x] Create `components/VideoCard/VideoCard.test.tsx`
 
-- [ ] Create `components/VideoGrid/VideoGrid.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `VideoGrid`
-  - [ ] Props: `videos: VideoWithSnapshots[]`
-  - [ ] Responsive grid layout using Tailwind
-- [ ] Create `components/VideoGrid/VideoGrid.test.tsx`
+- [x] Create `components/VideoGrid/VideoGrid.tsx`:
+  - [x] Server Component
+  - [x] Export named `VideoGrid`
+  - [x] Props: `videos: VideoWithSnapshots[]`
+  - [x] Responsive grid layout using Tailwind
+- [x] Create `components/VideoGrid/VideoGrid.test.tsx`
 
-- [ ] Create `components/VideoDetail/VideoDetail.tsx`:
-  - [ ] Client Component for interactive elements
-  - [ ] Export named `VideoDetail`
-  - [ ] Props: `video: VideoWithAll`, `calculatedMetrics`
-  - [ ] Display all video metadata
-  - [ ] Status change dropdown (forward-only)
-  - [ ] Edit/delete actions
-- [ ] Create `components/VideoDetail/VideoDetail.test.tsx`
+- [x] Create `components/VideoDetail/VideoDetail.tsx`:
+  - [x] Client Component for interactive elements
+  - [x] Export named `VideoDetail`
+  - [x] Props: `video: VideoWithAll`, `calculatedMetrics`
+  - [x] Display all video metadata
+  - [x] Edit/delete actions
+- [x] Create `components/VideoDetail/VideoDetail.test.tsx`
 
-- [ ] Create `components/VideoCharts/VideoCharts.tsx`:
-  - [ ] Client Component using Recharts
-  - [ ] Export named `VideoCharts`
-  - [ ] Props: `snapshots: AnalyticsSnapshot[]`, `videoLength: number`
-  - [ ] Line charts: views over time, engagement rate, completion rate, retention rate
-  - [ ] X-axis: snapshot types, Y-axis: metric values
-- [ ] Create `components/VideoCharts/VideoCharts.test.tsx`
+- [x] Create `components/VideoCharts/VideoCharts.tsx`:
+  - [x] Client Component using Recharts
+  - [x] Export named `VideoCharts`
+  - [x] Props: `snapshots: AnalyticsSnapshot[]`
+  - [x] Line charts: views over time, engagement rate
+  - [x] Bar charts: likes, shares, comments
+- [x] Create `components/VideoCharts/VideoCharts.test.tsx`
+
+- [x] Create `lib/utils/dateUtils.ts`:
+  - [x] Export `formatDate`, `formatDateTime`, `formatRelativeTime`
+- [x] Create `lib/utils/dateUtils.test.ts`
 
 - [ ] Create `components/SnapshotTable/SnapshotTable.tsx`:
   - [ ] Server Component
