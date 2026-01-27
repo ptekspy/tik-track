@@ -417,46 +417,46 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 - [x] Create `components/SnapshotTable/SnapshotTable.test.tsx`
 
 ### 4.5 Hashtag Display Components
-- [ ] Create `components/HashtagList/HashtagList.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `HashtagList`
-  - [ ] Props: `hashtags: HashtagWithStats[]`
-  - [ ] Table: tag, usage count, avg metrics
-  - [ ] Sort/filter controls
-  - [ ] Link to hashtag detail page
-- [ ] Create `components/HashtagList/HashtagList.test.tsx`
+- [x] Create `components/HashtagList/HashtagList.tsx`:
+  - [x] Server Component
+  - [x] Export named `HashtagList`
+  - [x] Props: `hashtags: HashtagWithStats[]`
+  - [x] Table: tag, usage count, avg metrics
+  - [x] Sort/filter controls
+  - [x] Link to hashtag detail page
+- [x] Create `components/HashtagList/HashtagList.test.tsx`
 
-- [ ] Create `components/HashtagActions/HashtagActions.tsx`:
-  - [ ] Client Component for bulk actions
-  - [ ] Export named `HashtagActions`
-  - [ ] Props: `hashtags: Hashtag[]`
-  - [ ] Merge similar tags, delete unused tags
-- [ ] Create `components/HashtagActions/HashtagActions.test.tsx`
+- [x] Create `components/HashtagActions/HashtagActions.tsx`:
+  - [x] Client Component for bulk actions
+  - [x] Export named `HashtagActions`
+  - [x] Props: `hashtags: Hashtag[]`
+  - [x] Merge similar tags, delete unused tags
+- [x] Create `components/HashtagActions/HashtagActions.test.tsx`
 
-- [ ] Create `components/HashtagDetail/HashtagDetail.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `HashtagDetail`
-  - [ ] Props: `hashtag: HashtagWithVideos`, `stats`
-  - [ ] Show all videos using hashtag
-  - [ ] Aggregate performance metrics
-  - [ ] Trend visualization
-- [ ] Create `components/HashtagDetail/HashtagDetail.test.tsx`
+- [x] Create `components/HashtagDetail/HashtagDetail.tsx`:
+  - [x] Server Component
+  - [x] Export named `HashtagDetail`
+  - [x] Props: `hashtag: HashtagWithVideos`, `stats`
+  - [x] Show all videos using hashtag
+  - [x] Aggregate performance metrics
+  - [x] Trend visualization
+- [x] Create `components/HashtagDetail/HashtagDetail.test.tsx`
 
 ### 4.6 Navigation Components
-- [ ] Create `components/Navigation/Navigation.tsx`:
-  - [ ] Server Component
-  - [ ] Export named `Navigation`
-  - [ ] Fetch draft count for badge
-  - [ ] Render navigation structure
-- [ ] Create `components/Navigation/Navigation.test.tsx`
+- [x] Create `components/Navigation/Navigation.tsx`:
+  - [x] Server Component
+  - [x] Export named `Navigation`
+  - [x] Fetch draft count for badge
+  - [x] Render navigation structure
+- [x] Create `components/Navigation/Navigation.test.tsx`
 
-- [ ] Create `components/Navigation/NavigationClient.tsx`:
-  - [ ] Client Component for interactivity
-  - [ ] Export named `NavigationClient`
-  - [ ] Props: `draftCount: number`
-  - [ ] Active route highlighting
-  - [ ] Links: Dashboard, New Video, Hashtags, Drafts
-- [ ] Create `components/Navigation/NavigationClient.test.tsx`
+- [x] Create `components/Navigation/NavigationClient.tsx`:
+  - [x] Client Component for interactivity
+  - [x] Export named `NavigationClient`
+  - [x] Props: `draftCount: number`
+  - [x] Active route highlighting
+  - [x] Links: Dashboard, New Video, Hashtags, Drafts
+- [x] Create `components/Navigation/NavigationClient.test.tsx`
 
 ---
 
