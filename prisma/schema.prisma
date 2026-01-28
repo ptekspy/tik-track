@@ -91,3 +91,10 @@ model VideoHashtag {
   @@index([hashtagId])
 }
 
+model DismissedNotification {
+  id             String   @id @default(uuid())
+  notificationId String   @unique
+  dismissedAt    DateTime @default(now())
+
+  @@index([notificationId])
+}

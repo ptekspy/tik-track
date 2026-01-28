@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Bell, X, TrendingUp, Clock, AlertCircle } from 'lucide-react';
 import type { Notification } from '@/lib/notifications/getNotifications';
+import { dismissNotification } from '@/actions/notifications/dismissNotification';
 
 export interface NotificationBellProps {
   notifications: Notification[];
@@ -11,6 +12,7 @@ export interface NotificationBellProps {
 
 export function NotificationBell({ notifications }: NotificationBellProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [dismissing, setDismissing] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -26,6 +28,20 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [isOpen]);
+
+  const handleDismiss = async (notificationId: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    setDismissing(notificationId);
+    const result = await dismissNotification(notificationId);
+    
+    if (!result.success) {
+      console.error('Failed to dismiss notification');
+      setDismissing(null);
+    }
+    // If successful, page will revalidate and notification will be gone
+  };
 
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
@@ -117,13 +133,24 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
                           <p className="text-sm text-gray-900 dark:text-white mb-2">
                             {notification.message}
                           </p>
-                          <Link
-                            href={notification.actionUrl}
-                            onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
-                          >
-                            {notification.actionLabel}
-                          </Link>
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={notification.actionUrl}
+                              onClick={() => setIsOpen(false)}
+                              className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
+                            >
+                              {notification.actionLabel}
+                            </Link>
+                            <button
+                              onClick={(e) => handleDismiss(notification.id, e)}
+                              disabled={dismissing === notification.id}
+                              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 dark:hover:text-gray-300 dark:hover:bg-gray-800/50 transition-colors disabled:opacity-50"
+                              aria-label="Dismiss notification"
+                              title="Dismiss"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>

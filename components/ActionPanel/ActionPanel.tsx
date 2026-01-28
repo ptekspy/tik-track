@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { Bell, TrendingUp, Clock, AlertCircle, Sparkles } from 'lucide-react';
+import { Bell, TrendingUp, Clock, AlertCircle, Sparkles, X } from 'lucide-react';
 import type { Notification } from '@/lib/notifications/getNotifications';
+import { dismissNotification } from '@/actions/notifications/dismissNotification';
 
 export interface ActionPanelProps {
   notifications: Notification[];
@@ -10,7 +12,22 @@ export interface ActionPanelProps {
 }
 
 export function ActionPanel({ notifications, maxItems = 5 }: ActionPanelProps) {
+  const [dismissing, setDismissing] = useState<string | null>(null);
   const topNotifications = notifications.slice(0, maxItems);
+
+  const handleDismiss = async (notificationId: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    setDismissing(notificationId);
+    const result = await dismissNotification(notificationId);
+    
+    if (!result.success) {
+      console.error('Failed to dismiss notification');
+      setDismissing(null);
+    }
+    // If successful, page will revalidate and notification will be gone
+  };
 
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
@@ -106,12 +123,23 @@ export function ActionPanel({ notifications, maxItems = 5 }: ActionPanelProps) {
                   <p className="text-sm font-medium text-gray-900 dark:text-white mb-3">
                     {notification.message}
                   </p>
-                  <Link
-                    href={notification.actionUrl}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
-                  >
-                    {notification.actionLabel}
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={notification.actionUrl}
+                      className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
+                    >
+                      {notification.actionLabel}
+                    </Link>
+                    <button
+                      onClick={(e) => handleDismiss(notification.id, e)}
+                      disabled={dismissing === notification.id}
+                      className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-white/50 dark:hover:text-gray-300 dark:hover:bg-gray-800/50 transition-colors disabled:opacity-50"
+                      aria-label="Dismiss"
+                      title="Dismiss this action"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

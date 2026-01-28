@@ -29,6 +29,12 @@ export interface Notification {
 export async function getNotifications(): Promise<Notification[]> {
   const notifications: Notification[] = [];
   
+  // Get dismissed notification IDs
+  const dismissedRecords = await db.dismissedNotification.findMany({
+    select: { notificationId: true },
+  });
+  const dismissedIds = new Set(dismissedRecords.map(d => d.notificationId));
+  
   // Get all published videos with snapshots
   const videos = await db.video.findMany({
     where: { status: VideoStatus.PUBLISHED },
@@ -88,8 +94,11 @@ export async function getNotifications(): Promise<Notification[]> {
     }
   }
 
+  // Filter out dismissed notifications and sort
+  const activeNotifications = notifications.filter(n => !dismissedIds.has(n.id));
+
   // Sort by priority (highest first), then by timestamp (most recent first)
-  return notifications.sort((a, b) => {
+  return activeNotifications.sort((a, b) => {
     if (a.priority !== b.priority) {
       return b.priority - a.priority;
     }
