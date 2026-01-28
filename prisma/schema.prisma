@@ -49,11 +49,32 @@ model User {
   
   sessions               Session[]
   accounts               Account[]
+  channels               Channel[]
   videos                 Video[]
   snapshots              AnalyticsSnapshot[]
   dismissedNotifications DismissedNotification[]
 
   @@index([email])
+}
+
+model Channel {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  handle    String   @unique
+  bio       String?  @db.Text
+  avatar    String?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user     User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  videos   Video[]
+  snapshots AnalyticsSnapshot[]
+
+  @@unique([userId, handle])
+  @@index([userId])
+  @@index([handle])
 }
 
 model Session {
@@ -104,7 +125,8 @@ model Verification {
 
 model Video {
   id                 String             @id @default(uuid())
-  userId             String?
+  channelId          String
+  userId             String
   title              String
   script             String             @db.Text
   description        String             @db.Text
@@ -115,17 +137,20 @@ model Video {
   updatedAt          DateTime           @updatedAt
   snapshots          AnalyticsSnapshot[]
   hashtags           VideoHashtag[]
-  user               User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel            Channel            @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([status])
   @@index([createdAt])
+  @@index([channelId])
   @@index([userId])
 }
 
 model AnalyticsSnapshot {
   id                   String       @id @default(uuid())
   videoId              String
-  userId               String?
+  channelId            String
+  userId               String
   recordedAt           DateTime     @default(now())
   snapshotType         SnapshotType
   views                Int?
@@ -140,12 +165,14 @@ model AnalyticsSnapshot {
   profileViews         Int?
   reach                Int?
   video                Video        @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  user                 User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel              Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  user                 User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([videoId, snapshotType])
   @@index([videoId])
-  @@index([recordedAt])
+  @@index([channelId])
   @@index([userId])
+  @@index([recordedAt])
 }
 
 model Hashtag {

@@ -1,8 +1,13 @@
 import { VideoForm } from '@/components/VideoForm/VideoForm';
 import { createVideoAction } from '@/actions/videos/createVideoAction';
 import { Video, Plus } from 'lucide-react';
+import { requireUser } from '@/lib/auth/server';
+import { findAllChannels } from '@/lib/dal/channels';
 
-export default function NewVideoPage() {
+export default async function NewVideoPage() {
+  const user = await requireUser();
+  const channels = await findAllChannels(user.id);
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
@@ -17,7 +22,7 @@ export default function NewVideoPage() {
         </p>
       </div>
 
-      <VideoForm onSubmit={createVideoAction} />
+      <VideoForm onSubmit={createVideoAction} channels={channels} />
     </div>
   );
 }

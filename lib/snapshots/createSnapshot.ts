@@ -19,11 +19,15 @@ export interface CreateSnapshotInput {
 export async function createSnapshot(
   prisma: PrismaClient,
   videoId: string,
+  userId: string,
+  channelId: string,
   input: CreateSnapshotInput
 ) {
   return await prisma.analyticsSnapshot.create({
     data: {
       videoId,
+      userId,
+      channelId,
       recordedAt: input.capturedAt,
       snapshotType: input.snapshotType,
       views: input.views,

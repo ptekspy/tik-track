@@ -7,6 +7,7 @@ import { TimeInput } from '@/components/TimeInput/TimeInput';
 import { PercentageInput } from '@/components/PercentageInput/PercentageInput';
 import { HashtagInput } from '@/components/HashtagInput/HashtagInput';
 import { FormError } from '@/components/FormError/FormError';
+import type { Channel } from '@/lib/types/server';
 
 export interface VideoFormData {
   title: string;
@@ -16,6 +17,7 @@ export interface VideoFormData {
   status: VideoStatus;
   postDate?: string; // ISO date string
   hashtags: string[];
+  channelId?: string;
   // Optional first snapshot data (only if status=PUBLISHED)
   firstSnapshot?: {
     views?: number;
@@ -36,6 +38,7 @@ export interface VideoFormProps {
   defaultValues?: Partial<VideoFormData>;
   onSubmit: (data: VideoFormData) => Promise<void>;
   onCancel?: () => void;
+  channels?: Channel[];
 }
 
 /**
@@ -44,7 +47,7 @@ export interface VideoFormProps {
  * Form for creating/editing video metadata with optional first analytics snapshot.
  * Uses react-hook-form for validation and state management.
  */
-export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps) {
+export function VideoForm({ defaultValues, onSubmit, onCancel, channels = [] }: VideoFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -105,6 +108,29 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
           />
           {errors.title && <FormError error={errors.title.message} />}
         </div>
+
+        {/* Channel */}
+        {channels.length > 1 && (
+          <div>
+            <label htmlFor="channelId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Channel
+            </label>
+            <select
+              id="channelId"
+              {...register('channelId')}
+              className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all"
+              disabled={isSubmitting}
+            >
+              <option value="">Select a channel (uses default)</option>
+              {channels.map((channel) => (
+                <option key={channel.id} value={channel.id}>
+                  {channel.name} {channel.isDefault ? '(Default)' : ''}
+                </option>
+              ))}
+            </select>
+            {errors.channelId && <FormError error={errors.channelId.message} />}
+          </div>
+        )}
 
         {/* Script */}
         <div>

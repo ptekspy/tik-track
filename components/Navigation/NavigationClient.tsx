@@ -3,17 +3,22 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { LayoutDashboard, Video, FileEdit, Hash, TrendingUp, Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { LayoutDashboard, Video, FileEdit, Hash, Menu, X } from 'lucide-react';
 import { NotificationBell } from '../NotificationBell/NotificationBell';
 import { LogoutButton } from '../LogoutButton/LogoutButton';
+import { ChannelSwitcher } from '../ChannelSwitcher/ChannelSwitcher';
 import type { Notification } from '@/lib/notifications/getNotifications';
+import type { Channel } from '@/lib/types/server';
 
 export interface NavigationClientProps {
   draftCount: number;
   notifications: Notification[];
+  channels: Channel[];
+  currentChannelId: string;
 }
 
-export function NavigationClient({ draftCount, notifications }: NavigationClientProps) {
+export function NavigationClient({ draftCount, notifications, channels, currentChannelId }: NavigationClientProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -37,16 +42,21 @@ export function NavigationClient({ draftCount, notifications }: NavigationClient
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             {/* Logo */}
-            <Link href="/dashboard" className="flex items-center space-x-2 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] p-2 rounded-lg">
-                  <TrendingUp className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] bg-clip-text text-transparent">
-                TikTrack
-              </span>
+            <Link href="/dashboard" className="flex items-center gap-2 group">
+              <Image
+                src="/logo/logo-icon.png"
+                alt="TikTrack Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+              />
+              <Image
+                src="/logo/logo-text.png"
+                alt="TikTrack"
+                width={100}
+                height={32}
+                className="h-6 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -84,7 +94,8 @@ export function NavigationClient({ draftCount, notifications }: NavigationClient
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-4">
+            <ChannelSwitcher channels={channels} currentChannelId={currentChannelId} />
             <NotificationBell notifications={notifications} />
             <LogoutButton variant="icon" />
           </div>
@@ -112,6 +123,9 @@ export function NavigationClient({ draftCount, notifications }: NavigationClient
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-white/10">
+          <div className="px-4 py-3 border-b border-white/10">
+            <ChannelSwitcher channels={channels} currentChannelId={currentChannelId} />
+          </div>
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => {
               const Icon = item.icon;

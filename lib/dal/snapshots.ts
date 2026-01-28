@@ -41,13 +41,15 @@ export const findSnapshotByVideoAndType = async (
  * Create a new snapshot
  */
 export const createSnapshot = async (
-  data: Prisma.AnalyticsSnapshotCreateInput,
-  userId: string
+  data: Omit<Prisma.AnalyticsSnapshotUncheckedCreateInput, 'user' | 'channel' | 'userId' | 'channelId'>,
+  userId: string,
+  channelId: string
 ): Promise<AnalyticsSnapshot> => {
   return db.analyticsSnapshot.create({
     data: {
       ...data,
-      user: { connect: { id: userId } },
+      userId,
+      channelId,
     },
   });
 };

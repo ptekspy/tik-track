@@ -33,11 +33,12 @@ export const findVideosByStatus = async (status: VideoStatus, userId: string): P
 /**
  * Create a new video
  */
-export const createVideo = async (data: Prisma.VideoCreateInput, userId: string): Promise<Video> => {
+export const createVideo = async (data: Omit<Prisma.VideoUncheckedCreateInput, 'user' | 'channel' | 'userId'>, userId: string, channelId: string): Promise<Video> => {
   return db.video.create({
     data: {
       ...data,
-      user: { connect: { id: userId } },
+      userId,
+      channelId,
     },
   });
 };

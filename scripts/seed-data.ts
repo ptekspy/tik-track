@@ -34,6 +34,26 @@ async function seedData() {
 
     console.log(`✅ Found owner: ${owner.email}\n`);
 
+    // Get or create default channel for the owner
+    let channel = await db.channel.findFirst({
+      where: { userId: owner.id, isDefault: true },
+    });
+
+    if (!channel) {
+      channel = await db.channel.create({
+        data: {
+          userId: owner.id,
+          name: 'Main Channel',
+          handle: owner.email.split('@')[0], // Use email prefix as handle
+          bio: 'My main TikTok analytics channel',
+          isDefault: true,
+        },
+      });
+      console.log(`✅ Created channel: "${channel.name}"\n`);
+    } else {
+      console.log(`✅ Using existing channel: "${channel.name}"\n`);
+    }
+
     // Create sample hashtags if they don't exist
     const hashtags = await Promise.all([
       db.hashtag.upsert({
@@ -80,6 +100,7 @@ async function seedData() {
         postDate: video1Date,
         status: VideoStatus.PUBLISHED,
         userId: owner.id,
+        channelId: channel.id,
       },
     });
     videos.push(video1);
@@ -100,6 +121,7 @@ async function seedData() {
         {
           videoId: video1.id,
           userId: owner.id,
+          channelId: channel.id,
           snapshotType: SnapshotType.ONE_HOUR,
           recordedAt: new Date(video1Date.getTime() + 1 * 60 * 60 * 1000),
           views: 1200,
@@ -117,6 +139,7 @@ async function seedData() {
         {
           videoId: video1.id,
           userId: owner.id,
+          channelId: channel.id,
           snapshotType: SnapshotType.ONE_DAY,
           recordedAt: new Date(video1Date.getTime() + 24 * 60 * 60 * 1000),
           views: 8500,
@@ -134,6 +157,7 @@ async function seedData() {
         {
           videoId: video1.id,
           userId: owner.id,
+          channelId: channel.id,
           snapshotType: SnapshotType.SEVEN_DAY,
           recordedAt: new Date(video1Date.getTime() + 7 * 24 * 60 * 60 * 1000),
           views: 45200,
@@ -163,6 +187,7 @@ async function seedData() {
         postDate: video2Date,
         status: VideoStatus.PUBLISHED,
         userId: owner.id,
+        channelId: channel.id,
       },
     });
     videos.push(video2);
@@ -182,6 +207,7 @@ async function seedData() {
         {
           videoId: video2.id,
           userId: owner.id,
+          channelId: channel.id,
           snapshotType: SnapshotType.ONE_HOUR,
           recordedAt: new Date(video2Date.getTime() + 1 * 60 * 60 * 1000),
           views: 2400,
@@ -199,6 +225,7 @@ async function seedData() {
         {
           videoId: video2.id,
           userId: owner.id,
+          channelId: channel.id,
           snapshotType: SnapshotType.ONE_DAY,
           recordedAt: new Date(video2Date.getTime() + 24 * 60 * 60 * 1000),
           views: 15600,
@@ -228,6 +255,7 @@ async function seedData() {
         postDate: video3Date,
         status: VideoStatus.DRAFT,
         userId: owner.id,
+        channelId: channel.id,
       },
     });
     videos.push(video3);

@@ -1,5 +1,6 @@
-import { getUser } from '@/lib/auth/getUser';
+import { getUser } from '@/lib/auth/server';
 import { redirect } from 'next/navigation';
+import LandingPage from './(marketing)/page';
 
 export default async function Home() {
   const user = await getUser();
@@ -9,7 +10,7 @@ export default async function Home() {
     redirect('/dashboard');
   }
 
-  // Otherwise, redirect to marketing landing page
-  redirect('/(marketing)');
+  // Otherwise, render the marketing landing page
+  return <LandingPage />;
 }
 

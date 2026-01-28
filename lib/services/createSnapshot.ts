@@ -48,7 +48,7 @@ export const createSnapshot = async (input: unknown): Promise<AnalyticsSnapshot>
 
   // Create snapshot
   return await createSnapshotDAL({
-    video: { connect: { id: validated.videoId } },
+    videoId: validated.videoId,
     snapshotType: validated.snapshotType,
     views: validated.views ?? null,
     totalPlayTimeSeconds: validated.totalPlayTimeSeconds ?? null,
@@ -61,5 +61,5 @@ export const createSnapshot = async (input: unknown): Promise<AnalyticsSnapshot>
     favorites: validated.favorites ?? null,
     profileViews: validated.profileViews ?? null,
     reach: validated.reach ?? null,
-  }, user.id);
+  }, user.id, video.channelId);
 };

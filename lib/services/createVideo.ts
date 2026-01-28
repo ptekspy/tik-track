@@ -3,20 +3,31 @@ import { createVideoSchema } from '@/lib/schemas/video';
 import type { CreateVideoInput } from '@/lib/schemas/video';
 import type { Video } from '@/lib/types/server';
 import { findOrCreateHashtag, linkHashtagToVideo } from '@/lib/dal/hashtags';
-import { createVideo as createVideoDAL } from '@/lib/dal/videos';
+import { findDefaultChannel } from '@/lib/dal/channels';
 import { requireUser } from '@/lib/auth/server';
 
 /**
  * Create a new video with hashtags
  * 
  * @param input - Video creation data (validated against schema)
+ * @param channelId - Channel ID (optional, defaults to user's default channel)
  * @returns Created video
  * @throws ZodError if validation fails
- * @throws Error if user not authenticated
+ * @throws Error if user not authenticated or channel not found
  */
-export const createVideo = async (input: unknown): Promise<Video> => {
+export const createVideo = async (input: unknown, channelId?: string): Promise<Video> => {
   // Get authenticated user
   const user = await requireUser();
+  
+  // If no channel specified, use default channel
+  let actualChannelId = channelId;
+  if (!actualChannelId) {
+    const defaultChannel = await findDefaultChannel(user.id);
+    if (!defaultChannel) {
+      throw new Error('No default channel found. Please create a channel first.');
+    }
+    actualChannelId = defaultChannel.id;
+  }
   
   // Validate input
   const validated = createVideoSchema.parse(input) as CreateVideoInput;
@@ -32,7 +43,8 @@ export const createVideo = async (input: unknown): Promise<Video> => {
         videoLengthSeconds: validated.videoLengthSeconds,
         postDate: validated.postDate ?? null,
         status: validated.status,
-        user: { connect: { id: user.id } },
+        userId: user.id,
+        channelId: actualChannelId,
       },
     });
 

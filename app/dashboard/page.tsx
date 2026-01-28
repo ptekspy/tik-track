@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   // Get videos for this user only
   const videos = await db.video.findMany({
     where: { userId: user.id },
-    include: { snapshots: true },
+    include: { snapshots: true, channel: true },
     orderBy: { createdAt: 'desc' },
   }) as VideoWithSnapshots[];
 

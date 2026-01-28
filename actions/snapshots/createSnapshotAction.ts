@@ -4,12 +4,21 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { createSnapshot } from '@/lib/snapshots/createSnapshot';
+import { findVideoById } from '@/lib/dal/videos';
+import { requireUser } from '@/lib/auth/server';
 import type { SnapshotFormData } from '@/components/SnapshotForm/SnapshotForm';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 export async function createSnapshotAction(videoId: string, data: SnapshotFormData) {
   try {
-    const snapshot = await createSnapshot(db, videoId, {
+    const user = await requireUser();
+    const video = await findVideoById(videoId, user.id);
+    
+    if (!video) {
+      throw new Error('Video not found');
+    }
+
+    const snapshot = await createSnapshot(db, videoId, user.id, video.channelId, {
       snapshotType: data.snapshotType,
       capturedAt: new Date(), // Use current time
       views: data.views || 0,

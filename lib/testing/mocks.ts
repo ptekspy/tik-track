@@ -3,11 +3,12 @@
  * These mocks match Prisma-inferred types and should be reused across all tests
  */
 
-import type { Video, AnalyticsSnapshot, Hashtag } from '@/lib/types/server';
+import type { Video, AnalyticsSnapshot, Hashtag, Channel } from '@/lib/types/server';
 import { VideoStatus, SnapshotType, Prisma } from '@/lib/types/server';
 
 // Mock user ID for testing
 export const MOCK_USER_ID = '90000000-0000-4000-8000-000000000001';
+export const MOCK_CHANNEL_ID = 'a0000000-0000-4000-8000-000000000001';
 
 // Mock User for testing
 export const mockUser = {
@@ -21,10 +22,24 @@ export const mockUser = {
   updatedAt: new Date('2026-01-01T00:00:00Z'),
 };
 
+// Mock Channel for testing
+export const mockChannel: Channel = {
+  id: MOCK_CHANNEL_ID,
+  userId: MOCK_USER_ID,
+  name: 'Main Channel',
+  handle: 'mainhandle',
+  bio: 'Test channel bio',
+  avatar: null,
+  isDefault: true,
+  createdAt: new Date('2026-01-01T00:00:00Z'),
+  updatedAt: new Date('2026-01-01T00:00:00Z'),
+};
+
 // Mock Video - DRAFT
 export const mockVideoDraft: Video = {
   id: '00000000-0000-4000-8000-000000000001',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   title: 'Draft Video Title',
   script: 'This is a draft video script for testing purposes.',
   description: 'Draft video description with #test #draft',
@@ -39,6 +54,7 @@ export const mockVideoDraft: Video = {
 export const mockVideoPublished: Video = {
   id: '00000000-0000-4000-8000-000000000002',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   title: 'Published Video Title',
   script: 'This is a published video script about productivity tips.',
   description: 'Learn how to be more productive! #productivity #tips #tiktok',
@@ -53,6 +69,7 @@ export const mockVideoPublished: Video = {
 export const mockVideoArchived: Video = {
   id: '00000000-0000-4000-8000-000000000003',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   title: 'Archived Video Title',
   script: 'This is an archived video script.',
   description: 'Old content #archived',
@@ -68,6 +85,7 @@ export const mockSnapshotOneHour: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000001',
   videoId: '00000000-0000-4000-8000-000000000002',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   recordedAt: new Date('2026-01-20T15:30:00Z'),
   snapshotType: SnapshotType.ONE_HOUR,
   views: 1500,
@@ -88,6 +106,7 @@ export const mockSnapshotTwentyFourHours: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000002',
   videoId: '00000000-0000-4000-8000-000000000002',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   recordedAt: new Date('2026-01-21T14:30:00Z'),
   snapshotType: SnapshotType.ONE_DAY,
   views: 12500,
@@ -110,6 +129,7 @@ export const mockSnapshotSevenDay: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000003',
   videoId: '00000000-0000-4000-8000-000000000002',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   recordedAt: new Date('2026-01-27T14:30:00Z'),
   snapshotType: SnapshotType.SEVEN_DAY,
   views: 45000,
@@ -130,6 +150,7 @@ export const mockSnapshotMinimal: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000004',
   videoId: '00000000-0000-4000-8000-000000000002',
   userId: MOCK_USER_ID,
+  channelId: MOCK_CHANNEL_ID,
   recordedAt: new Date('2026-01-20T15:30:00Z'),
   snapshotType: SnapshotType.THREE_HOUR,
   views: 100,

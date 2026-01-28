@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { Video, AnalyticsSnapshot, Prisma } from '@/lib/types/prisma';
+import type { Video, AnalyticsSnapshot, Channel, Prisma } from '@/lib/types/server';
 import { StatusBadge } from '@/components/StatusBadge/StatusBadge';
 import { SignalBadge } from '@/components/SignalBadge/SignalBadge';
 import { CompactDelta } from '@/components/DeltaDisplay/DeltaDisplay';
@@ -12,7 +12,7 @@ import { getLatestDeltas } from '@/lib/utils/deltas';
 import type { SerializedSnapshot } from '@/lib/types/snapshot';
 
 export interface VideoCardProps {
-  video: Video & { snapshots: AnalyticsSnapshot[] };
+  video: Video & { snapshots: AnalyticsSnapshot[]; channel?: Channel | null };
 }
 
 /**
@@ -126,11 +126,18 @@ export function VideoCard({ video }: VideoCardProps) {
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-full"></div>
-              <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
-                {video.snapshots.length} snapshot{video.snapshots.length !== 1 ? 's' : ''}
-              </span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-full"></div>
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                  {video.snapshots.length} snapshot{video.snapshots.length !== 1 ? 's' : ''}
+                </span>
+              </div>
+              {video.channel && (
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-500 px-2 py-1 bg-gray-100/50 dark:bg-gray-800/50 rounded">
+                  @{video.channel.handle}
+                </span>
+              )}
             </div>
             {video.status === 'PUBLISHED' && <SignalBadge signal={signal} />}
           </div>

@@ -10,12 +10,14 @@ export interface CreateVideoInput {
   hashtags?: string[];
 }
 
-export async function createVideo(prisma: PrismaClient, input: CreateVideoInput) {
+export async function createVideo(prisma: PrismaClient, userId: string, channelId: string, input: CreateVideoInput) {
   const { hashtags = [], ...videoData } = input;
 
   return await prisma.video.create({
     data: {
       ...videoData,
+      userId,
+      channelId,
       status: videoData.status || 'DRAFT',
       hashtags: hashtags.length > 0 ? {
         create: await Promise.all(

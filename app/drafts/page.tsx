@@ -20,7 +20,7 @@ export default async function DraftsPage() {
       status: VideoStatus.DRAFT,
       userId: user.id 
     },
-    include: { snapshots: true },
+    include: { snapshots: true, channel: true },
     orderBy: { createdAt: 'desc' },
   }) as VideoWithSnapshots[];
 

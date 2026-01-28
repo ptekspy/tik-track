@@ -9,6 +9,7 @@ export { VideoStatus, SnapshotType, UserRole } from '@/lib/generated/client/clie
 export type {
   Video,
   AnalyticsSnapshot,
+  Channel,
   Hashtag,
   VideoHashtag,
   User,
