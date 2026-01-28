@@ -17,9 +17,12 @@ export function FormError({ error, className = '' }: FormErrorProps) {
   if (errors.length === 0) return null;
 
   return (
-    <div className={`text-sm text-red-600 mt-1 ${className}`} role="alert">
+    <div className={`text-sm text-red-600 dark:text-red-400 mt-2 ${className}`} role="alert">
       {errors.length === 1 ? (
-        <p>{errors[0]}</p>
+        <p className="flex items-center space-x-1">
+          <span className="inline-block w-1 h-4 bg-red-500 rounded-full"></span>
+          <span>{errors[0]}</span>
+        </p>
       ) : (
         <ul className="list-disc list-inside space-y-1">
           {errors.map((err, index) => (

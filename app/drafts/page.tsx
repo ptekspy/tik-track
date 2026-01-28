@@ -3,6 +3,7 @@ import { VideoStatus } from '@/lib/types/server';
 import { VideoGrid } from '@/components/VideoGrid/VideoGrid';
 import { VideoWithSnapshots } from '@/lib/types/video';
 import Link from 'next/link';
+import { FileEdit, Plus } from 'lucide-react';
 
 export default async function DraftsPage() {
   const draftVideos = await db.video.findMany({
@@ -15,37 +16,50 @@ export default async function DraftsPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Draft Videos</h1>
-        <p className="mt-2 text-sm text-gray-600">
+        <div className="flex items-center space-x-3 mb-3">
+          <FileEdit className="w-8 h-8 text-[#fe2c55]" />
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+            Draft Videos
+          </h1>
+        </div>
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Videos waiting to be published
         </p>
       </div>
 
       {/* Content */}
       {draftVideos.length === 0 ? (
-        <div className="bg-white p-12 rounded-lg shadow text-center">
-          <p className="text-gray-500 text-lg mb-4">No draft videos</p>
-          <p className="text-gray-400 mb-6">
+        <div className="glass rounded-2xl p-16 border border-white/20 text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-500/20 to-orange-600/20 rounded-full mb-6">
+            <FileEdit className="w-10 h-10 text-amber-500" />
+          </div>
+          <p className="text-gray-900 dark:text-white text-xl font-semibold mb-2">No draft videos</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
             All your videos are either published or archived
           </p>
           <Link
             href="/videos/new"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all btn-glow"
           >
-            + Create New Video
+            <Plus className="w-5 h-5" />
+            <span>Create New Video</span>
           </Link>
         </div>
       ) : (
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="mb-4 flex items-center justify-between">
-            <p className="text-sm text-gray-600">
-              {draftVideos.length} draft{draftVideos.length === 1 ? '' : 's'} found
-            </p>
+        <div className="glass rounded-2xl p-6 border border-white/20">
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-1 h-6 bg-gradient-to-b from-amber-500 to-orange-600 rounded-full"></div>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                {draftVideos.length} draft{draftVideos.length === 1 ? '' : 's'} found
+              </p>
+            </div>
             <Link
               href="/videos/new"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium text-sm"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all btn-glow text-sm"
             >
-              + New Video
+              <Plus className="w-4 h-4" />
+              <span>New Video</span>
             </Link>
           </div>
           <VideoGrid videos={draftVideos} />

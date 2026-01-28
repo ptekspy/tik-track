@@ -72,10 +72,10 @@ export function PercentageInput({
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         disabled={disabled}
-        className="w-24 px-2 py-1 pr-7 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+        className="w-28 px-3 py-2 pr-8 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all disabled:bg-gray-100 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-900 dark:text-white"
         aria-label="Percentage"
       />
-      <span className="absolute right-2 text-sm text-gray-500 pointer-events-none">%</span>
+      <span className="absolute right-3 text-sm text-gray-500 dark:text-gray-400 pointer-events-none font-medium">%</span>
     </div>
   );
 }

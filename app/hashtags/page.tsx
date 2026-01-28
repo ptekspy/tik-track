@@ -40,13 +40,18 @@ export default async function HashtagsPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4">
+    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Hashtags</h1>
-          <p className="text-gray-600 mt-2">
-            Manage and track hashtags across your videos
-          </p>
+        <div className="flex items-center space-x-3">
+          <span className="text-4xl">#️⃣</span>
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">
+              Hashtags
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              Manage and track hashtags across your videos
+            </p>
+          </div>
         </div>
         <HashtagActions hashtags={allHashtags} />
       </div>
@@ -54,10 +59,15 @@ export default async function HashtagsPage() {
       {hashtags.length > 0 ? (
         <HashtagList hashtags={hashtags} />
       ) : (
-        <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-          <p className="text-gray-600 mb-4">
-            No hashtags yet. Add hashtags to your videos to start tracking
-            their performance.
+        <div className="glass rounded-2xl border border-white/20 p-16 text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-full mb-6">
+            <span className="text-4xl">#️⃣</span>
+          </div>
+          <p className="text-gray-900 dark:text-white text-xl font-semibold mb-2">
+            No hashtags yet
+          </p>
+          <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+            Add hashtags to your videos to start tracking their performance.
           </p>
           <a
             href="/videos/new"

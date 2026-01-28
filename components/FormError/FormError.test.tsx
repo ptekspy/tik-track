@@ -22,14 +22,14 @@ describe('FormError', () => {
     render(<FormError error="This is an error" />);
     
     const errorText = screen.getByText('This is an error');
-    expect(errorText.tagName).toBe('P');
+    expect(errorText.tagName).toBe('SPAN');
   });
 
   it('should render single error from array as paragraph', () => {
     render(<FormError error={['Single error in array']} />);
     
     const errorText = screen.getByText('Single error in array');
-    expect(errorText.tagName).toBe('P');
+    expect(errorText.tagName).toBe('SPAN');
   });
 
   it('should render multiple errors as list', () => {

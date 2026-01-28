@@ -96,21 +96,21 @@ export function HashtagInput({
 
   return (
     <div className={`w-full ${className}`}>
-      <div className="flex flex-wrap gap-2 p-2 border border-gray-300 rounded min-h-[42px] focus-within:ring-2 focus-within:ring-blue-500">
+      <div className="flex flex-wrap gap-2 p-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl min-h-[48px] focus-within:ring-2 focus-within:ring-[#fe2c55] focus-within:border-transparent transition-all">
         {value.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm"
+            className="inline-flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-purple-500/20 to-pink-600/20 border border-purple-500/30 text-purple-700 dark:text-purple-300 rounded-lg text-sm font-medium"
           >
             #{tag}
             {!disabled && (
               <button
                 type="button"
                 onClick={() => removeTag(tag)}
-                className="hover:bg-blue-200 rounded-full p-0.5 transition-colors"
+                className="hover:bg-purple-500/20 rounded-full p-0.5 transition-colors"
                 aria-label={`Remove ${tag}`}
               >
-                <X className="w-3 h-3" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </span>
@@ -123,12 +123,12 @@ export function HashtagInput({
           onBlur={handleBlur}
           disabled={disabled}
           placeholder={value.length === 0 ? placeholder : ''}
-          className="flex-1 min-w-[120px] outline-none bg-transparent disabled:cursor-not-allowed text-sm"
+          className="flex-1 min-w-[120px] outline-none bg-transparent disabled:cursor-not-allowed text-sm text-gray-900 dark:text-white placeholder:text-gray-500"
           aria-label="Hashtag input"
         />
       </div>
       {maxTags && (
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
           {value.length} / {maxTags} tags
         </p>
       )}

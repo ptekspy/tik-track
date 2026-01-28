@@ -16,10 +16,14 @@ describe('NavigationClient', () => {
     render(<NavigationClient draftCount={0} />);
 
     expect(screen.getByText('TikTrack')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'New Video' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Drafts' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Hashtags' })).toBeInTheDocument();
+    const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
+    expect(dashboardLinks.length).toBeGreaterThan(0);
+    const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
+    expect(newVideoLinks.length).toBeGreaterThan(0);
+    const draftsLinks = screen.getAllByRole('link', { name: /Drafts/i });
+    expect(draftsLinks.length).toBeGreaterThan(0);
+    const hashtagsLinks = screen.getAllByRole('link', { name: /Hashtags/i });
+    expect(hashtagsLinks.length).toBeGreaterThan(0);
   });
 
   it('should render draft badge when drafts exist', () => {
@@ -27,7 +31,8 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={5} />);
 
-    expect(screen.getByText('5')).toBeInTheDocument();
+    const badges = screen.getAllByText('5');
+    expect(badges.length).toBeGreaterThan(0);
   });
 
   it('should not render draft badge when no drafts exist', () => {
@@ -35,9 +40,12 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    // Should not have badge with number 0
-    const draftLink = screen.getByRole('link', { name: 'Drafts' });
-    expect(draftLink).not.toHaveTextContent('0');
+    // Should not have badge element
+    const badgeElements = screen.queryAllByText('0');
+    // Check none of them are badges in the nav
+    badgeElements.forEach(el => {
+      expect(el).not.toHaveClass('bg-[#25f4ee]');
+    });
   });
 
   it('should highlight active route - dashboard', () => {
@@ -45,9 +53,13 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    const dashboardLink = screen.getByRole('link', { name: 'Dashboard' });
-    expect(dashboardLink).toHaveClass('border-blue-500');
-    expect(dashboardLink).toHaveClass('text-gray-900');
+    const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
+    // At least one should have the active gradient class
+    const hasActiveLink = dashboardLinks.some(link => 
+      link.className.includes('bg-gradient-to-r') &&
+      link.className.includes('from-[#fe2c55]')
+    );
+    expect(hasActiveLink).toBe(true);
   });
 
   it('should highlight active route - new video', () => {
@@ -55,8 +67,9 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    const newVideoLink = screen.getByRole('link', { name: 'New Video' });
-    expect(newVideoLink).toHaveClass('border-blue-500');
+    const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
+    const desktopLink = newVideoLinks[0];
+    expect(desktopLink.className).toContain('text-white');
   });
 
   it('should highlight active route - drafts', () => {
@@ -64,8 +77,9 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={3} />);
 
-    const draftsLink = screen.getByRole('link', { name: /drafts/i });
-    expect(draftsLink).toHaveClass('border-blue-500');
+    const draftsLinks = screen.getAllByRole('link', { name: /drafts/i });
+    const desktopLink = draftsLinks[0];
+    expect(desktopLink.className).toContain('text-white');
   });
 
   it('should highlight active route - hashtags', () => {
@@ -73,8 +87,9 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    const hashtagsLink = screen.getByRole('link', { name: 'Hashtags' });
-    expect(hashtagsLink).toHaveClass('border-blue-500');
+    const hashtagsLinks = screen.getAllByRole('link', { name: /Hashtags/i });
+    const desktopLink = hashtagsLinks[0];
+    expect(desktopLink.className).toContain('text-white');
   });
 
   it('should highlight when on nested route under /videos', () => {
@@ -82,9 +97,10 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    const newVideoLink = screen.getByRole('link', { name: 'New Video' });
+    const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
+    const desktopLink = newVideoLinks[0];
     // /videos/new/step2 starts with /videos/new so it should be active
-    expect(newVideoLink).toHaveClass('border-blue-500');
+    expect(desktopLink.className).toContain('text-white');
   });
 
   it('should not highlight inactive routes', () => {
@@ -92,9 +108,11 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    const hashtagsLink = screen.getByRole('link', { name: 'Hashtags' });
-    expect(hashtagsLink).toHaveClass('border-transparent');
-    expect(hashtagsLink).toHaveClass('text-gray-500');
+    const hashtagsLinks = screen.getAllByRole('link', { name: /Hashtags/i });
+    const desktopLink = hashtagsLinks[0];
+    // Inactive links should have text-gray-600 not gradient
+    expect(desktopLink.className).not.toContain('from-[#fe2c55]');
+    expect(desktopLink.className).toContain('text-gray-600');
   });
 
   it('should render TikTrack logo as link to dashboard', () => {
@@ -111,9 +129,13 @@ describe('NavigationClient', () => {
 
     render(<NavigationClient draftCount={0} />);
 
-    expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/dashboard');
-    expect(screen.getByRole('link', { name: 'New Video' })).toHaveAttribute('href', '/videos/new');
-    expect(screen.getByRole('link', { name: 'Drafts' })).toHaveAttribute('href', '/drafts');
-    expect(screen.getByRole('link', { name: 'Hashtags' })).toHaveAttribute('href', '/hashtags');
+    const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
+    expect(dashboardLinks[0]).toHaveAttribute('href', '/dashboard');
+    const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
+    expect(newVideoLinks[0]).toHaveAttribute('href', '/videos/new');
+    const draftsLinks = screen.getAllByRole('link', { name: /Drafts/i });
+    expect(draftsLinks[0]).toHaveAttribute('href', '/drafts');
+    const hashtagsLinks = screen.getAllByRole('link', { name: /Hashtags/i });
+    expect(hashtagsLinks[0]).toHaveAttribute('href', '/hashtags');
   });
 });

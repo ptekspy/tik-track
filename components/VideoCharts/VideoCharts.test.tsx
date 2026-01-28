@@ -9,7 +9,7 @@ describe('VideoCharts', () => {
 
     render(<VideoCharts snapshots={snapshots} />);
 
-    expect(screen.getByText('Views Over Time')).toBeInTheDocument();
+    expect(screen.getByText(/Views Over Time/i)).toBeInTheDocument();
   });
 
   it('should render engagement metrics chart', () => {
@@ -17,7 +17,7 @@ describe('VideoCharts', () => {
 
     render(<VideoCharts snapshots={snapshots} />);
 
-    expect(screen.getByText('Engagement Metrics')).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Metrics/i)).toBeInTheDocument();
   });
 
   it('should render engagement rate chart', () => {
@@ -25,7 +25,7 @@ describe('VideoCharts', () => {
 
     render(<VideoCharts snapshots={snapshots} />);
 
-    expect(screen.getByText('Engagement Rate')).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Rate/i)).toBeInTheDocument();
   });
 
   it('should sort snapshots by recordedAt', () => {
@@ -44,7 +44,7 @@ describe('VideoCharts', () => {
     render(<VideoCharts snapshots={[snapshot1, snapshot2]} />);
 
     // Should render without error
-    expect(screen.getByText('Views Over Time')).toBeInTheDocument();
+    expect(screen.getByText(/Views Over Time/i)).toBeInTheDocument();
   });
 
   it('should handle single snapshot', () => {
@@ -53,9 +53,9 @@ describe('VideoCharts', () => {
     render(<VideoCharts snapshots={snapshots} />);
 
     // Should still render all three charts
-    expect(screen.getByText('Views Over Time')).toBeInTheDocument();
-    expect(screen.getByText('Engagement Metrics')).toBeInTheDocument();
-    expect(screen.getByText('Engagement Rate')).toBeInTheDocument();
+    expect(screen.getByText(/Views Over Time/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Metrics/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Rate/i)).toBeInTheDocument();
   });
 
   it('should use responsive container', () => {
@@ -64,9 +64,9 @@ describe('VideoCharts', () => {
     render(<VideoCharts snapshots={snapshots} />);
 
     // Should render the chart sections
-    expect(screen.getByText('Views Over Time')).toBeInTheDocument();
-    expect(screen.getByText('Engagement Metrics')).toBeInTheDocument();
-    expect(screen.getByText('Engagement Rate')).toBeInTheDocument();
+    expect(screen.getByText(/Views Over Time/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Metrics/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Rate/i)).toBeInTheDocument();
   });
 
   it('should display chart titles', () => {
@@ -74,8 +74,8 @@ describe('VideoCharts', () => {
 
     render(<VideoCharts snapshots={snapshots} />);
 
-    expect(screen.getByText('Views Over Time')).toBeInTheDocument();
-    expect(screen.getByText('Engagement Metrics')).toBeInTheDocument();
-    expect(screen.getByText('Engagement Rate')).toBeInTheDocument();
+    expect(screen.getByText(/Views Over Time/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Metrics/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engagement Rate/i)).toBeInTheDocument();
   });
 });

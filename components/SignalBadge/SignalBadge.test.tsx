@@ -6,31 +6,28 @@ describe('SignalBadge', () => {
   it('should render positive signal with green styling', () => {
     render(<SignalBadge signal="positive" />);
 
-    const badge = screen.getByText('Positive Signal');
+    const badge = screen.getByText(/Positive/i);
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass('bg-green-100');
-    expect(badge).toHaveClass('text-green-800');
-    expect(badge).toHaveClass('border-green-200');
+    expect(badge).toHaveClass('bg-gradient-to-r');
+    expect(badge).toHaveClass('from-emerald-500');
   });
 
   it('should render negative signal with red styling', () => {
     render(<SignalBadge signal="negative" />);
 
-    const badge = screen.getByText('Negative Signal');
+    const badge = screen.getByText(/Negative/i);
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass('bg-red-100');
-    expect(badge).toHaveClass('text-red-800');
-    expect(badge).toHaveClass('border-red-200');
+    expect(badge).toHaveClass('bg-gradient-to-r');
+    expect(badge).toHaveClass('from-red-500');
   });
 
   it('should render neutral signal with gray styling', () => {
     render(<SignalBadge signal="neutral" />);
 
-    const badge = screen.getByText('Neutral');
+    const badge = screen.getByText(/Neutral/i);
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass('bg-gray-100');
-    expect(badge).toHaveClass('text-gray-800');
-    expect(badge).toHaveClass('border-gray-200');
+    expect(badge).toHaveClass('bg-gradient-to-r');
+    expect(badge).toHaveClass('from-slate-400');
   });
 
   it('should have role="status" for accessibility', () => {
@@ -43,7 +40,7 @@ describe('SignalBadge', () => {
   it('should have appropriate aria-label', () => {
     render(<SignalBadge signal="positive" />);
 
-    const badge = screen.getByLabelText('Positive Signal');
+    const badge = screen.getByLabelText(/Positive/i);
     expect(badge).toBeInTheDocument();
   });
 
@@ -56,7 +53,7 @@ describe('SignalBadge', () => {
   it('should render with rounded-full styling', () => {
     render(<SignalBadge signal="positive" />);
 
-    const badge = screen.getByText('Positive Signal');
+    const badge = screen.getByText(/Positive/i);
     expect(badge).toHaveClass('rounded-full');
   });
 });

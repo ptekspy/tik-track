@@ -13,20 +13,20 @@ export interface SignalBadgeProps {
  */
 export function SignalBadge({ signal, className = '' }: SignalBadgeProps) {
   const styles = {
-    positive: 'bg-green-100 text-green-800 border-green-200',
-    negative: 'bg-red-100 text-red-800 border-red-200',
-    neutral: 'bg-gray-100 text-gray-800 border-gray-200',
+    positive: 'bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-lg shadow-green-500/30',
+    negative: 'bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-lg shadow-red-500/30',
+    neutral: 'bg-gradient-to-r from-slate-400 to-gray-400 text-white shadow-lg shadow-gray-500/30',
   };
 
   const labels = {
-    positive: 'Positive Signal',
-    negative: 'Negative Signal',
-    neutral: 'Neutral',
+    positive: '🚀 Positive',
+    negative: '⚠️ Negative',
+    neutral: '➖ Neutral',
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${styles[signal]} ${className}`}
+      className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${styles[signal]} ${className}`}
       role="status"
       aria-label={labels[signal]}
     >

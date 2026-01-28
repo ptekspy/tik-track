@@ -59,12 +59,12 @@ export function TimeInput({ value = 0, onChange, className = '', disabled = fals
           value={hours}
           onChange={handleHoursChange}
           disabled={disabled}
-          className="w-16 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-16 px-3 py-2 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all disabled:bg-gray-100 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-900 dark:text-white"
           aria-label="Hours"
         />
-        <span className="text-sm text-gray-600">h</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">h</span>
       </div>
-      <span className="text-gray-400">:</span>
+      <span className="text-gray-400 dark:text-gray-500">:</span>
       <div className="flex items-center gap-1">
         <input
           type="number"
@@ -73,12 +73,12 @@ export function TimeInput({ value = 0, onChange, className = '', disabled = fals
           value={minutes}
           onChange={handleMinutesChange}
           disabled={disabled}
-          className="w-16 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-16 px-3 py-2 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all disabled:bg-gray-100 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-900 dark:text-white"
           aria-label="Minutes"
         />
-        <span className="text-sm text-gray-600">m</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">m</span>
       </div>
-      <span className="text-gray-400">:</span>
+      <span className="text-gray-400 dark:text-gray-500">:</span>
       <div className="flex items-center gap-1">
         <input
           type="number"
@@ -88,10 +88,10 @@ export function TimeInput({ value = 0, onChange, className = '', disabled = fals
           value={seconds}
           onChange={handleSecondsChange}
           disabled={disabled}
-          className="w-16 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-16 px-3 py-2 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all disabled:bg-gray-100 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-900 dark:text-white"
           aria-label="Seconds"
         />
-        <span className="text-sm text-gray-600">s</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">s</span>
       </div>
     </div>
   );

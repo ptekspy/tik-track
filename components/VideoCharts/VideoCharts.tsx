@@ -37,61 +37,103 @@ export function VideoCharts({ snapshots }: VideoChartsProps) {
   }));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Views over time */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold mb-4">Views Over Time</h3>
+      <div className="glass rounded-2xl p-6 border border-white/20">
+        <h3 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent mb-6">
+          👁️ Views Over Time
+        </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+            <XAxis dataKey="date" stroke="#9ca3af" />
+            <YAxis stroke="#9ca3af" />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                border: 'none', 
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              }} 
+            />
             <Legend />
             <Line
               type="monotone"
               dataKey="views"
               stroke="#3b82f6"
-              strokeWidth={2}
-              dot={{ r: 4 }}
+              strokeWidth={3}
+              dot={{ r: 5, fill: '#3b82f6', strokeWidth: 2, stroke: '#fff' }}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
       {/* Engagement metrics */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold mb-4">Engagement Metrics</h3>
+      <div className="glass rounded-2xl p-6 border border-white/20">
+        <h3 className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent mb-6">
+          📊 Engagement Metrics
+        </h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+            <XAxis dataKey="date" stroke="#9ca3af" />
+            <YAxis stroke="#9ca3af" />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                border: 'none', 
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              }} 
+            />
             <Legend />
-            <Bar dataKey="likes" fill="#10b981" />
-            <Bar dataKey="shares" fill="#f59e0b" />
-            <Bar dataKey="comments" fill="#8b5cf6" />
+            <Bar dataKey="likes" fill="url(#likesGradient)" radius={[8, 8, 0, 0]} />
+            <Bar dataKey="shares" fill="url(#sharesGradient)" radius={[8, 8, 0, 0]} />
+            <Bar dataKey="comments" fill="url(#commentsGradient)" radius={[8, 8, 0, 0]} />
+            <defs>
+              <linearGradient id="likesGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#10b981" stopOpacity={0.8}/>
+                <stop offset="100%" stopColor="#10b981" stopOpacity={0.3}/>
+              </linearGradient>
+              <linearGradient id="sharesGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.8}/>
+                <stop offset="100%" stopColor="#f59e0b" stopOpacity={0.3}/>
+              </linearGradient>
+              <linearGradient id="commentsGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.3}/>
+              </linearGradient>
+            </defs>
           </BarChart>
         </ResponsiveContainer>
       </div>
 
       {/* Engagement rate */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold mb-4">Engagement Rate</h3>
+      <div className="glass rounded-2xl p-6 border border-white/20">
+        <h3 className="text-xl font-bold bg-gradient-to-r from-[#fe2c55] to-[#ec4899] bg-clip-text text-transparent mb-6">
+          💫 Engagement Rate
+        </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip formatter={(value) => typeof value === 'number' ? `${value.toFixed(2)}%` : ''} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+            <XAxis dataKey="date" stroke="#9ca3af" />
+            <YAxis stroke="#9ca3af" />
+            <Tooltip 
+              formatter={(value) => typeof value === 'number' ? `${value.toFixed(2)}%` : ''} 
+              contentStyle={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                border: 'none', 
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              }} 
+            />
             <Legend />
             <Line
               type="monotone"
               dataKey="engagementRate"
               stroke="#ec4899"
-              strokeWidth={2}
-              dot={{ r: 4 }}
+              strokeWidth={3}
+              dot={{ r: 5, fill: '#ec4899', strokeWidth: 2, stroke: '#fff' }}
               name="Engagement Rate (%)"
             />
           </LineChart>

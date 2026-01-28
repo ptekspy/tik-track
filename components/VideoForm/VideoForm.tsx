@@ -88,19 +88,19 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       {/* Video Details Section */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Video Details</h2>
+      <div className="glass rounded-2xl p-6 border border-white/20 space-y-5">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] bg-clip-text text-transparent">Video Details</h2>
 
         {/* Title */}
         <div>
-          <label htmlFor="title" className="block text-sm font-medium mb-1">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Title *
           </label>
           <input
             id="title"
             type="text"
             {...register('title', { required: 'Title is required' })}
-            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all"
             disabled={isSubmitting}
           />
           {errors.title && <FormError error={errors.title.message} />}
@@ -108,13 +108,13 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
 
         {/* Script */}
         <div>
-          <label htmlFor="script" className="block text-sm font-medium mb-1">
+          <label htmlFor="script" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Script *
           </label>
           <textarea
             id="script"
             {...register('script', { required: 'Script is required' })}
-            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+            className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all min-h-[100px] resize-y"
             disabled={isSubmitting}
           />
           {errors.script && <FormError error={errors.script.message} />}
@@ -122,13 +122,13 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
 
         {/* Description */}
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-1">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Description *
           </label>
           <textarea
             id="description"
             {...register('description', { required: 'Description is required' })}
-            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+            className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all min-h-[100px] resize-y"
             disabled={isSubmitting}
           />
           {errors.description && <FormError error={errors.description.message} />}
@@ -136,7 +136,7 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
 
         {/* Video Length */}
         <div>
-          <label htmlFor="videoLength" className="block text-sm font-medium mb-1">
+          <label htmlFor="videoLength" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Video Length *
           </label>
           <TimeInput
@@ -149,18 +149,18 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
 
         {/* Status */}
         <div>
-          <label htmlFor="status" className="block text-sm font-medium mb-1">
+          <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Status *
           </label>
           <select
             id="status"
             {...register('status', { required: 'Status is required' })}
-            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all"
             disabled={isSubmitting}
           >
-            <option value={VideoStatus.DRAFT}>Draft</option>
-            <option value={VideoStatus.PUBLISHED}>Published</option>
-            <option value={VideoStatus.ARCHIVED}>Archived</option>
+            <option value={VideoStatus.DRAFT}>📝 Draft</option>
+            <option value={VideoStatus.PUBLISHED}>✨ Published</option>
+            <option value={VideoStatus.ARCHIVED}>📦 Archived</option>
           </select>
           {errors.status && <FormError error={errors.status.message} />}
         </div>
@@ -168,7 +168,7 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
         {/* Post Date (required if status=PUBLISHED) */}
         {isPublished && (
           <div>
-            <label htmlFor="postDate" className="block text-sm font-medium mb-1">
+            <label htmlFor="postDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Post Date *
             </label>
             <input
@@ -177,7 +177,7 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
               {...register('postDate', {
                 required: isPublished ? 'Post date is required for published videos' : false,
               })}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#fe2c55] focus:border-transparent transition-all"
               disabled={isSubmitting}
             />
             {errors.postDate && <FormError error={errors.postDate.message} />}
@@ -186,7 +186,7 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
 
         {/* Hashtags */}
         <div>
-          <label className="block text-sm font-medium mb-1">Hashtags</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hashtags</label>
           <HashtagInput
             value={hashtags}
             onChange={(tags) => setValue('hashtags', tags)}
@@ -197,23 +197,25 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
 
       {/* Optional First Snapshot Section (only for PUBLISHED) */}
       {isPublished && (
-        <div className="space-y-4 border-t pt-6">
-          <h2 className="text-xl font-semibold">Initial Analytics (Optional)</h2>
-          <p className="text-sm text-gray-600">
-            You can optionally capture the first analytics snapshot now.
-          </p>
+        <div className="glass rounded-2xl p-6 border border-white/20 space-y-5">
+          <div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">Initial Analytics</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              You can optionally capture the first analytics snapshot now.
+            </p>
+          </div>
 
           {/* Views */}
           <div>
-            <label htmlFor="views" className="block text-sm font-medium mb-1">
-              Views
+            <label htmlFor="views" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              👁️ Views
             </label>
             <input
               id="views"
               type="number"
               min="0"
               {...register('firstSnapshot.views', { valueAsNumber: true })}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               disabled={isSubmitting}
             />
           </div>
@@ -359,13 +361,13 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
       {submitError && <FormError error={submitError} />}
 
       {/* Actions */}
-      <div className="flex gap-3 pt-4 border-t">
+      <div className="flex gap-3 pt-4">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+            className="px-6 py-3 text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-white/80 dark:hover:bg-gray-800/80 disabled:opacity-50 transition-all font-medium"
           >
             Cancel
           </button>
@@ -373,7 +375,7 @@ export function VideoForm({ defaultValues, onSubmit, onCancel }: VideoFormProps)
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          className="px-6 py-3 text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:transform-none transition-all btn-glow"
         >
           {isSubmitting ? 'Saving...' : 'Save Video'}
         </button>

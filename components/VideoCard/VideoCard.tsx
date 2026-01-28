@@ -50,47 +50,62 @@ export function VideoCard({ video }: VideoCardProps) {
 
   return (
     <Link href={`/videos/${video.id}`}>
-      <div className="block p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 flex-1">
-            {video.title}
-          </h3>
-          <StatusBadge status={video.status} />
-        </div>
+      <div className="group relative card-hover">
+        {/* Gradient border effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#fe2c55]/20 to-[#7c3aed]/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        
+        <div className="relative glass rounded-2xl p-6 border border-white/20 h-full">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-3 mb-4">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2 flex-1 group-hover:text-[#fe2c55] transition-colors">
+              {video.title}
+            </h3>
+            <StatusBadge status={video.status} />
+          </div>
 
-        {/* Description */}
-        <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-          {video.description}
-        </p>
+          {/* Description */}
+          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4">
+            {video.description}
+          </p>
 
-        {/* Metrics */}
-        {latestSnapshot && (
-          <div className="flex items-center gap-4 mb-3 text-sm text-gray-700">
-            <div className="flex items-center gap-1">
-              <Eye className="w-4 h-4 text-gray-500" />
-              <span>{views.toLocaleString()} views</span>
-            </div>
-            {engagementRate !== null && (
-              <div className="flex items-center gap-1">
-                <TrendingUp className="w-4 h-4 text-gray-500" />
-                <span>{engagementRate.toFixed(2)}% engagement</span>
+          {/* Metrics */}
+          {latestSnapshot && (
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#fe2c55]/10 to-[#7c3aed]/10 rounded-lg">
+                <Eye className="w-4 h-4 text-[#fe2c55]" />
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                  {views.toLocaleString()}
+                </span>
               </div>
-            )}
-          </div>
-        )}
+              {engagementRate !== null && (
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#25f4ee]/10 to-[#4f46e5]/10 rounded-lg">
+                  <TrendingUp className="w-4 h-4 text-[#25f4ee]" />
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                    {engagementRate.toFixed(1)}%
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
 
-        {/* No metrics message */}
-        {!latestSnapshot && video.status === 'PUBLISHED' && (
-          <p className="text-sm text-gray-500 mb-3">No analytics data yet</p>
-        )}
+          {/* No metrics message */}
+          {!latestSnapshot && video.status === 'PUBLISHED' && (
+            <div className="flex items-center gap-2 mb-4 px-3 py-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+              <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+              <p className="text-sm text-amber-700 dark:text-amber-400">No analytics data yet</p>
+            </div>
+          )}
 
-        {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t">
-          <div className="text-xs text-gray-500">
-            {video.snapshots.length} snapshot{video.snapshots.length !== 1 ? 's' : ''}
+          {/* Footer */}
+          <div className="flex items-center justify-between pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-full"></div>
+              <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                {video.snapshots.length} snapshot{video.snapshots.length !== 1 ? 's' : ''}
+              </span>
+            </div>
+            {video.status === 'PUBLISHED' && <SignalBadge signal={signal} />}
           </div>
-          {video.status === 'PUBLISHED' && <SignalBadge signal={signal} />}
         </div>
       </div>
     </Link>

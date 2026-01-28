@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { LayoutDashboard, Video, FileEdit, Hash, TrendingUp } from 'lucide-react';
 
 export interface NavigationClientProps {
   draftCount: number;
@@ -18,43 +19,106 @@ export function NavigationClient({ draftCount }: NavigationClientProps) {
   };
 
   const navItems = [
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/videos/new', label: 'New Video' },
-    { href: '/drafts', label: 'Drafts', badge: draftCount > 0 ? draftCount : null },
-    { href: '/hashtags', label: 'Hashtags' },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/videos/new', label: 'New Video', icon: Video },
+    { href: '/drafts', label: 'Drafts', icon: FileEdit, badge: draftCount > 0 ? draftCount : null },
+    { href: '/hashtags', label: 'Hashtags', icon: Hash },
   ];
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="glass border-b border-white/10 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/dashboard" className="text-xl font-bold text-gray-900">
+          <div className="flex items-center">
+            {/* Logo */}
+            <Link href="/dashboard" className="flex items-center space-x-2 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] p-2 rounded-lg">
+                  <TrendingUp className="w-5 h-5 text-white" />
+                </div>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] bg-clip-text text-transparent">
                 TikTrack
-              </Link>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    isActive(item.href)
-                      ? 'border-blue-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
-                >
-                  {item.label}
-                  {item.badge !== null && item.badge !== undefined && (
-                    <span className="ml-2 bg-blue-600 text-white text-xs font-medium px-2 py-0.5 rounded-full">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              ))}
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:ml-10 md:flex md:space-x-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`relative inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all group ${
+                      active
+                        ? 'text-white'
+                        : 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
+                    }`}
+                  >
+                    {active && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg"></div>
+                    )}
+                    <div className={`relative flex items-center space-x-2 ${!active && 'group-hover:scale-105'}`}>
+                      <Icon className="w-4 h-4" />
+                      <span>{item.label}</span>
+                      {item.badge !== null && item.badge !== undefined && (
+                        <span className="ml-1 bg-[#25f4ee] text-[#0f0f23] text-xs font-bold px-2 py-0.5 rounded-full animate-pulse-glow">
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              type="button"
+              className="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800/50"
+              aria-label="Open menu"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation - hidden by default */}
+      <div className="md:hidden border-t border-white/10">
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.href);
+            
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium ${
+                  active
+                    ? 'bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] text-white'
+                    : 'text-gray-600 hover:bg-gray-100/50 dark:text-gray-300 dark:hover:bg-gray-800/50'
+                }`}
+              >
+                <Icon className="w-4 h-4 mr-2" />
+                {item.label}
+                {item.badge !== null && item.badge !== undefined && (
+                  <span className="ml-auto bg-[#25f4ee] text-[#0f0f23] text-xs font-bold px-2 py-0.5 rounded-full">
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </nav>

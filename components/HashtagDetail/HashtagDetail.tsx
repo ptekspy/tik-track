@@ -30,45 +30,78 @@ export function HashtagDetail({ hashtag, stats }: HashtagDetailProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          #{hashtag.tag}
-        </h1>
-        <p className="text-sm text-gray-500">
+      <div className="glass rounded-2xl p-8 border border-white/20">
+        <div className="flex items-center space-x-3 mb-2">
+          <span className="text-4xl">#️⃣</span>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">
+            #{hashtag.tag}
+          </h1>
+        </div>
+        <p className="text-sm text-gray-600 dark:text-gray-400 ml-14">
           Created {formatDate(hashtag.createdAt)}
         </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="text-sm text-gray-500 mb-1">Total Videos</div>
-          <div className="text-2xl font-bold text-gray-900">{stats.totalVideos}</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="glass rounded-2xl p-6 border border-white/20 card-hover">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-cyan-600/20 rounded-xl flex items-center justify-center">
+              <span className="text-xl">📹</span>
+            </div>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Videos</div>
+          </div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent">{stats.totalVideos}</div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="text-sm text-gray-500 mb-1">Published Videos</div>
-          <div className="text-2xl font-bold text-gray-900">{stats.publishedVideos}</div>
+        <div className="glass rounded-2xl p-6 border border-white/20 card-hover">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500/20 to-green-600/20 rounded-xl flex items-center justify-center">
+              <span className="text-xl">✨</span>
+            </div>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Published</div>
+          </div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">{stats.publishedVideos}</div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="text-sm text-gray-500 mb-1">Total Views</div>
-          <div className="text-2xl font-bold text-gray-900">{formatNumber(stats.totalViews)}</div>
+        <div className="glass rounded-2xl p-6 border border-white/20 card-hover">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#fe2c55]/20 to-[#7c3aed]/20 rounded-xl flex items-center justify-center">
+              <span className="text-xl">👁️</span>
+            </div>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Views</div>
+          </div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] bg-clip-text text-transparent">{formatNumber(stats.totalViews)}</div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="text-sm text-gray-500 mb-1">Avg Views</div>
-          <div className="text-2xl font-bold text-gray-900">{formatNumber(stats.avgViews)}</div>
+        <div className="glass rounded-2xl p-6 border border-white/20 card-hover">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-xl flex items-center justify-center">
+              <span className="text-xl">📊</span>
+            </div>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Avg Views</div>
+          </div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">{formatNumber(stats.avgViews)}</div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="text-sm text-gray-500 mb-1">Avg Engagement</div>
-          <div className="text-2xl font-bold text-gray-900">{formatPercentage(stats.avgEngagementRate)}</div>
+        <div className="glass rounded-2xl p-6 border border-white/20 card-hover">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-orange-600/20 rounded-xl flex items-center justify-center">
+              <span className="text-xl">💫</span>
+            </div>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Avg Engagement</div>
+          </div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">{formatPercentage(stats.avgEngagementRate)}</div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="text-sm text-gray-500 mb-1">Avg Completion</div>
-          <div className="text-2xl font-bold text-gray-900">{formatPercentage(stats.avgCompletionRate)}</div>
+        <div className="glass rounded-2xl p-6 border border-white/20 card-hover">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-xl flex items-center justify-center">
+              <span className="text-xl">📈</span>
+            </div>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Avg Completion</div>
+          </div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">{formatPercentage(stats.avgCompletionRate)}</div>
         </div>
       </div>
 

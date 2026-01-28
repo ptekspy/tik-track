@@ -41,10 +41,15 @@ export default async function VideoEditPage({ params }: VideoEditPageProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
+    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Edit Video</h1>
-        <p className="text-gray-600 mt-2">
+        <div className="flex items-center space-x-3 mb-3">
+          <span className="text-4xl">✏️</span>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] bg-clip-text text-transparent">
+            Edit Video
+          </h1>
+        </div>
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Update the details and metadata for this video.
         </p>
       </div>

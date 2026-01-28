@@ -66,8 +66,8 @@ describe('VideoCard', () => {
 
     render(<VideoCard video={video} />);
 
-    expect(screen.getByText(/5,000 views/i)).toBeInTheDocument();
-    expect(screen.getByText(/engagement/i)).toBeInTheDocument();
+    expect(screen.getByText('5,000')).toBeInTheDocument();
+    expect(screen.getByText(/6.5/)).toBeInTheDocument();
   });
 
   it('should show "No analytics data yet" for published videos without snapshots', () => {
@@ -150,7 +150,7 @@ describe('VideoCard', () => {
     render(<VideoCard video={video} />);
 
     // Should show the newer snapshot's views
-    expect(screen.getByText(/5,000 views/i)).toBeInTheDocument();
+    expect(screen.getByText('5,000')).toBeInTheDocument();
   });
 
   it('should truncate long titles with line-clamp', () => {

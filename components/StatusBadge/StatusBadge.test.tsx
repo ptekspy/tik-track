@@ -7,31 +7,28 @@ describe('StatusBadge', () => {
   it('should render DRAFT status with gray styling', () => {
     render(<StatusBadge status={VideoStatus.DRAFT} />);
 
-    const badge = screen.getByText('Draft');
+    const badge = screen.getByText(/Draft/);
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass('bg-gray-100');
-    expect(badge).toHaveClass('text-gray-800');
-    expect(badge).toHaveClass('border-gray-200');
+    expect(badge).toHaveClass('bg-gradient-to-r');
+    expect(badge).toHaveClass('from-amber-100');
   });
 
   it('should render PUBLISHED status with green styling', () => {
     render(<StatusBadge status={VideoStatus.PUBLISHED} />);
 
-    const badge = screen.getByText('Published');
+    const badge = screen.getByText(/Published/);
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass('bg-green-100');
-    expect(badge).toHaveClass('text-green-800');
-    expect(badge).toHaveClass('border-green-200');
+    expect(badge).toHaveClass('bg-gradient-to-r');
+    expect(badge).toHaveClass('from-emerald-100');
   });
 
   it('should render ARCHIVED status with blue styling', () => {
     render(<StatusBadge status={VideoStatus.ARCHIVED} />);
 
-    const badge = screen.getByText('Archived');
+    const badge = screen.getByText(/Archived/);
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass('bg-blue-100');
-    expect(badge).toHaveClass('text-blue-800');
-    expect(badge).toHaveClass('border-blue-200');
+    expect(badge).toHaveClass('bg-gradient-to-r');
+    expect(badge).toHaveClass('from-slate-100');
   });
 
   it('should have role="status" for accessibility', () => {
