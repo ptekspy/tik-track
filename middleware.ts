@@ -3,37 +3,34 @@ import type { NextRequest } from 'next/server';
 import { betterFetch } from '@better-fetch/fetch';
 
 // Routes that don't require authentication
-const publicRoutes = [
+const publicRoutes = new Set([
   '/',
   '/login',
   '/signup',
   '/forgot-password',
   '/reset-password',
   '/verify-email',
-];
-
-// API routes that should be public
-const publicApiRoutes = [
-  '/api/auth',
-];
+]);
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow public routes
-  if (publicRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
+  // Check if it's a public route (exact match only for root, otherwise check if path starts with route)
+  const isPublicRoute = publicRoutes.has(pathname) || 
+    Array.from(publicRoutes).some(route => route !== '/' && pathname.startsWith(route + '/'));
+  
+  if (isPublicRoute) {
     return NextResponse.next();
   }
 
-  // Allow public API routes
-  if (publicApiRoutes.some(route => pathname.startsWith(route))) {
+  // Allow all API routes to pass through (they handle their own auth)
+  if (pathname.startsWith('/api')) {
     return NextResponse.next();
   }
 
   // Allow static files and Next.js internals
   if (
     pathname.startsWith('/_next') ||
-    pathname.startsWith('/api') ||
     pathname.includes('.')
   ) {
     return NextResponse.next();
