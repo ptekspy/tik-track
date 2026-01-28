@@ -6,6 +6,10 @@ import { VideoWithSnapshots } from '@/lib/types/video';
 import { VideoStatus } from '@/lib/types/server';
 import { HashtagWithVideos } from '@/lib/types/hashtag';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface HashtagDetailPageProps {
   params: Promise<{ tag: string }>;
 }

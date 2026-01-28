@@ -4,6 +4,10 @@ import { VideoHeader, VideoMetrics } from '@/components/videos';
 import { SnapshotChart, SnapshotList } from '@/components/snapshots';
 import { VideoWithSnapshots, SerializedVideoWithSnapshots } from '@/lib/types/video';
 
+// Force dynamic rendering - snapshots change frequently
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface VideoDetailPageProps {
   params: Promise<{ id: string }>;
 }

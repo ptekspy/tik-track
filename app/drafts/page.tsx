@@ -5,6 +5,10 @@ import { VideoWithSnapshots } from '@/lib/types/video';
 import Link from 'next/link';
 import { FileEdit, Plus } from 'lucide-react';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function DraftsPage() {
   const draftVideos = await db.video.findMany({
     where: { status: VideoStatus.DRAFT },

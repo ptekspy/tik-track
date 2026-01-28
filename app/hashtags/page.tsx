@@ -3,6 +3,10 @@ import { HashtagList } from '@/components/HashtagList/HashtagList';
 import { HashtagActions } from '@/components/HashtagActions/HashtagActions';
 import type { HashtagWithStats } from '@/lib/types/hashtag';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function HashtagsPage() {
   const hashtagsFromDb = await db.hashtag.findMany({
     include: {

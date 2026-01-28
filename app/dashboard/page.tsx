@@ -4,6 +4,10 @@ import { VideoWithSnapshots } from '@/lib/types/video';
 import Link from 'next/link';
 import { TrendingUp, Video, FileEdit, Archive, Plus, Sparkles } from 'lucide-react';
 
+// Force dynamic rendering - don't cache this page
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function DashboardPage() {
   const videos = await db.video.findMany({
     include: { snapshots: true },
