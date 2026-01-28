@@ -1,7 +1,6 @@
 import { updateVideoStatusSchema } from '@/lib/schemas/video';
 import { findVideoById, updateVideo as updateVideoDAL } from '@/lib/dal/videos';
-import { VideoStatus } from '@/lib/generated/client';
-import type { Video } from '@/lib/generated/client';
+import { VideoStatus, type Video } from '@/lib/types/server';
 
 /**
  * Update video status with forward-only validation

@@ -1,6 +1,5 @@
 import { db } from '@/lib/database/client';
-import type { AnalyticsSnapshot, SnapshotType } from '@/lib/generated/client';
-import type { Prisma } from '@/lib/generated/client';
+import type { AnalyticsSnapshot, SnapshotType, Prisma } from '@/lib/types/server';
 
 /**
  * Find a snapshot by ID

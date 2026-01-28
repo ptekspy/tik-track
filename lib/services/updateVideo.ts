@@ -1,7 +1,7 @@
 import { db } from '@/lib/database/client';
 import { updateVideoSchema } from '@/lib/schemas/video';
 import type { UpdateVideoInput } from '@/lib/schemas/video';
-import type { Video } from '@/lib/generated/client';
+import type { Video } from '@/lib/types/server';
 import { findVideoById, updateVideo as updateVideoDAL } from '@/lib/dal/videos';
 
 /**

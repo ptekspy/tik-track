@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { SnapshotType } from '@/lib/generated/client';
-import { Prisma } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/generated/client/client';
+import { Prisma } from '@/lib/generated/client/client';
 
 /**
  * Schema for creating a new analytics snapshot
@@ -10,7 +10,7 @@ export const createSnapshotSchema = z.object({
   snapshotType: z.nativeEnum(SnapshotType),
   views: z.number().int().nonnegative().optional().nullable(),
   totalPlayTimeSeconds: z.number().int().nonnegative().optional().nullable(),
-  avgWatchTimeSeconds: z.number().int().nonnegative().optional().nullable(),
+  avgWatchTimeSeconds: z.instanceof(Prisma.Decimal).or(z.number().nonnegative()).optional().nullable(),
   completionRate: z.instanceof(Prisma.Decimal).or(z.number().nonnegative().max(100)).optional().nullable(),
   newFollowers: z.number().int().nonnegative().optional().nullable(),
   likes: z.number().int().nonnegative().optional().nullable(),
@@ -29,7 +29,7 @@ export type CreateSnapshotInput = z.infer<typeof createSnapshotSchema>;
 export const updateSnapshotSchema = z.object({
   views: z.number().int().nonnegative().optional().nullable(),
   totalPlayTimeSeconds: z.number().int().nonnegative().optional().nullable(),
-  avgWatchTimeSeconds: z.number().int().nonnegative().optional().nullable(),
+  avgWatchTimeSeconds: z.instanceof(Prisma.Decimal).or(z.number().nonnegative()).optional().nullable(),
   completionRate: z.instanceof(Prisma.Decimal).or(z.number().nonnegative().max(100)).optional().nullable(),
   newFollowers: z.number().int().nonnegative().optional().nullable(),
   likes: z.number().int().nonnegative().optional().nullable(),

@@ -1,6 +1,6 @@
 import { findVideoById } from '@/lib/dal/videos';
 import { findSnapshotsByVideoId } from '@/lib/dal/snapshots';
-import type { Video, AnalyticsSnapshot } from '@/lib/generated/client';
+import type { Video, AnalyticsSnapshot, Prisma } from '@/lib/types/server';
 import type { VideoWithAll } from '@/lib/types/video';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
 import { calculateShareRate } from '@/lib/metrics/calculateShareRate';
@@ -8,7 +8,6 @@ import { calculateRetentionRate } from '@/lib/metrics/calculateRetentionRate';
 import { calculateFollowerConversion } from '@/lib/metrics/calculateFollowerConversion';
 import { detectSignals } from '@/lib/metrics/detectSignals';
 import type { SnapshotWithMetrics } from '@/lib/types/metrics';
-import { Prisma } from '@/lib/generated/client';
 
 export interface VideoWithAnalytics extends Video {
   snapshots: SnapshotWithMetrics[];

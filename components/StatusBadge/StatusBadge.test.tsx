@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { StatusBadge } from './StatusBadge';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 
 describe('StatusBadge', () => {
   it('should render DRAFT status with gray styling', () => {

@@ -27,7 +27,9 @@ export default async function NewSnapshotPage({ params }: NewSnapshotPageProps) 
     await createSnapshotAction(videoId, data);
   };
 
-  const availableTypes = getExpectedSnapshots(video.postDate);
+  const expectedTypes = getExpectedSnapshots(video.postDate);
+  const recordedTypes = new Set(video.snapshots.map(s => s.snapshotType));
+  const availableTypes = expectedTypes.filter(type => !recordedTypes.has(type));
 
   const latestSnapshot = video.snapshots.length > 0
     ? [...video.snapshots].sort((a, b) => b.recordedAt.getTime() - a.recordedAt.getTime())[0]

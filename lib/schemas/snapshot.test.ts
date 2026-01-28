@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SnapshotType, Prisma } from '@/lib/generated/client';
+import { SnapshotType, Prisma } from '@/lib/generated/client/client';
 import { createSnapshotSchema, updateSnapshotSchema } from './snapshot';
 
 describe('Snapshot Schemas', () => {

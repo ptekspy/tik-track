@@ -1,4 +1,4 @@
-import { SnapshotType } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/types/server';
 import { getMissedSnapshots } from './getMissedSnapshots';
 
 const SNAPSHOT_ORDER: SnapshotType[] = [

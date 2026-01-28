@@ -1,4 +1,4 @@
-import type { PrismaClient, SnapshotType } from '@/lib/generated/client';
+import type { PrismaClient, SnapshotType } from '@/lib/types/server';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export interface CreateSnapshotInput {

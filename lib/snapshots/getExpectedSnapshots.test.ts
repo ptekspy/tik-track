@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SnapshotType } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/generated/client/client';
 import { getExpectedSnapshots } from './getExpectedSnapshots';
 import { subHours, subDays } from 'date-fns';
 

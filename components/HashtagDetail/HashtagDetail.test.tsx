@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { HashtagDetail, HashtagStats } from './HashtagDetail';
 import { HashtagWithVideos } from '@/lib/types/hashtag';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 
 const mockHashtagWithVideos: HashtagWithVideos = {
   id: 'hashtag-1',

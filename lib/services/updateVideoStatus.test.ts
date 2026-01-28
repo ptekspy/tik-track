@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 import { updateVideoStatus } from './updateVideoStatus';
 import { mockVideoDraft, mockVideoPublished, mockVideoArchived } from '@/lib/testing/mocks';
 

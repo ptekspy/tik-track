@@ -10,7 +10,7 @@ import * as updateVideoModule from '@/lib/services/updateVideo';
 import * as updateVideoStatusModule from '@/lib/services/updateVideoStatus';
 import * as deleteVideoModule from '@/lib/services/deleteVideo';
 import { mockVideoPublished, mockVideoDraft } from '@/lib/testing/mocks';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 
 // Mock Next.js cache revalidation
 vi.mock('next/cache', () => ({

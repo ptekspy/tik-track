@@ -1,4 +1,4 @@
-import type { Prisma, AnalyticsSnapshot } from '@/lib/generated/client';
+import type { Prisma, AnalyticsSnapshot } from '@/lib/generated/client/client';
 
 export type { AnalyticsSnapshot };
 
@@ -10,4 +10,4 @@ export type SnapshotWithVideo = Prisma.AnalyticsSnapshotGetPayload<{
 }>;
 
 // Re-export SnapshotType enum from Prisma
-export { SnapshotType } from '@/lib/generated/client';
+export { SnapshotType } from '@/lib/generated/client/client';

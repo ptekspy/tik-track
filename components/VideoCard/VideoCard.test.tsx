@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 import { VideoCard } from './VideoCard';
 import { mockVideoPublished, mockSnapshotOneHour } from '@/lib/testing/mocks';
 

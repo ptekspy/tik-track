@@ -1,7 +1,7 @@
 import { db } from '@/lib/database/client';
 import { createVideoSchema } from '@/lib/schemas/video';
 import type { CreateVideoInput } from '@/lib/schemas/video';
-import type { Video } from '@/lib/generated/client';
+import type { Video } from '@/lib/types/server';
 import { findOrCreateHashtag, linkHashtagToVideo } from '@/lib/dal/hashtags';
 import { createVideo as createVideoDAL } from '@/lib/dal/videos';
 

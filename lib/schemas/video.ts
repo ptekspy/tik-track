@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/types/server';
 
 /**
  * Schema for creating a new video

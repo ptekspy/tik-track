@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getAllHashtagsWithStats } from './getAllHashtagsWithStats';
 import { mockHashtag1, mockHashtag2, mockVideoPublished, mockVideoDraft, mockSnapshotOneDay } from '@/lib/testing/mocks';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 
 // Mock the database
 vi.mock('@/lib/database/client', () => ({

@@ -6,7 +6,7 @@
  */
 
 import { db } from '@/lib/database/client';
-import { VideoStatus, type Video, type AnalyticsSnapshot } from '@/lib/generated/client';
+import { VideoStatus, type Video, type AnalyticsSnapshot } from '@/lib/types/server';
 
 export interface HashtagWithStats {
   tag: string;

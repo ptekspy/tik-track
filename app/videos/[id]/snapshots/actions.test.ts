@@ -3,7 +3,7 @@ import { createSnapshotAction, deleteSnapshotAction } from './actions';
 import * as createSnapshotModule from '@/lib/services/createSnapshot';
 import * as deleteSnapshotModule from '@/lib/services/deleteSnapshot';
 import { mockSnapshotOneHour, mockVideoPublished } from '@/lib/testing/mocks';
-import { SnapshotType } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/generated/client/client';
 
 // Mock Next.js cache revalidation
 vi.mock('next/cache', () => ({

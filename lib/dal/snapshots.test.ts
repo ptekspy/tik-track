@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { SnapshotType } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/generated/client/client';
 import {
   findSnapshotById,
   findSnapshotsByVideoId,

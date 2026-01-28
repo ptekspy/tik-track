@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { SnapshotTimeline } from './SnapshotTimeline';
 import { mockVideoPublished, mockVideoDraft, mockSnapshotOneHour, mockSnapshotOneDay } from '@/lib/testing/mocks';
-import { SnapshotType } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/generated/client/client';
 
 describe('SnapshotTimeline', () => {
   it('should show message for draft videos', () => {

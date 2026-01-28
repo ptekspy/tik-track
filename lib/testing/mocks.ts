@@ -3,8 +3,7 @@
  * These mocks match Prisma-inferred types and should be reused across all tests
  */
 
-import type { Video, AnalyticsSnapshot, Hashtag } from '@/lib/generated/client';
-import { Prisma } from '@/lib/generated/client';
+import type { Video, AnalyticsSnapshot, Hashtag, Prisma } from '@/lib/types/server';
 
 // Video status enum for type safety
 export enum VideoStatus {

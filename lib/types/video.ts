@@ -1,4 +1,4 @@
-import type { Prisma, Video } from '@/lib/generated/client';
+import type { Prisma, Video } from '@/lib/generated/client/client';
 
 export type { Video };
 
@@ -33,4 +33,4 @@ export type VideoWithAll = Prisma.VideoGetPayload<{
 }>;
 
 // Re-export VideoStatus enum from Prisma
-export { VideoStatus } from '@/lib/generated/client';
+export { VideoStatus } from '@/lib/generated/client/client';

@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getHashtagStats } from './getHashtagStats';
 import { mockHashtag1, mockVideoPublished, mockSnapshotOneDay } from '@/lib/testing/mocks';
-import { VideoStatus } from '@/lib/generated/client';
-import { Prisma } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
+import { Prisma } from '@/lib/generated/client/client';
 
 // Mock the DAL and database
 vi.mock('@/lib/dal/hashtags', () => ({

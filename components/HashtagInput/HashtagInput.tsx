@@ -32,6 +32,27 @@ export function HashtagInput({
     return tag.toLowerCase().trim().replace(/^#/, ''); // Remove leading # if present
   };
 
+  const addTags = (input: string) => {
+    // Split on spaces, newlines, commas to support pasting multiple hashtags
+    const tags = input.split(/[\s,\n]+/).filter(t => t.trim());
+    
+    const newTags: string[] = [];
+    for (const tag of tags) {
+      const normalized = normalizeTag(tag);
+      if (!normalized) continue;
+      if (value.includes(normalized)) continue;
+      if (newTags.includes(normalized)) continue; // Avoid duplicates in batch
+      if (maxTags && value.length + newTags.length >= maxTags) break;
+      
+      newTags.push(normalized);
+    }
+
+    if (newTags.length > 0) {
+      onChange([...value, ...newTags]);
+      setInputValue('');
+    }
+  };
+
   const addTag = (tag: string) => {
     const normalized = normalizeTag(tag);
     
@@ -50,7 +71,12 @@ export function HashtagInput({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      addTag(inputValue);
+      // Check if input contains multiple hashtags (spaces)
+      if (inputValue.includes(' ') || inputValue.includes(',')) {
+        addTags(inputValue);
+      } else {
+        addTag(inputValue);
+      }
     } else if (e.key === 'Backspace' && !inputValue && value.length > 0) {
       // Remove last tag on backspace if input is empty
       removeTag(value[value.length - 1]);
@@ -59,7 +85,12 @@ export function HashtagInput({
 
   const handleBlur = () => {
     if (inputValue.trim()) {
-      addTag(inputValue);
+      // Check if input contains multiple hashtags (spaces)
+      if (inputValue.includes(' ') || inputValue.includes(',')) {
+        addTags(inputValue);
+      } else {
+        addTag(inputValue);
+      }
     }
   };
 

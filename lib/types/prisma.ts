@@ -12,7 +12,7 @@ import type {
   Prisma,
   VideoStatus,
   SnapshotType
-} from '@/lib/generated/client';
+} from '@/lib/generated/client/client';
 
 // Export types
 export type {

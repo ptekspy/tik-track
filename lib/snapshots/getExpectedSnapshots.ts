@@ -1,5 +1,5 @@
-import { SnapshotType } from '@/lib/generated/client';
-import { differenceInHours, differenceInDays } from 'date-fns';
+import { SnapshotType } from '@/lib/types/server';
+import { differenceInHours, differenceInCalendarDays } from 'date-fns';
 
 /**
  * Get the list of expected snapshot types based on time elapsed since post date
@@ -10,7 +10,7 @@ import { differenceInHours, differenceInDays } from 'date-fns';
 export const getExpectedSnapshots = (postDate: Date): SnapshotType[] => {
   const now = new Date();
   const hoursElapsed = differenceInHours(now, postDate);
-  const daysElapsed = differenceInDays(now, postDate);
+  const daysElapsed = differenceInCalendarDays(now, postDate);
 
   const expected: SnapshotType[] = [];
 

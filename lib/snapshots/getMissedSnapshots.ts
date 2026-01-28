@@ -1,4 +1,4 @@
-import { SnapshotType } from '@/lib/generated/client';
+import { SnapshotType } from '@/lib/generated/client/client';
 import { getExpectedSnapshots } from './getExpectedSnapshots';
 
 /**

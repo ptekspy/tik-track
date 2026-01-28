@@ -1,4 +1,4 @@
-import type { PrismaClient, VideoStatus } from '@/lib/generated/client';
+import type { PrismaClient, VideoStatus } from '@/lib/generated/client/client';
 
 export interface CreateVideoInput {
   title: string;

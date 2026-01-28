@@ -1,6 +1,6 @@
 import { db } from '@/lib/database/client';
-import type { Hashtag, VideoHashtag } from '@/lib/generated/client';
-import type { Prisma } from '@/lib/generated/client';
+import type { Hashtag, VideoHashtag } from '@/lib/generated/client/client';
+import type { Prisma } from '@/lib/generated/client/client';
 import type { HashtagWithVideos } from '@/lib/types/hashtag';
 
 /**

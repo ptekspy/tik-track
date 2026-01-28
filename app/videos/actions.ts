@@ -5,7 +5,7 @@ import { createVideo } from '@/lib/services/createVideo';
 import { updateVideo } from '@/lib/services/updateVideo';
 import { updateVideoStatus } from '@/lib/services/updateVideoStatus';
 import { deleteVideo } from '@/lib/services/deleteVideo';
-import type { VideoStatus } from '@/lib/generated/client';
+import type { VideoStatus } from '@/lib/types/server';
 
 export interface ActionResult<T = unknown> {
   success: boolean;

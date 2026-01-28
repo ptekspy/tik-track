@@ -1,6 +1,5 @@
 import { db } from '@/lib/database/client';
-import type { Video, VideoStatus } from '@/lib/generated/client';
-import type { Prisma } from '@/lib/generated/client';
+import type { Video, VideoStatus, Prisma } from '@/lib/types/server';
 
 /**
  * Find a video by ID

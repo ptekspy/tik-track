@@ -1,4 +1,4 @@
-import type { AnalyticsSnapshot } from '@/lib/generated/client';
+import type { AnalyticsSnapshot } from '@/lib/types/server';
 
 /**
  * Calculate share rate for a snapshot

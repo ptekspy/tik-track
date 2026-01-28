@@ -36,7 +36,7 @@ import { VideoStatus, SnapshotType } from '@/lib/constants';
 import type { Video, AnalyticsSnapshot } from '@/lib/types/prisma';
 
 // ❌ Wrong - don't import from generated client
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 ```
 
 ### Server Components / Server Actions
@@ -46,7 +46,7 @@ import { VideoStatus, SnapshotType } from '@/lib/types/server';
 import type { Video, Prisma } from '@/lib/types/server';
 
 // ✅ Also correct - can import directly from generated client
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/generated/client/client';
 ```
 
 ### Why This Approach?

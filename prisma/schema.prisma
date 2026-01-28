@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
   output   = "../lib/generated/client"
+  moduleFormat = "esm" 
 }
 
 datasource db {
@@ -53,7 +54,7 @@ model AnalyticsSnapshot {
   snapshotType         SnapshotType
   views                Int?
   totalPlayTimeSeconds Int?
-  avgWatchTimeSeconds  Int?
+  avgWatchTimeSeconds  Decimal?     @db.Decimal(10, 2)
   completionRate       Decimal?     @db.Decimal(5, 4)
   newFollowers         Int?
   likes                Int?

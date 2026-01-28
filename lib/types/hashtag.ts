@@ -1,4 +1,4 @@
-import type { Prisma, Hashtag } from '@/lib/generated/client';
+import type { Prisma, Hashtag } from '@/lib/generated/client/client';
 
 export type { Hashtag };
 

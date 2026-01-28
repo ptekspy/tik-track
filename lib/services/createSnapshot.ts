@@ -2,8 +2,8 @@ import { createSnapshotSchema } from '@/lib/schemas/snapshot';
 import type { CreateSnapshotInput } from '@/lib/schemas/snapshot';
 import { findVideoById } from '@/lib/dal/videos';
 import { findSnapshotByVideoAndType, createSnapshot as createSnapshotDAL } from '@/lib/dal/snapshots';
-import { VideoStatus, SnapshotType } from '@/lib/generated/client';
-import type { AnalyticsSnapshot } from '@/lib/generated/client';
+import { VideoStatus, SnapshotType } from '@/lib/types/server';
+import type { AnalyticsSnapshot } from '@/lib/types/server';
 
 /**
  * Create a new analytics snapshot for a published video

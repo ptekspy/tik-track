@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Prisma, VideoStatus, SnapshotType } from '@/lib/generated/client';
+import { Prisma, VideoStatus, SnapshotType } from '@/lib/generated/client/client';
 
 describe('Prisma Client Setup', () => {
   it('should have Prisma.Decimal constructor', () => {
