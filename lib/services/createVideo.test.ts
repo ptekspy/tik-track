@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { VideoStatus } from '@/lib/generated/client/client';
 import { createVideo } from './createVideo';
-import { mockVideoDraft } from '@/lib/testing/mocks';
+import { mockVideoDraft, mockUser } from '@/lib/testing/mocks';
+
+// Mock auth
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the database client
 vi.mock('@/lib/database/client', () => ({
@@ -10,11 +15,13 @@ vi.mock('@/lib/database/client', () => ({
   },
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { db } from '@/lib/database/client';
 
 describe('createVideo', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   it('should create a video with valid input', async () => {

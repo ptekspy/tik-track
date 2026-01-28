@@ -5,6 +5,10 @@ export const metadata = {
   description: 'Sign in to your TikTrack account',
 };
 
-export default function LoginPage() {
-  return <LoginForm />;
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string }>;
+}) {
+  return <LoginForm searchParams={searchParams} />;
 }

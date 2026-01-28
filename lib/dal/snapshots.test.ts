@@ -13,13 +13,14 @@ import {
   mockSnapshotOneDay,
   mockSnapshotSevenDay,
   mockVideoPublished,
+  MOCK_USER_ID,
 } from '@/lib/testing/mocks';
 
 // Mock the database client
 vi.mock('@/lib/database/client', () => ({
   db: {
     analyticsSnapshot: {
-      findUnique: vi.fn(),
+      findFirst: vi.fn(),
       findMany: vi.fn(),
       create: vi.fn(),
       update: vi.fn(),
@@ -37,20 +38,20 @@ describe('DAL - Snapshots', () => {
 
   describe('findSnapshotById', () => {
     it('should find a snapshot by id', async () => {
-      vi.mocked(db.analyticsSnapshot.findUnique).mockResolvedValue(mockSnapshotOneHour);
+      vi.mocked(db.analyticsSnapshot.findFirst).mockResolvedValue(mockSnapshotOneHour);
 
-      const result = await findSnapshotById(mockSnapshotOneHour.id);
+      const result = await findSnapshotById(mockSnapshotOneHour.id, MOCK_USER_ID);
 
-      expect(db.analyticsSnapshot.findUnique).toHaveBeenCalledWith({
-        where: { id: mockSnapshotOneHour.id },
+      expect(db.analyticsSnapshot.findFirst).toHaveBeenCalledWith({
+        where: { id: mockSnapshotOneHour.id, userId: MOCK_USER_ID },
       });
       expect(result).toEqual(mockSnapshotOneHour);
     });
 
     it('should return null if snapshot not found', async () => {
-      vi.mocked(db.analyticsSnapshot.findUnique).mockResolvedValue(null);
+      vi.mocked(db.analyticsSnapshot.findFirst).mockResolvedValue(null);
 
-      const result = await findSnapshotById('non-existent-id');
+      const result = await findSnapshotById('non-existent-id', MOCK_USER_ID);
 
       expect(result).toBeNull();
     });
@@ -61,10 +62,10 @@ describe('DAL - Snapshots', () => {
       const mockSnapshots = [mockSnapshotOneHour, mockSnapshotOneDay, mockSnapshotSevenDay];
       vi.mocked(db.analyticsSnapshot.findMany).mockResolvedValue(mockSnapshots);
 
-      const result = await findSnapshotsByVideoId(mockVideoPublished.id);
+      const result = await findSnapshotsByVideoId(mockVideoPublished.id, MOCK_USER_ID);
 
       expect(db.analyticsSnapshot.findMany).toHaveBeenCalledWith({
-        where: { videoId: mockVideoPublished.id },
+        where: { videoId: mockVideoPublished.id, video: { userId: MOCK_USER_ID } },
         orderBy: { recordedAt: 'asc' },
       });
       expect(result).toEqual(mockSnapshots);
@@ -73,7 +74,7 @@ describe('DAL - Snapshots', () => {
     it('should return empty array if no snapshots', async () => {
       vi.mocked(db.analyticsSnapshot.findMany).mockResolvedValue([]);
 
-      const result = await findSnapshotsByVideoId('video-id');
+      const result = await findSnapshotsByVideoId('video-id', MOCK_USER_ID);
 
       expect(result).toEqual([]);
     });
@@ -81,30 +82,31 @@ describe('DAL - Snapshots', () => {
 
   describe('findSnapshotByVideoAndType', () => {
     it('should find a snapshot by video ID and type', async () => {
-      vi.mocked(db.analyticsSnapshot.findUnique).mockResolvedValue(mockSnapshotOneHour);
+      vi.mocked(db.analyticsSnapshot.findFirst).mockResolvedValue(mockSnapshotOneHour);
 
       const result = await findSnapshotByVideoAndType(
         mockVideoPublished.id,
-        SnapshotType.ONE_HOUR
+        SnapshotType.ONE_HOUR,
+        MOCK_USER_ID
       );
 
-      expect(db.analyticsSnapshot.findUnique).toHaveBeenCalledWith({
+      expect(db.analyticsSnapshot.findFirst).toHaveBeenCalledWith({
         where: {
-          videoId_snapshotType: {
-            videoId: mockVideoPublished.id,
-            snapshotType: SnapshotType.ONE_HOUR,
-          },
+          videoId: mockVideoPublished.id,
+          snapshotType: SnapshotType.ONE_HOUR,
+          userId: MOCK_USER_ID,
         },
       });
       expect(result).toEqual(mockSnapshotOneHour);
     });
 
     it('should return null if snapshot type does not exist for video', async () => {
-      vi.mocked(db.analyticsSnapshot.findUnique).mockResolvedValue(null);
+      vi.mocked(db.analyticsSnapshot.findFirst).mockResolvedValue(null);
 
       const result = await findSnapshotByVideoAndType(
         mockVideoPublished.id,
-        SnapshotType.THIRTY_DAY
+        SnapshotType.THIRTY_DAY,
+        MOCK_USER_ID
       );
 
       expect(result).toBeNull();
@@ -115,6 +117,7 @@ describe('DAL - Snapshots', () => {
     it('should create a new snapshot', async () => {
       const newSnapshotData = {
         video: { connect: { id: mockVideoPublished.id } },
+        user: { connect: { id: MOCK_USER_ID } },
         snapshotType: SnapshotType.THREE_HOUR,
         views: 500,
         likes: 50,
@@ -122,7 +125,7 @@ describe('DAL - Snapshots', () => {
 
       vi.mocked(db.analyticsSnapshot.create).mockResolvedValue(mockSnapshotOneHour);
 
-      const result = await createSnapshot(newSnapshotData);
+      const result = await createSnapshot(newSnapshotData, MOCK_USER_ID);
 
       expect(db.analyticsSnapshot.create).toHaveBeenCalledWith({
         data: newSnapshotData,

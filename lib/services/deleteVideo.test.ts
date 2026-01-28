@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { deleteVideo } from './deleteVideo';
-import { mockVideoPublished } from '@/lib/testing/mocks';
+import { mockVideoPublished, mockUser } from '@/lib/testing/mocks';
+
+// Mock auth
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the database client
 vi.mock('@/lib/database/client', () => ({
@@ -16,12 +21,14 @@ vi.mock('@/lib/dal/videos', () => ({
   findVideoById: vi.fn(),
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { db } from '@/lib/database/client';
 import { findVideoById } from '@/lib/dal/videos';
 
 describe('deleteVideo', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   it('should delete an existing video', async () => {

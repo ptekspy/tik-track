@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { VideoStatus } from '@/lib/generated/client/client';
 import { updateVideoStatus } from './updateVideoStatus';
-import { mockVideoDraft, mockVideoPublished, mockVideoArchived } from '@/lib/testing/mocks';
+import { mockVideoDraft, mockVideoPublished, mockVideoArchived, mockUser } from '@/lib/testing/mocks';
+
+// Mock auth
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the DAL functions
 vi.mock('@/lib/dal/videos', () => ({
@@ -9,11 +14,13 @@ vi.mock('@/lib/dal/videos', () => ({
   updateVideo: vi.fn(),
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { findVideoById, updateVideo } from '@/lib/dal/videos';
 
 describe('updateVideoStatus', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   describe('valid transitions', () => {

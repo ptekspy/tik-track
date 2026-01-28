@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getAllHashtagsWithStats } from './getAllHashtagsWithStats';
-import { mockHashtag1, mockHashtag2, mockVideoPublished, mockVideoDraft, mockSnapshotOneDay } from '@/lib/testing/mocks';
+import { mockHashtag1, mockHashtag2, mockVideoPublished, mockVideoDraft, mockSnapshotOneDay, mockUser } from '@/lib/testing/mocks';
 import { VideoStatus } from '@/lib/generated/client/client';
+
+// Mock auth
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the database
 vi.mock('@/lib/database/client', () => ({
@@ -12,11 +17,13 @@ vi.mock('@/lib/database/client', () => ({
   },
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { db } from '@/lib/database/client';
 
 describe('getAllHashtagsWithStats', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   it('should return empty array when no hashtags exist', async () => {

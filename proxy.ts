@@ -12,14 +12,11 @@ const publicRoutes = new Set([
   '/verify-email',
 ]);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Check if it's a public route (exact match only for root, otherwise check if path starts with route)
-  const isPublicRoute = publicRoutes.has(pathname) || 
-    Array.from(publicRoutes).some(route => route !== '/' && pathname.startsWith(route + '/'));
-  
-  if (isPublicRoute) {
+  // Allow public routes without any checks
+  if (publicRoutes.has(pathname)) {
     return NextResponse.next();
   }
 

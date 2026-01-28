@@ -1,17 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn } from '@/lib/auth/client';
 import { LogIn, Mail, Lock, AlertCircle } from 'lucide-react';
 
-export function LoginForm() {
+export function LoginForm({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string }>;
+}) {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [redirectTo, setRedirectTo] = useState('/dashboard');
+
+  useEffect(() => {
+    searchParams.then((params) => {
+      if (params.from) {
+        setRedirectTo(params.from);
+      }
+    });
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +43,8 @@ export function LoginForm() {
         return;
       }
 
-      // Success - redirect to dashboard
-      router.push('/dashboard');
+      // Success - redirect to original page or dashboard
+      router.push(redirectTo);
       router.refresh();
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');

@@ -9,6 +9,18 @@ import { VideoStatus, SnapshotType, Prisma } from '@/lib/types/server';
 // Mock user ID for testing
 export const MOCK_USER_ID = '90000000-0000-4000-8000-000000000001';
 
+// Mock User for testing
+export const mockUser = {
+  id: MOCK_USER_ID,
+  name: 'Test User',
+  email: 'test@example.com',
+  emailVerified: true,
+  image: null,
+  role: 'USER' as const,
+  createdAt: new Date('2026-01-01T00:00:00Z'),
+  updatedAt: new Date('2026-01-01T00:00:00Z'),
+};
+
 // Mock Video - DRAFT
 export const mockVideoDraft: Video = {
   id: '00000000-0000-4000-8000-000000000001',
