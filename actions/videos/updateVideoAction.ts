@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { updateVideo } from '@/lib/videos/updateVideo';
 import type { VideoFormData } from '@/components/VideoForm/VideoForm';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 export async function updateVideoAction(id: string, data: VideoFormData) {
   try {
@@ -23,6 +24,9 @@ export async function updateVideoAction(id: string, data: VideoFormData) {
     revalidatePath(`/videos/${id}`);
     redirect(`/videos/${video.id}`);
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     console.error('Failed to update video:', error);
     throw new Error('Failed to update video');
   }

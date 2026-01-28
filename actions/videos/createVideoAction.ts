@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { createVideo } from '@/lib/videos/createVideo';
 import type { VideoFormData } from '@/components/VideoForm/VideoForm';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 export async function createVideoAction(data: VideoFormData) {
   try {
@@ -22,6 +23,9 @@ export async function createVideoAction(data: VideoFormData) {
     revalidatePath('/videos');
     redirect(`/videos/${video.id}`);
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     console.error('Failed to create video:', error);
     throw new Error('Failed to create video');
   }

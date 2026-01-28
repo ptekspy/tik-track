@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { createSnapshot } from '@/lib/snapshots/createSnapshot';
 import type { SnapshotFormData } from '@/components/SnapshotForm/SnapshotForm';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 export async function createSnapshotAction(videoId: string, data: SnapshotFormData) {
   try {
@@ -27,6 +28,9 @@ export async function createSnapshotAction(videoId: string, data: SnapshotFormDa
     revalidatePath(`/videos/${videoId}`);
     redirect(`/videos/${videoId}`);
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     console.error('Failed to create snapshot:', error);
     throw new Error('Failed to create snapshot');
   }
