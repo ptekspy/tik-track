@@ -14,6 +14,9 @@ importers:
       '@prisma/extension-accelerate':
         specifier: ^3.0.1
         version: 3.0.1(@prisma/client@6.19.2(prisma@6.19.2(typescript@5.9.3))(typescript@5.9.3))
+      bcryptjs:
+        specifier: ^3.0.3
+        version: 3.0.3
       better-auth:
         specifier: ^1.4.17
         version: 1.4.17(@prisma/client@6.19.2(prisma@6.19.2(typescript@5.9.3))(typescript@5.9.3))(next@16.1.5(@babel/core@7.28.6)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(prisma@6.19.2(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vitest@4.0.18(@types/node@20.19.30)(happy-dom@20.3.9)(jiti@2.6.1)(lightningcss@1.30.2))
@@ -1406,6 +1409,10 @@ packages:
 
   bcrypt-pbkdf@1.0.2:
     resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
+
+  bcryptjs@3.0.3:
+    resolution: {integrity: sha512-GlF5wPWnSa/X5LKM1o0wz0suXIINz1iHRLvTS+sLyi7XPbe5ycmYI3DlZqVGZZtDgl4DmasFg7gOB3JYbphV5g==}
+    hasBin: true
 
   better-auth@1.4.17:
     resolution: {integrity: sha512-VmHGQyKsEahkEs37qguROKg/6ypYpNF13D7v/lkbO7w7Aivz0Bv2h+VyUkH4NzrGY0QBKXi1577mGhDCVwp0ew==}
@@ -4663,6 +4670,8 @@ snapshots:
   bcrypt-pbkdf@1.0.2:
     dependencies:
       tweetnacl: 0.14.5
+
+  bcryptjs@3.0.3: {}
 
   better-auth@1.4.17(@prisma/client@6.19.2(prisma@6.19.2(typescript@5.9.3))(typescript@5.9.3))(next@16.1.5(@babel/core@7.28.6)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(prisma@6.19.2(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vitest@4.0.18(@types/node@20.19.30)(happy-dom@20.3.9)(jiti@2.6.1)(lightningcss@1.30.2)):
     dependencies:
