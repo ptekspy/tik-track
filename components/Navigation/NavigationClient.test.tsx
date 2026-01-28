@@ -31,7 +31,7 @@ describe('NavigationClient', () => {
   it('should render draft badge when drafts exist', () => {
     vi.mocked(usePathname).mockReturnValue('/dashboard');
 
-    render(<NavigationClient draftCount={5} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={5} notifications={mockNotifications} />);
 
     const badges = screen.getAllByText('5');
     expect(badges.length).toBeGreaterThan(0);

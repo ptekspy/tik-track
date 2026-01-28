@@ -5,13 +5,19 @@ import Link from 'next/link';
 import { TrendingUp, Video, FileEdit, Archive, Plus, Sparkles } from 'lucide-react';
 import { ActionPanel } from '@/components/ActionPanel/ActionPanel';
 import { getNotifications } from '@/lib/notifications/getNotifications';
+import { requireUser } from '@/lib/auth/server';
 
 // Force dynamic rendering - don't cache this page
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function DashboardPage() {
+  // Get authenticated user
+  const user = await requireUser();
+  
+  // Get videos for this user only
   const videos = await db.video.findMany({
+    where: { userId: user.id },
     include: { snapshots: true },
     orderBy: { createdAt: 'desc' },
   }) as VideoWithSnapshots[];

@@ -5,8 +5,14 @@ import {
   mockVideoPublished, 
   mockSnapshotOneHour, 
   mockSnapshotOneDay,
-  mockSnapshotSevenDay 
+  mockSnapshotSevenDay,
+  mockUser 
 } from '@/lib/testing/mocks';
+
+// Mock auth
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the DAL functions
 vi.mock('@/lib/dal/videos', () => ({
@@ -17,12 +23,14 @@ vi.mock('@/lib/dal/snapshots', () => ({
   findSnapshotsByVideoId: vi.fn(),
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { findVideoById } from '@/lib/dal/videos';
 import { findSnapshotsByVideoId } from '@/lib/dal/snapshots';
 
 describe('getVideoWithAnalytics', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   it('should return video with calculated metrics for snapshots', async () => {

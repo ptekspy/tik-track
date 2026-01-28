@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { deleteSnapshot } from './deleteSnapshot';
-import { mockSnapshotOneHour } from '@/lib/testing/mocks';
+import { mockSnapshotOneHour, mockUser } from '@/lib/testing/mocks';
+
+// Mock auth
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the database client
 vi.mock('@/lib/database/client', () => ({
@@ -16,12 +21,14 @@ vi.mock('@/lib/dal/snapshots', () => ({
   findSnapshotById: vi.fn(),
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { db } from '@/lib/database/client';
 import { findSnapshotById } from '@/lib/dal/snapshots';
 
 describe('deleteSnapshot', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   it('should delete an existing snapshot', async () => {

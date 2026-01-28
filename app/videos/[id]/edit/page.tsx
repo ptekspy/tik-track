@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { VideoForm, VideoFormData } from '@/components/VideoForm/VideoForm';
 import { updateVideoAction } from '@/actions/videos/updateVideoAction';
 import { VideoWithSnapshots } from '@/lib/types/video';
+import { requireUser } from '@/lib/auth/server';
 
 interface VideoEditPageProps {
   params: Promise<{ id: string }>;
@@ -10,9 +11,13 @@ interface VideoEditPageProps {
 
 export default async function VideoEditPage({ params }: VideoEditPageProps) {
   const { id } = await params;
+  
+  // Get authenticated user
+  const user = await requireUser();
 
-  const video = await db.video.findUnique({
-    where: { id },
+  // Get video only if owned by this user
+  const video = await db.video.findFirst({
+    where: { id, userId: user.id },
     include: {
       snapshots: true,
       hashtags: {

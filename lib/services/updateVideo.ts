@@ -3,6 +3,7 @@ import { updateVideoSchema } from '@/lib/schemas/video';
 import type { UpdateVideoInput } from '@/lib/schemas/video';
 import type { Video } from '@/lib/types/server';
 import { findVideoById, updateVideo as updateVideoDAL } from '@/lib/dal/videos';
+import { requireUser } from '@/lib/auth/server';
 
 /**
  * Update video metadata and hashtags
@@ -10,15 +11,18 @@ import { findVideoById, updateVideo as updateVideoDAL } from '@/lib/dal/videos';
  * @param videoId - Video ID
  * @param input - Video update data (validated against schema)
  * @returns Updated video
- * @throws Error if video not found
+ * @throws Error if video not found or user not authorized
  * @throws ZodError if validation fails
  */
 export const updateVideo = async (videoId: string, input: unknown): Promise<Video> => {
+  // Get authenticated user
+  const user = await requireUser();
+  
   // Validate input
   const validated = updateVideoSchema.parse(input) as UpdateVideoInput;
 
-  // Check video exists
-  const existingVideo = await findVideoById(videoId);
+  // Check video exists and user owns it
+  const existingVideo = await findVideoById(videoId, user.id);
   if (!existingVideo) {
     throw new Error(`Video with ID ${videoId} not found`);
   }
@@ -27,7 +31,7 @@ export const updateVideo = async (videoId: string, input: unknown): Promise<Vide
   return await db.$transaction(async (tx) => {
     // Update video metadata
     const video = await tx.video.update({
-      where: { id: videoId },
+      where: { id: videoId, userId: user.id },
       data: {
         ...(validated.title && { title: validated.title }),
         ...(validated.script && { script: validated.script }),

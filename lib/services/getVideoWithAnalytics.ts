@@ -9,6 +9,7 @@ import { calculateRetentionRate } from '@/lib/metrics/calculateRetentionRate';
 import { calculateFollowerConversion } from '@/lib/metrics/calculateFollowerConversion';
 import { detectSignals } from '@/lib/metrics/detectSignals';
 import type { SnapshotWithMetrics } from '@/lib/types/metrics';
+import { requireUser } from '@/lib/auth/server';
 
 export interface VideoWithAnalytics extends Video {
   snapshots: SnapshotWithMetrics[];
@@ -19,18 +20,21 @@ export interface VideoWithAnalytics extends Video {
  * 
  * @param videoId - Video ID
  * @returns Video with snapshots enriched with calculated metrics
- * @throws Error if video not found
+ * @throws Error if video not found or user not authorized
  */
 export const getVideoWithAnalytics = async (videoId: string): Promise<VideoWithAnalytics> => {
-  // Fetch video
-  const video = await findVideoById(videoId);
+  // Get authenticated user
+  const user = await requireUser();
+  
+  // Fetch video (ensures user owns it)
+  const video = await findVideoById(videoId, user.id);
   
   if (!video) {
     throw new Error(`Video with ID ${videoId} not found`);
   }
 
-  // Fetch snapshots
-  const snapshots = await findSnapshotsByVideoId(videoId);
+  // Fetch snapshots for this user's video
+  const snapshots = await findSnapshotsByVideoId(videoId, user.id);
 
   // Calculate metrics for each snapshot
   const snapshotsWithMetrics: SnapshotWithMetrics[] = snapshots.map((snapshot) => {

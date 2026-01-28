@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { LayoutDashboard, Video, FileEdit, Hash, TrendingUp, Menu, X } from 'lucide-react';
 import { NotificationBell } from '../NotificationBell/NotificationBell';
+import { LogoutButton } from '../LogoutButton/LogoutButton';
 import type { Notification } from '@/lib/notifications/getNotifications';
 
 export interface NavigationClientProps {
@@ -85,6 +86,7 @@ export function NavigationClient({ draftCount, notifications }: NavigationClient
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-2">
             <NotificationBell notifications={notifications} />
+            <LogoutButton variant="icon" />
           </div>
 
           {/* Mobile menu button */}
@@ -136,6 +138,13 @@ export function NavigationClient({ draftCount, notifications }: NavigationClient
                 </Link>
               );
             })}
+            
+            {/* Mobile Logout Button */}
+            <div className="border-t border-white/10 mt-2 pt-2">
+              <div onClick={() => setIsMobileMenuOpen(false)}>
+                <LogoutButton variant="full" showText />
+              </div>
+            </div>
           </div>
         </div>
       )}

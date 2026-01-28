@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { VideoStatus, SnapshotType } from '@/lib/generated/client/client';
 import { createSnapshot } from './createSnapshot';
-import { mockVideoPublished, mockVideoDraft, mockSnapshotOneHour } from '@/lib/testing/mocks';
+import { mockVideoPublished, mockVideoDraft, mockSnapshotOneHour, mockUser } from '@/lib/testing/mocks';
+
+// Mock the auth server functions
+vi.mock('@/lib/auth/server', () => ({
+  requireUser: vi.fn(),
+}));
 
 // Mock the DAL functions
 vi.mock('@/lib/dal/videos', () => ({
@@ -13,12 +18,14 @@ vi.mock('@/lib/dal/snapshots', () => ({
   createSnapshot: vi.fn(),
 }));
 
+import { requireUser } from '@/lib/auth/server';
 import { findVideoById } from '@/lib/dal/videos';
 import { findSnapshotByVideoAndType, createSnapshot as createSnapshotDAL } from '@/lib/dal/snapshots';
 
 describe('createSnapshot', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(requireUser).mockResolvedValue(mockUser);
   });
 
   it('should create a snapshot for a published video', async () => {

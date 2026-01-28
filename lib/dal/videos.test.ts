@@ -8,13 +8,13 @@ import {
   updateVideo,
   deleteVideo,
 } from './videos';
-import { mockVideoDraft, mockVideoPublished, mockVideoArchived } from '@/lib/testing/mocks';
+import { mockVideoDraft, mockVideoPublished, mockVideoArchived, MOCK_USER_ID } from '@/lib/testing/mocks';
 
 // Mock the database client
 vi.mock('@/lib/database/client', () => ({
   db: {
     video: {
-      findUnique: vi.fn(),
+      findFirst: vi.fn(),
       findMany: vi.fn(),
       create: vi.fn(),
       update: vi.fn(),
@@ -33,12 +33,12 @@ describe('DAL - Videos', () => {
 
   describe('findVideoById', () => {
     it('should find a video by id', async () => {
-      vi.mocked(db.video.findUnique).mockResolvedValue(mockVideoPublished);
+      vi.mocked(db.video.findFirst).mockResolvedValue(mockVideoPublished);
 
-      const result = await findVideoById(mockVideoPublished.id);
+      const result = await findVideoById(mockVideoPublished.id, MOCK_USER_ID);
 
-      expect(db.video.findUnique).toHaveBeenCalledWith({
-        where: { id: mockVideoPublished.id },
+      expect(db.video.findFirst).toHaveBeenCalledWith({
+        where: { id: mockVideoPublished.id, userId: MOCK_USER_ID },
       });
       expect(result).toEqual(mockVideoPublished);
     });
@@ -46,7 +46,7 @@ describe('DAL - Videos', () => {
     it('should return null if video not found', async () => {
       vi.mocked(db.video.findUnique).mockResolvedValue(null);
 
-      const result = await findVideoById('non-existent-id');
+      const result = await findVideoById('non-existent-id', MOCK_USER_ID);
 
       expect(result).toBeNull();
     });
@@ -57,9 +57,10 @@ describe('DAL - Videos', () => {
       const mockVideos = [mockVideoPublished, mockVideoDraft, mockVideoArchived];
       vi.mocked(db.video.findMany).mockResolvedValue(mockVideos);
 
-      const result = await findAllVideos();
+      const result = await findAllVideos(MOCK_USER_ID);
 
       expect(db.video.findMany).toHaveBeenCalledWith({
+        where: { userId: MOCK_USER_ID },
         orderBy: { createdAt: 'desc' },
       });
       expect(result).toEqual(mockVideos);
@@ -120,10 +121,13 @@ describe('DAL - Videos', () => {
 
       vi.mocked(db.video.create).mockResolvedValue(mockVideoDraft);
 
-      const result = await createVideo(newVideoData);
+      const result = await createVideo(newVideoData, MOCK_USER_ID);
 
       expect(db.video.create).toHaveBeenCalledWith({
-        data: newVideoData,
+        data: {
+          ...newVideoData,
+          user: { connect: { id: MOCK_USER_ID } },
+        },
       });
       expect(result).toEqual(mockVideoDraft);
     });

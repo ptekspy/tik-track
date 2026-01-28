@@ -42,8 +42,7 @@ describe('getExpectedSnapshots', () => {
     expect(result).toContain(SnapshotType.THREE_HOUR);
     expect(result).toContain(SnapshotType.SIX_HOUR);
     expect(result).toContain(SnapshotType.TWELVE_HOUR);
-    expect(result).toContain(SnapshotType.ONE_DAY);
-    expect(result.length).toBe(6);
+    expect(result.length).toBe(5); // 5 hour snapshots (no day snapshot yet at 12 hours)
   });
 
   it('should include ONE_DAY after 24 hours', () => {

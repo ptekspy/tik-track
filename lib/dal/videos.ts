@@ -2,29 +2,30 @@ import { db } from '@/lib/database/client';
 import type { Video, VideoStatus, Prisma } from '@/lib/types/server';
 
 /**
- * Find a video by ID
+ * Find a video by ID for a specific user
  */
-export const findVideoById = async (id: string): Promise<Video | null> => {
+export const findVideoById = async (id: string, userId: string): Promise<Video | null> => {
   return db.video.findUnique({
-    where: { id },
+    where: { id, userId },
   });
 };
 
 /**
- * Find all videos
+ * Find all videos for a specific user
  */
-export const findAllVideos = async (): Promise<Video[]> => {
+export const findAllVideos = async (userId: string): Promise<Video[]> => {
   return db.video.findMany({
+    where: { userId },
     orderBy: { createdAt: 'desc' },
   });
 };
 
 /**
- * Find videos by status
+ * Find videos by status for a specific user
  */
-export const findVideosByStatus = async (status: VideoStatus): Promise<Video[]> => {
+export const findVideosByStatus = async (status: VideoStatus, userId: string): Promise<Video[]> => {
   return db.video.findMany({
-    where: { status },
+    where: { status, userId },
     orderBy: { createdAt: 'desc' },
   });
 };
@@ -32,30 +33,34 @@ export const findVideosByStatus = async (status: VideoStatus): Promise<Video[]> 
 /**
  * Create a new video
  */
-export const createVideo = async (data: Prisma.VideoCreateInput): Promise<Video> => {
+export const createVideo = async (data: Prisma.VideoCreateInput, userId: string): Promise<Video> => {
   return db.video.create({
-    data,
+    data: {
+      ...data,
+      user: { connect: { id: userId } },
+    },
   });
 };
 
 /**
- * Update a video
+ * Update a video (only if owned by user)
  */
 export const updateVideo = async (
   id: string,
-  data: Prisma.VideoUpdateInput
+  data: Prisma.VideoUpdateInput,
+  userId: string
 ): Promise<Video> => {
   return db.video.update({
-    where: { id },
+    where: { id, userId },
     data,
   });
 };
 
 /**
- * Delete a video
+ * Delete a video (only if owned by user)
  */
-export const deleteVideo = async (id: string): Promise<Video> => {
+export const deleteVideo = async (id: string, userId: string): Promise<Video> => {
   return db.video.delete({
-    where: { id },
+    where: { id, userId },
   });
 };

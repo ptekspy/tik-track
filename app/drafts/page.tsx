@@ -4,14 +4,22 @@ import { VideoGrid } from '@/components/VideoGrid/VideoGrid';
 import { VideoWithSnapshots } from '@/lib/types/video';
 import Link from 'next/link';
 import { FileEdit, Plus } from 'lucide-react';
+import { requireUser } from '@/lib/auth/server';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function DraftsPage() {
+  // Get authenticated user
+  const user = await requireUser();
+  
+  // Get draft videos for this user only
   const draftVideos = await db.video.findMany({
-    where: { status: VideoStatus.DRAFT },
+    where: { 
+      status: VideoStatus.DRAFT,
+      userId: user.id 
+    },
     include: { snapshots: true },
     orderBy: { createdAt: 'desc' },
   }) as VideoWithSnapshots[];

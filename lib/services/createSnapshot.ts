@@ -4,6 +4,7 @@ import { findVideoById } from '@/lib/dal/videos';
 import { findSnapshotByVideoAndType, createSnapshot as createSnapshotDAL } from '@/lib/dal/snapshots';
 import { VideoStatus, SnapshotType } from '@/lib/types/server';
 import type { AnalyticsSnapshot } from '@/lib/types/server';
+import { requireUser } from '@/lib/auth/server';
 
 /**
  * Create a new analytics snapshot for a published video
@@ -14,11 +15,14 @@ import type { AnalyticsSnapshot } from '@/lib/types/server';
  * @throws ZodError if validation fails
  */
 export const createSnapshot = async (input: unknown): Promise<AnalyticsSnapshot> => {
+  // Get authenticated user
+  const user = await requireUser();
+  
   // Validate input
   const validated = createSnapshotSchema.parse(input) as CreateSnapshotInput;
 
-  // Check video exists
-  const video = await findVideoById(validated.videoId);
+  // Check video exists and user owns it
+  const video = await findVideoById(validated.videoId, user.id);
   
   if (!video) {
     throw new Error(`Video with ID ${validated.videoId} not found`);
@@ -32,7 +36,8 @@ export const createSnapshot = async (input: unknown): Promise<AnalyticsSnapshot>
   // Check snapshot type doesn't already exist for this video
   const existingSnapshot = await findSnapshotByVideoAndType(
     validated.videoId,
-    validated.snapshotType
+    validated.snapshotType,
+    user.id
   );
 
   if (existingSnapshot) {
@@ -56,5 +61,5 @@ export const createSnapshot = async (input: unknown): Promise<AnalyticsSnapshot>
     favorites: validated.favorites ?? null,
     profileViews: validated.profileViews ?? null,
     reach: validated.reach ?? null,
-  });
+  }, user.id);
 };
