@@ -123,9 +123,18 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`p-4 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-colors ${getNotificationStyle(notification.type)}`}
+                      className={`relative p-4 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-colors ${getNotificationStyle(notification.type)}`}
                     >
-                      <div className="flex gap-3">
+                      <button
+                        onClick={(e) => handleDismiss(notification.id, e)}
+                        disabled={dismissing === notification.id}
+                        className="absolute top-2 right-2 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 dark:hover:text-gray-300 dark:hover:bg-gray-800/50 transition-colors disabled:opacity-50"
+                        aria-label="Dismiss notification"
+                        title="Dismiss"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                      <div className="flex gap-3 pr-8">
                         <div className="flex-shrink-0 mt-0.5">
                           {getNotificationIcon(notification.type)}
                         </div>
@@ -133,24 +142,13 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
                           <p className="text-sm text-gray-900 dark:text-white mb-2">
                             {notification.message}
                           </p>
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={notification.actionUrl}
-                              onClick={() => setIsOpen(false)}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
-                            >
-                              {notification.actionLabel}
-                            </Link>
-                            <button
-                              onClick={(e) => handleDismiss(notification.id, e)}
-                              disabled={dismissing === notification.id}
-                              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 dark:hover:text-gray-300 dark:hover:bg-gray-800/50 transition-colors disabled:opacity-50"
-                              aria-label="Dismiss notification"
-                              title="Dismiss"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
+                          <Link
+                            href={notification.actionUrl}
+                            onClick={() => setIsOpen(false)}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-[#fe2c55] to-[#7c3aed] rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
+                          >
+                            {notification.actionLabel}
+                          </Link>
                         </div>
                       </div>
                     </div>
