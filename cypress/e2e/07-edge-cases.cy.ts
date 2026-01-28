@@ -2,7 +2,7 @@ describe('Edge Cases', () => {
   it('should handle video length = 0', () => {
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Zero Length Video');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('0');
+    cy.get('input[aria-label="Seconds"]').clear().type('0');
     cy.contains('button', 'Create Video').click();
 
     // Should either show error or handle gracefully
@@ -103,7 +103,10 @@ describe('Edge Cases', () => {
     cy.get('input[name="title"]').type('Time Edge Test');
     cy.get('select[name="status"]').select('PUBLISHED');
     cy.get('input[name="postDate"]').type('2026-01-27');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('3661'); // 1h 1m 1s
+    // Set video length to 1h 1m 1s
+    cy.get('input[aria-label="Hours"]').clear().type('1');
+    cy.get('input[aria-label="Minutes"]').clear().type('1');
+    cy.get('input[aria-label="Seconds"]').clear().type('1');
     cy.contains('button', 'Create Video').click();
 
     // Should display time correctly

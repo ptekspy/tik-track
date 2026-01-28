@@ -3,7 +3,7 @@ describe('Video Status Transitions', () => {
     // Create draft
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Status Test Video');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('30');
+    cy.get('input[aria-label="Seconds"]').clear().type('30');
     cy.contains('button', 'Create Video').click();
 
     // Publish it
@@ -30,7 +30,7 @@ describe('Video Status Transitions', () => {
     // Create and archive a video
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Archive Edit Test');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('30');
+    cy.get('input[aria-label="Seconds"]').clear().type('30');
     cy.get('select[name="status"]').select('PUBLISHED');
     cy.get('input[name="postDate"]').type('2026-01-27');
     cy.contains('button', 'Create Video').click();
@@ -54,7 +54,7 @@ describe('Video Status Transitions', () => {
     // Create draft video
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Draft No Snapshot');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('30');
+    cy.get('input[aria-label="Seconds"]').clear().type('30');
     cy.contains('button', 'Create Video').click();
 
     // Should not have "Add Snapshot" button or link

@@ -2,17 +2,21 @@ describe('Snapshot Management', () => {
   let videoId: string;
 
   beforeEach(() => {
-    // Create a published video first
-    cy.visit('/videos/new');
-    cy.get('input[name="title"]').type('Published Video for Snapshots');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('60');
-    cy.get('select[name="status"]').select('PUBLISHED');
-    cy.get('input[name="postDate"]').type('2026-01-28');
-    cy.contains('button', 'Create Video').click();
+    // Clean database and create a published video
+    cy.cleanDb();
     
-    // Extract video ID from URL
-    cy.url().then((url) => {
-      videoId = url.split('/videos/')[1];
+    // Use helper to create test video
+    const postDate = new Date();
+    postDate.setHours(postDate.getHours() - 2); // 2 hours ago
+    
+    cy.createTestVideo({
+      title: 'Published Video for Snapshots',
+      status: 'PUBLISHED',
+      postDate: postDate,
+      videoLengthSeconds: 60,
+    }).then((video) => {
+      videoId = video.id;
+      cy.visit(`/videos/${videoId}`);
     });
   });
 

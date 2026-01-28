@@ -3,7 +3,7 @@ describe('Delete Operations', () => {
     // Create published video with snapshot
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Video to Delete');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('60');
+    cy.get('input[aria-label="Seconds"]').clear().type('60');
     cy.get('select[name="status"]').select('PUBLISHED');
     cy.get('input[name="postDate"]').type('2026-01-27');
     cy.contains('button', 'Create Video').click();

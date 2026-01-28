@@ -1,5 +1,7 @@
 describe('Video Management - Draft to Published Flow', () => {
   beforeEach(() => {
+    // Clean database before each test
+    cy.cleanDb();
     cy.visit('/');
   });
 
@@ -13,11 +15,11 @@ describe('Video Management - Draft to Published Flow', () => {
     cy.get('textarea[name="description"]').type('Video description here');
 
     // Set video length (e.g., 45 seconds)
-    cy.get('input[name="videoLengthSeconds"]').clear().type('45');
+    cy.get('input[aria-label="Seconds"]').clear().type('45');
 
     // Add hashtags
-    cy.get('input[placeholder*="hashtag"]').type('testtag{enter}');
-    cy.get('input[placeholder*="hashtag"]').type('cypress{enter}');
+    cy.get('input[aria-label="Hashtag input"]').type('testtag{enter}');
+    cy.get('input[aria-label="Hashtag input"]').type('cypress{enter}');
 
     // Status should default to DRAFT (no post date required)
     cy.get('select[name="status"]').should('have.value', 'DRAFT');
@@ -36,7 +38,7 @@ describe('Video Management - Draft to Published Flow', () => {
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Original Title');
     cy.get('textarea[name="script"]').type('Original script');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('30');
+    cy.get('input[aria-label="Seconds"]').clear().type('30');
     cy.contains('button', 'Create Video').click();
 
     // Wait for redirect
@@ -48,7 +50,7 @@ describe('Video Management - Draft to Published Flow', () => {
     // Update fields
     cy.get('input[name="title"]').clear().type('Updated Title');
     cy.get('textarea[name="description"]').clear().type('New description');
-    cy.get('input[placeholder*="hashtag"]').type('newtag{enter}');
+    cy.get('input[aria-label="Hashtag input"]').type('newtag{enter}');
 
     // Save
     cy.contains('button', /save|update/i).click();
@@ -63,7 +65,7 @@ describe('Video Management - Draft to Published Flow', () => {
     // Create a draft
     cy.visit('/videos/new');
     cy.get('input[name="title"]').type('Video to Publish');
-    cy.get('input[name="videoLengthSeconds"]').clear().type('60');
+    cy.get('input[aria-label="Seconds"]').clear().type('60');
     cy.contains('button', 'Create Video').click();
     cy.url().should('include', '/videos/');
 

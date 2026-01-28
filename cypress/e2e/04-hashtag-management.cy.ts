@@ -22,7 +22,7 @@ describe('Hashtag Management', () => {
     ['Video 1', 'Video 2'].forEach((title) => {
       cy.visit('/videos/new');
       cy.get('input[name="title"]').type(title);
-      cy.get('input[name="videoLengthSeconds"]').clear().type('45');
+      cy.get('input[aria-label="Seconds"]').clear().type('45');
       cy.get('select[name="status"]').select('PUBLISHED');
       cy.get('input[name="postDate"]').type('2026-01-27');
       cy.get('input[placeholder*="hashtag"]').type('testhashtag{enter}');
