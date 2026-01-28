@@ -5,7 +5,7 @@
  * This is a one-time migration script.
  * 
  * Usage:
- *   tsx scripts/backfill-data-ownership.ts
+ *   pnpm backfill:ownership
  * 
  * Environment Variables Required:
  *   - PRISMA_DATABASE_URL: Database connection string
@@ -17,6 +17,7 @@
  *   - Provides before/after counts
  */
 
+import 'dotenv/config';
 import { db } from '../lib/database/client';
 import { UserRole } from '../lib/types/server';
 

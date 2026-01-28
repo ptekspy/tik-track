@@ -5,13 +5,14 @@
  * This script is idempotent - safe to run multiple times.
  * 
  * Usage:
- *   BOOTSTRAP_PASSWORD="your-secure-password" tsx scripts/bootstrap-owner.ts
+ *   pnpm bootstrap:owner
  * 
  * Environment Variables Required:
  *   - BOOTSTRAP_PASSWORD: Initial password for the owner account
  *   - PRISMA_DATABASE_URL: Database connection string
  */
 
+import 'dotenv/config';
 import { db } from '../lib/database/client';
 import { UserRole } from '../lib/types/server';
 
