@@ -34,7 +34,7 @@ export const auth = betterAuth({
       },
     },
   },
-  trustedOrigins: [appUrl, "https://www.tri-track.com", "https://tik-track.com"],
+  trustedOrigins: [appUrl, "https://www.tik-track.com", "https://tik-track.com"],
   socialProviders: {
         tiktok: { 
             clientSecret: process.env.TIKTOK_CLIENT_SECRET as string, 
