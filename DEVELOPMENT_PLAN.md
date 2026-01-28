@@ -617,44 +617,36 @@ Manual TikTok video analytics tracking system with PostgreSQL, Prisma 6 + Accele
 ## Phase 8: Testing & Validation
 
 ### 8.1 Run All Tests
-- [ ] Run `pnpm test` and verify all tests pass
-- [ ] Check test coverage with `pnpm test:coverage`
-- [ ] Ensure minimum 80% coverage on services and utilities
+- [x] Run `pnpm test` and verify all tests pass
+- [x] Check test coverage with `pnpm test:coverage`
+- [x] Ensure minimum 80% coverage on services and utilities
 
-### 8.2 Manual Testing Scenarios
-- [ ] Create draft video without analytics
-- [ ] Edit draft video (update title, script, description, hashtags)
-- [ ] Publish draft video (transition to PUBLISHED)
-- [ ] Add 1h snapshot to published video
-- [ ] Add subsequent snapshots (3h, 6h, 12h, 24h, etc.)
-- [ ] Delete a snapshot
-- [ ] Verify snapshot timeline shows completed/missed correctly
-- [ ] Verify charts render correctly with multiple snapshots
-- [ ] Verify calculated metrics are accurate
-- [ ] Verify signal detection works (positive/negative/neutral)
-- [ ] Test hashtag creation and linking
-- [ ] View hashtag stats and video list
-- [ ] Merge two hashtags
-- [ ] Delete unused hashtag
-- [ ] Archive published video (transition to ARCHIVED)
-- [ ] Edit archived video metadata
-- [ ] Attempt invalid status transitions (should fail)
-- [ ] Attempt to add snapshot to draft video (should fail)
-- [ ] Attempt to create duplicate snapshot type (should fail)
-- [ ] Delete a video with snapshots (cascade deletion)
+### 8.2 E2E Testing with Cypress ✅
+- [x] Install Cypress and @testing-library/cypress
+- [x] Configure Cypress (cypress.config.ts)
+- [x] Set up test structure and support files
+- [x] Create E2E tests for core workflows:
+  - [x] Video management (create draft, edit, publish)
+  - [x] Snapshot management (add 1h, 3h, 6h, etc.)
+  - [x] Analytics and metrics calculations
+  - [x] Hashtag operations
+  - [x] Status transitions (DRAFT→PUBLISHED→ARCHIVED)
+  - [x] Delete operations with cascade
+  - [x] Edge cases and validation
+- [x] Add Cypress scripts to package.json
 
 ### 8.3 Edge Cases
-- [ ] Test with video length = 0 (retention rate calculation)
-- [ ] Test with snapshot views = 0 (avoid division by zero in metrics)
-- [ ] Test with null values in optional fields (all snapshot metrics)
-- [ ] Test with very large numbers (millions of views, hours of play time)
-- [ ] Test with special characters in hashtags
-- [ ] Test with very long video titles/scripts/descriptions
-- [ ] Test time input with edge values (0 seconds, very large values)
-- [ ] Test percentage input with values outside 0-100 range
-- [ ] Test creating video with PUBLISHED status but no postDate (should fail)
-- [ ] Test hashtag case-sensitivity (should normalize to lowercase)
-- [ ] Test position tracking when adding/removing hashtags
+- [x] Test with video length = 0 (retention rate calculation)
+- [x] Test with snapshot views = 0 (avoid division by zero in metrics)
+- [x] Test with null values in optional fields (all snapshot metrics)
+- [x] Test with very large numbers (millions of views, hours of play time)
+- [x] Test with special characters in hashtags
+- [x] Test with very long video titles/scripts/descriptions
+- [x] Test time input with edge values (0 seconds, very large values)
+- [x] Test percentage input with values outside 0-100 range
+- [x] Test creating video with PUBLISHED status but no postDate (should fail)
+- [x] Test hashtag case-sensitivity (should normalize to lowercase)
+- [x] Test position tracking when adding/removing hashtags
 
 ### 8.4 UI/UX Validation
 - [ ] Verify responsive layout on mobile, tablet, desktop
