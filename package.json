@@ -27,6 +27,7 @@
     "test:e2e:dev": "cypress open"
   },
   "dependencies": {
+    "@better-fetch/fetch": "^1.1.21",
     "@prisma/client": "^6.19.2",
     "@prisma/extension-accelerate": "^3.0.1",
     "bcryptjs": "^3.0.3",
