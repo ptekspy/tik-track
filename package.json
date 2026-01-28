@@ -18,6 +18,7 @@
     "bootstrap:owner": "tsx scripts/bootstrap-owner.ts",
     "backfill:ownership": "tsx scripts/backfill-data-ownership.ts",
     "reset:owner": "tsx scripts/reset-owner.ts",
+    "seed:data": "tsx scripts/seed-data.ts",
     "postinstall": "pnpm db:generate",
     "test": "vitest run",
     "test:watch": "vitest",
