@@ -12,9 +12,11 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
 import { formatDate } from '@/lib/utils/dateUtils';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
+import { calculateSnapshotDeltas, formatDelta } from '@/lib/utils/deltas';
 
 interface VideoChartsProps {
   snapshots: SerializedSnapshot[];
@@ -26,15 +28,67 @@ export function VideoCharts({ snapshots }: VideoChartsProps) {
     (a, b) => a.recordedAt.getTime() - b.recordedAt.getTime()
   );
 
-  // Prepare data for charts
-  const chartData = sortedSnapshots.map((snapshot) => ({
-    date: formatDate(snapshot.recordedAt),
-    views: snapshot.views,
-    likes: snapshot.likes,
-    shares: snapshot.shares,
-    comments: snapshot.comments,
-    engagementRate: calculateEngagementRate(snapshot as any), // Accept both Decimal and number types
-  }));
+  // Prepare data for charts with deltas
+  const chartData = sortedSnapshots.map((snapshot, index) => {
+    const deltas = calculateSnapshotDeltas(sortedSnapshots, index);
+    
+    return {
+      date: formatDate(snapshot.recordedAt),
+      views: snapshot.views,
+      likes: snapshot.likes,
+      shares: snapshot.shares,
+      comments: snapshot.comments,
+      engagementRate: calculateEngagementRate(snapshot as any),
+      deltas,
+    };
+  });
+
+  // Custom tooltip that shows deltas
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (!active || !payload || payload.length === 0) return null;
+
+    const data = payload[0].payload;
+    const deltaInfo = data.deltas;
+
+    return (
+      <div className="glass rounded-xl p-4 border border-white/20 shadow-xl">
+        <p className="font-semibold text-gray-900 dark:text-white mb-2">{data.date}</p>
+        {payload.map((entry: any, index: number) => {
+          const metricName = entry.dataKey as string;
+          const delta = deltaInfo?.[metricName as keyof typeof deltaInfo];
+          
+          return (
+            <div key={index} className="flex items-center justify-between gap-4 py-1">
+              <span className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                {entry.name || metricName}:
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold" style={{ color: entry.color }}>
+                  {typeof entry.value === 'number' 
+                    ? metricName === 'engagementRate' 
+                      ? `${entry.value.toFixed(2)}%`
+                      : entry.value.toLocaleString()
+                    : entry.value
+                  }
+                </span>
+                {delta && (
+                  <span className={`text-xs font-medium ${
+                    delta.direction === 'up' 
+                      ? 'text-emerald-600 dark:text-emerald-400' 
+                      : delta.direction === 'down'
+                      ? 'text-red-600 dark:text-red-400'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}>
+                    {formatDelta(delta, 'percentage')}
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -48,14 +102,7 @@ export function VideoCharts({ snapshots }: VideoChartsProps) {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="date" stroke="#9ca3af" />
             <YAxis stroke="#9ca3af" />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                border: 'none', 
-                borderRadius: '12px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }} 
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Line
               type="monotone"
@@ -78,14 +125,7 @@ export function VideoCharts({ snapshots }: VideoChartsProps) {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="date" stroke="#9ca3af" />
             <YAxis stroke="#9ca3af" />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                border: 'none', 
-                borderRadius: '12px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }} 
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar dataKey="likes" fill="url(#likesGradient)" radius={[8, 8, 0, 0]} />
             <Bar dataKey="shares" fill="url(#sharesGradient)" radius={[8, 8, 0, 0]} />
@@ -118,15 +158,7 @@ export function VideoCharts({ snapshots }: VideoChartsProps) {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="date" stroke="#9ca3af" />
             <YAxis stroke="#9ca3af" />
-            <Tooltip 
-              formatter={(value) => typeof value === 'number' ? `${value.toFixed(2)}%` : ''} 
-              contentStyle={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                border: 'none', 
-                borderRadius: '12px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }} 
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Line
               type="monotone"

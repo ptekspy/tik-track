@@ -6,7 +6,9 @@ export { VideoGrid } from '../VideoGrid/VideoGrid';
 import Link from 'next/link';
 import { SerializedVideoWithSnapshots } from '@/lib/types/video';
 import { StatusBadge } from '../StatusBadge/StatusBadge';
+import { CompactDelta } from '../DeltaDisplay/DeltaDisplay';
 import { formatDate } from '@/lib/utils/dateUtils';
+import { getLatestDeltas } from '@/lib/utils/deltas';
 import { Edit, Plus } from 'lucide-react';
 
 export function VideoHeader({ video }: { video: SerializedVideoWithSnapshots }) {
@@ -53,11 +55,14 @@ export function VideoMetrics({ video }: { video: SerializedVideoWithSnapshots })
     ? [...video.snapshots].sort((a, b) => b.recordedAt.getTime() - a.recordedAt.getTime())[0]
     : null;
 
+  // Calculate deltas
+  const deltas = getLatestDeltas(video.snapshots);
+
   const metrics = [
-    { label: 'Views', value: latestSnapshot?.views, gradient: 'from-blue-500 to-cyan-500', icon: '👁️' },
-    { label: 'Likes', value: latestSnapshot?.likes, gradient: 'from-pink-500 to-rose-500', icon: '❤️' },
-    { label: 'Comments', value: latestSnapshot?.comments, gradient: 'from-purple-500 to-violet-500', icon: '💬' },
-    { label: 'Shares', value: latestSnapshot?.shares, gradient: 'from-amber-500 to-orange-500', icon: '📤' },
+    { label: 'Views', value: latestSnapshot?.views, delta: deltas?.views, gradient: 'from-blue-500 to-cyan-500', icon: '👁️' },
+    { label: 'Likes', value: latestSnapshot?.likes, delta: deltas?.likes, gradient: 'from-pink-500 to-rose-500', icon: '❤️' },
+    { label: 'Comments', value: latestSnapshot?.comments, delta: deltas?.comments, gradient: 'from-purple-500 to-violet-500', icon: '💬' },
+    { label: 'Shares', value: latestSnapshot?.shares, delta: deltas?.shares, gradient: 'from-amber-500 to-orange-500', icon: '📤' },
   ];
 
   return (
@@ -70,8 +75,15 @@ export function VideoMetrics({ video }: { video: SerializedVideoWithSnapshots })
               <dt className="text-sm font-medium text-gray-600 dark:text-gray-400">{metric.label}</dt>
               <span className="text-2xl">{metric.icon}</span>
             </div>
-            <dd className="text-3xl font-bold text-gray-900 dark:text-white">
-              {metric.value !== null && metric.value !== undefined ? metric.value.toLocaleString() : '—'}
+            <dd className="space-y-1">
+              <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                {metric.value !== null && metric.value !== undefined ? metric.value.toLocaleString() : '—'}
+              </div>
+              {metric.delta && (
+                <div className="text-xs">
+                  <CompactDelta delta={metric.delta} />
+                </div>
+              )}
             </dd>
           </div>
         </div>

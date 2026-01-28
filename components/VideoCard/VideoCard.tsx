@@ -2,11 +2,14 @@ import Link from 'next/link';
 import type { Video, AnalyticsSnapshot, Prisma } from '@/lib/types/prisma';
 import { StatusBadge } from '@/components/StatusBadge/StatusBadge';
 import { SignalBadge } from '@/components/SignalBadge/SignalBadge';
+import { CompactDelta } from '@/components/DeltaDisplay/DeltaDisplay';
 import { Eye, TrendingUp } from 'lucide-react';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
 import { calculateShareRate } from '@/lib/metrics/calculateShareRate';
 import { calculateFollowerConversion } from '@/lib/metrics/calculateFollowerConversion';
 import { detectSignals } from '@/lib/metrics/detectSignals';
+import { getLatestDeltas } from '@/lib/utils/deltas';
+import type { SerializedSnapshot } from '@/lib/types/snapshot';
 
 export interface VideoCardProps {
   video: Video & { snapshots: AnalyticsSnapshot[] };
@@ -15,16 +18,34 @@ export interface VideoCardProps {
 /**
  * VideoCard Component
  * 
- * Displays a video summary card with status, latest metrics, and signal.
+ * Displays a video summary card with status, latest metrics, deltas, and signal.
  * Links to the video detail page.
  */
 export function VideoCard({ video }: VideoCardProps) {
+  // Convert snapshots to serialized format for delta calculations
+  const serializedSnapshots: SerializedSnapshot[] = video.snapshots.map(s => ({
+    ...s,
+    avgWatchTimeSeconds: s.avgWatchTimeSeconds 
+      ? (typeof s.avgWatchTimeSeconds === 'object' && 'toNumber' in s.avgWatchTimeSeconds
+          ? (s.avgWatchTimeSeconds as any).toNumber()
+          : Number(s.avgWatchTimeSeconds))
+      : null,
+    completionRate: s.completionRate
+      ? (typeof s.completionRate === 'object' && 'toNumber' in s.completionRate
+          ? (s.completionRate as any).toNumber()
+          : Number(s.completionRate))
+      : null,
+  }));
+
   // Get the latest snapshot
   const latestSnapshot = video.snapshots.length > 0
     ? video.snapshots.reduce((latest, current) =>
         new Date(current.recordedAt) > new Date(latest.recordedAt) ? current : latest
       )
     : null;
+
+  // Calculate deltas
+  const deltas = getLatestDeltas(serializedSnapshots);
 
   // Calculate metrics if we have a snapshot
   const views = latestSnapshot?.views || 0;
@@ -70,21 +91,28 @@ export function VideoCard({ video }: VideoCardProps) {
 
           {/* Metrics */}
           {latestSnapshot && (
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#fe2c55]/10 to-[#7c3aed]/10 rounded-lg">
-                <Eye className="w-4 h-4 text-[#fe2c55]" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  {views.toLocaleString()}
-                </span>
-              </div>
-              {engagementRate !== null && (
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#25f4ee]/10 to-[#4f46e5]/10 rounded-lg">
-                  <TrendingUp className="w-4 h-4 text-[#25f4ee]" />
-                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                    {engagementRate.toFixed(1)}%
-                  </span>
+            <div className="space-y-3 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#fe2c55]/10 to-[#7c3aed]/10 rounded-lg">
+                  <Eye className="w-4 h-4 text-[#fe2c55]" />
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                      {views.toLocaleString()}
+                    </span>
+                    {deltas?.views && (
+                      <CompactDelta delta={deltas.views} />
+                    )}
+                  </div>
                 </div>
-              )}
+                {engagementRate !== null && (
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#25f4ee]/10 to-[#4f46e5]/10 rounded-lg">
+                    <TrendingUp className="w-4 h-4 text-[#25f4ee]" />
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                      {engagementRate.toFixed(1)}%
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
