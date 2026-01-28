@@ -81,8 +81,8 @@ export function VideoDetail({
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl font-bold">{video.title}</h1>
-            <StatusBadge status={video.status as any} />
-            {signal && video.status === 'PUBLISHED' as any && (
+            <StatusBadge status={video.status} />
+            {signal && video.status === 'PUBLISHED' && (
               <SignalBadge signal={signal} />
             )}
           </div>

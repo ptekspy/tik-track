@@ -1,5 +1,5 @@
 import type { Video, AnalyticsSnapshot } from '@/lib/types/prisma';
-import { SnapshotType } from '@/lib/types/prisma';
+import { SnapshotType } from '@/lib/constants';
 import { getExpectedSnapshots } from '@/lib/snapshots/getExpectedSnapshots';
 import { getMissedSnapshots } from '@/lib/snapshots/getMissedSnapshots';
 import { Check, X, Clock } from 'lucide-react';

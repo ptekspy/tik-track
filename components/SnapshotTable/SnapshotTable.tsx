@@ -1,5 +1,5 @@
 import type { AnalyticsSnapshot } from '@/lib/types/prisma';
-import { SnapshotType } from '@/lib/types/prisma';
+import { SnapshotType } from '@/lib/constants';
 import { formatDate } from '@/lib/utils/dateUtils';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
 

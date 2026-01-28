@@ -52,8 +52,8 @@ export default async function NewSnapshotPage({ params }: NewSnapshotPageProps) 
 
       <SnapshotForm 
         videoId={video.id} 
-        availableTypes={availableTypes as any}
-        previousSnapshot={previousSnapshot as any}
+        availableTypes={availableTypes}
+        previousSnapshot={previousSnapshot}
         onSubmit={handleSubmit(video.id)} 
       />
     </div>

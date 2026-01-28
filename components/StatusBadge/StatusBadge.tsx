@@ -1,4 +1,4 @@
-import { VideoStatus } from '@/lib/types/prisma';
+import { VideoStatus } from '@/lib/constants';
 
 export interface StatusBadgeProps {
   status: VideoStatus;

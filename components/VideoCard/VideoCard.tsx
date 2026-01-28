@@ -56,7 +56,7 @@ export function VideoCard({ video }: VideoCardProps) {
           <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 flex-1">
             {video.title}
           </h3>
-          <StatusBadge status={video.status as any} />
+          <StatusBadge status={video.status} />
         </div>
 
         {/* Description */}

@@ -1,9 +1,9 @@
 /**
- * Re-export Prisma types for use in client components
- * This file only exports types, not runtime code, so it's safe for client components
+ * Re-export Prisma types for use throughout the application
+ * Uses explicit exports to avoid Turbopack warnings and type-only imports for client components
  */
 
-// Type-only imports
+// Type-only imports to avoid bundling Prisma runtime
 import type {
   Video,
   AnalyticsSnapshot,
@@ -12,7 +12,7 @@ import type {
   Prisma,
 } from '@/lib/generated/client';
 
-// Re-export types
+// Export types
 export type {
   Video,
   AnalyticsSnapshot,
@@ -21,21 +21,17 @@ export type {
   Prisma,
 };
 
-// Enums need to be redeclared to avoid importing runtime code
-export enum VideoStatus {
-  DRAFT = 'DRAFT',
-  PUBLISHED = 'PUBLISHED',
-  ARCHIVED = 'ARCHIVED',
-}
+// Export enum types as string literal unions (safe for client components)
+// These match the Prisma enum values exactly but don't require runtime imports
+export type VideoStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+export type SnapshotType = 
+  | 'ONE_HOUR'
+  | 'THREE_HOUR'
+  | 'SIX_HOUR'
+  | 'TWELVE_HOUR'
+  | 'ONE_DAY'
+  | 'TWO_DAY'
+  | 'SEVEN_DAY'
+  | 'FOURTEEN_DAY'
+  | 'THIRTY_DAY';
 
-export enum SnapshotType {
-  ONE_HOUR = 'ONE_HOUR',
-  THREE_HOUR = 'THREE_HOUR',
-  SIX_HOUR = 'SIX_HOUR',
-  TWELVE_HOUR = 'TWELVE_HOUR',
-  ONE_DAY = 'ONE_DAY',
-  TWO_DAY = 'TWO_DAY',
-  SEVEN_DAY = 'SEVEN_DAY',
-  FOURTEEN_DAY = 'FOURTEEN_DAY',
-  THIRTY_DAY = 'THIRTY_DAY',
-}

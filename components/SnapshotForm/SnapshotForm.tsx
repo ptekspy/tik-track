@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { SnapshotType } from '@/lib/types/prisma';
+import { SnapshotType } from '@/lib/constants';
 import { TimeInput } from '@/components/TimeInput/TimeInput';
 import { PercentageInput } from '@/components/PercentageInput/PercentageInput';
 import { FormError } from '@/components/FormError/FormError';

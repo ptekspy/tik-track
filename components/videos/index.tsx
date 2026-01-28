@@ -14,7 +14,7 @@ export function VideoHeader({ video }: { video: VideoWithSnapshots }) {
       <div className="flex-1">
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-3xl font-bold text-gray-900">{video.title}</h1>
-          <StatusBadge status={video.status as any} />
+          <StatusBadge status={video.status} />
         </div>
         {video.description && (
           <p className="text-gray-600 mt-2">{video.description}</p>

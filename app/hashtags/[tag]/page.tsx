@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { HashtagDetail, HashtagStats } from '@/components/HashtagDetail/HashtagDetail';
 import { VideoGrid } from '@/components/VideoGrid/VideoGrid';
 import { VideoWithSnapshots } from '@/lib/types/video';
-import { VideoStatus } from '@/lib/generated/client';
+import { VideoStatus } from '@/lib/types/server';
 import { HashtagWithVideos } from '@/lib/types/hashtag';
 
 interface HashtagDetailPageProps {

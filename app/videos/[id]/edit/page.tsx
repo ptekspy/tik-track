@@ -35,7 +35,7 @@ export default async function VideoEditPage({ params }: VideoEditPageProps) {
     script: video.script,
     description: video.description || '',
     videoLengthSeconds: video.videoLengthSeconds,
-    status: video.status as any,
+    status: video.status,
     postDate: video.postDate?.toISOString(),
     hashtags: video.hashtags.map(h => h.hashtag.tag),
   };
