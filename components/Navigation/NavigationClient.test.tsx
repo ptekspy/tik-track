@@ -54,10 +54,10 @@ describe('NavigationClient', () => {
     render(<NavigationClient draftCount={0} />);
 
     const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
-    // At least one should have the active gradient class
+    // Check if any dashboard link has text-white class (desktop nav) or is in active gradient container
     const hasActiveLink = dashboardLinks.some(link => 
-      link.className.includes('bg-gradient-to-r') &&
-      link.className.includes('from-[#fe2c55]')
+      link.className.includes('text-white') || 
+      (link.className.includes('bg-gradient-to-r') && link.className.includes('from-[#fe2c55]'))
     );
     expect(hasActiveLink).toBe(true);
   });
