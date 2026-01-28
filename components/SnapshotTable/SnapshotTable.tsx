@@ -16,11 +16,6 @@ export function SnapshotTable({ snapshots }: SnapshotTableProps) {
     );
   }
 
-  // Sort snapshots by recordedAt descending (newest first)
-  const sortedSnapshots = [...snapshots].sort(
-    (a, b) => b.recordedAt.getTime() - a.recordedAt.getTime()
-  );
-
   const snapshotTypeLabels: Record<SnapshotType, string> = {
     ONE_HOUR: '1 Hour',    TWO_HOUR: '2 Hours',    THREE_HOUR: '3 Hours',
     SIX_HOUR: '6 Hours',
@@ -31,6 +26,33 @@ export function SnapshotTable({ snapshots }: SnapshotTableProps) {
     FOURTEEN_DAY: '14 Days',
     THIRTY_DAY: '30 Days',
   };
+
+  // Define snapshot type order (largest to smallest time window)
+  const snapshotTypeOrder: Record<SnapshotType, number> = {
+    THIRTY_DAY: 0,
+    FOURTEEN_DAY: 1,
+    SEVEN_DAY: 2,
+    TWO_DAY: 3,
+    ONE_DAY: 4,
+    TWELVE_HOUR: 5,
+    SIX_HOUR: 6,
+    THREE_HOUR: 7,
+    TWO_HOUR: 8,
+    ONE_HOUR: 9,
+  };
+
+  // Sort snapshots by type (largest time window first), then by recordedAt descending
+  const sortedSnapshots = [...snapshots].sort((a, b) => {
+    const orderA = snapshotTypeOrder[a.snapshotType as SnapshotType];
+    const orderB = snapshotTypeOrder[b.snapshotType as SnapshotType];
+    
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+    
+    // If same type, sort by most recent first
+    return b.recordedAt.getTime() - a.recordedAt.getTime();
+  });
 
   // Calculate delta from previous snapshot
   const calculateDelta = (currentValue: number | null, previousValue: number | null): string | null => {
