@@ -4,12 +4,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { LayoutDashboard, Video, FileEdit, Hash, TrendingUp, Menu, X } from 'lucide-react';
+import { NotificationBell } from '../NotificationBell/NotificationBell';
+import type { Notification } from '@/lib/notifications/getNotifications';
 
 export interface NavigationClientProps {
   draftCount: number;
+  notifications: Notification[];
 }
 
-export function NavigationClient({ draftCount }: NavigationClientProps) {
+export function NavigationClient({ draftCount, notifications }: NavigationClientProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -79,8 +82,14 @@ export function NavigationClient({ draftCount }: NavigationClientProps) {
             </div>
           </div>
 
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-2">
+            <NotificationBell notifications={notifications} />
+          </div>
+
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center gap-2">
+            <NotificationBell notifications={notifications} />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

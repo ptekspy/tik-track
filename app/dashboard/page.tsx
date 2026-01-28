@@ -3,6 +3,8 @@ import { VideoGrid } from '@/components/VideoGrid/VideoGrid';
 import { VideoWithSnapshots } from '@/lib/types/video';
 import Link from 'next/link';
 import { TrendingUp, Video, FileEdit, Archive, Plus, Sparkles } from 'lucide-react';
+import { ActionPanel } from '@/components/ActionPanel/ActionPanel';
+import { getNotifications } from '@/lib/notifications/getNotifications';
 
 // Force dynamic rendering - don't cache this page
 export const dynamic = 'force-dynamic';
@@ -13,6 +15,9 @@ export default async function DashboardPage() {
     include: { snapshots: true },
     orderBy: { createdAt: 'desc' },
   }) as VideoWithSnapshots[];
+
+  // Get notifications for action panel
+  const notifications = await getNotifications();
 
   // Calculate aggregate stats
   const stats = {
@@ -113,6 +118,13 @@ export default async function DashboardPage() {
           <span>Create New Video</span>
         </Link>
       </div>
+
+      {/* Action Panel - What to do next */}
+      {notifications.length > 0 && (
+        <div className="mb-8">
+          <ActionPanel notifications={notifications} maxItems={5} />
+        </div>
+      )}
 
       {/* Videos Grid */}
       <div className="glass rounded-2xl p-6 border border-white/20">

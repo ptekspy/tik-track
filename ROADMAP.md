@@ -8,6 +8,8 @@ No bloat. No automation theatre. Insight over data volume.
 ## Phase 1 — Make the dashboard tell a story (highest ROI)
 
 ### 1. Snapshot deltas everywhere
+- [x] 
+
 **Problem:** Raw numbers feel dead without movement.  
 **Solution:** Always show change vs previous snapshot.
 
