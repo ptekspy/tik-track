@@ -14,6 +14,12 @@ vi.mock('@/lib/dal/videos', () => ({
   findVideosByStatus: vi.fn(),
 }));
 
+// Mock the channels DAL
+vi.mock('@/lib/dal/channels', () => ({
+  findAllChannels: vi.fn(),
+  findDefaultChannel: vi.fn(),
+}));
+
 // Mock the notifications
 vi.mock('@/lib/notifications/getNotifications', () => ({
   getNotifications: vi.fn(),
@@ -21,8 +27,13 @@ vi.mock('@/lib/notifications/getNotifications', () => ({
 
 // Mock the client component
 vi.mock('./NavigationClient', () => ({
-  NavigationClient: ({ draftCount }: { draftCount: number }) => (
-    <div data-testid="navigation-client" data-draft-count={draftCount}>
+  NavigationClient: ({ draftCount, channels, currentChannelId }: any) => (
+    <div 
+      data-testid="navigation-client" 
+      data-draft-count={draftCount}
+      data-channel-count={channels?.length || 0}
+      data-current-channel-id={currentChannelId}
+    >
       Navigation Client (Draft Count: {draftCount})
     </div>
   ),
@@ -30,12 +41,32 @@ vi.mock('./NavigationClient', () => ({
 
 import { getUser } from '@/lib/auth/server';
 import { getNotifications } from '@/lib/notifications/getNotifications';
+import { findAllChannels, findDefaultChannel } from '@/lib/dal/channels';
+import { MOCK_CHANNEL_ID } from '@/lib/testing/mocks';
 
 describe('Navigation', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(getUser).mockResolvedValue(mockUser);
     vi.mocked(getNotifications).mockResolvedValue([]);
+    vi.mocked(findAllChannels).mockResolvedValue([{
+      id: MOCK_CHANNEL_ID,
+      userId: mockUser.id,
+      name: 'Main Channel',
+      handle: 'mainhandle',
+      isDefault: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }]);
+    vi.mocked(findDefaultChannel).mockResolvedValue({
+      id: MOCK_CHANNEL_ID,
+      userId: mockUser.id,
+      name: 'Main Channel',
+      handle: 'mainhandle',
+      isDefault: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   });
 
   it('should fetch draft count and render NavigationClient', async () => {

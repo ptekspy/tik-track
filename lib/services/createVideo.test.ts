@@ -15,13 +15,29 @@ vi.mock('@/lib/database/client', () => ({
   },
 }));
 
+// Mock DAL functions
+vi.mock('@/lib/dal/channels', () => ({
+  findDefaultChannel: vi.fn(),
+}));
+
 import { requireUser } from '@/lib/auth/server';
 import { db } from '@/lib/database/client';
+import { findDefaultChannel } from '@/lib/dal/channels';
+import { MOCK_CHANNEL_ID } from '@/lib/testing/mocks';
 
 describe('createVideo', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(requireUser).mockResolvedValue(mockUser);
+    vi.mocked(findDefaultChannel).mockResolvedValue({
+      id: MOCK_CHANNEL_ID,
+      userId: mockUser.id,
+      name: 'Main Channel',
+      handle: 'mainhandle',
+      isDefault: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   });
 
   it('should create a video with valid input', async () => {

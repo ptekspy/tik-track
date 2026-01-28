@@ -30,10 +30,10 @@ describe('updateVideoStatus', () => {
 
       const result = await updateVideoStatus(mockVideoDraft.id, VideoStatus.PUBLISHED);
 
-      expect(findVideoById).toHaveBeenCalledWith(mockVideoDraft.id);
+      expect(findVideoById).toHaveBeenCalledWith(mockVideoDraft.id, mockUser.id);
       expect(updateVideo).toHaveBeenCalledWith(mockVideoDraft.id, {
         status: VideoStatus.PUBLISHED,
-      });
+      }, mockUser.id);
       expect(result.status).toBe(VideoStatus.PUBLISHED);
     });
 

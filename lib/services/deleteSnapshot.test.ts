@@ -37,9 +37,9 @@ describe('deleteSnapshot', () => {
 
     await deleteSnapshot(mockSnapshotOneHour.id);
 
-    expect(findSnapshotById).toHaveBeenCalledWith(mockSnapshotOneHour.id);
+    expect(findSnapshotById).toHaveBeenCalledWith(mockSnapshotOneHour.id, mockUser.id);
     expect(db.analyticsSnapshot.delete).toHaveBeenCalledWith({
-      where: { id: mockSnapshotOneHour.id },
+      where: { id: mockSnapshotOneHour.id, userId: mockUser.id },
     });
   });
 

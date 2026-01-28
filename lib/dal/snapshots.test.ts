@@ -65,7 +65,7 @@ describe('DAL - Snapshots', () => {
       const result = await findSnapshotsByVideoId(mockVideoPublished.id, MOCK_USER_ID);
 
       expect(db.analyticsSnapshot.findMany).toHaveBeenCalledWith({
-        where: { videoId: mockVideoPublished.id, video: { userId: MOCK_USER_ID } },
+        where: { videoId: mockVideoPublished.id, userId: MOCK_USER_ID },
         orderBy: { recordedAt: 'asc' },
       });
       expect(result).toEqual(mockSnapshots);
@@ -117,7 +117,6 @@ describe('DAL - Snapshots', () => {
     it('should create a new snapshot', async () => {
       const newSnapshotData = {
         video: { connect: { id: mockVideoPublished.id } },
-        user: { connect: { id: MOCK_USER_ID } },
         snapshotType: SnapshotType.THREE_HOUR,
         views: 500,
         likes: 50,
@@ -125,10 +124,14 @@ describe('DAL - Snapshots', () => {
 
       vi.mocked(db.analyticsSnapshot.create).mockResolvedValue(mockSnapshotOneHour);
 
-      const result = await createSnapshot(newSnapshotData, MOCK_USER_ID);
+      const result = await createSnapshot(newSnapshotData, MOCK_USER_ID, 'test-channel-id');
 
       expect(db.analyticsSnapshot.create).toHaveBeenCalledWith({
-        data: newSnapshotData,
+        data: {
+          ...newSnapshotData,
+          userId: MOCK_USER_ID,
+          channelId: 'test-channel-id',
+        },
       });
       expect(result).toEqual(mockSnapshotOneHour);
     });
@@ -144,10 +147,10 @@ describe('DAL - Snapshots', () => {
       const updatedSnapshot = { ...mockSnapshotOneHour, views: 2000, likes: 200 };
       vi.mocked(db.analyticsSnapshot.update).mockResolvedValue(updatedSnapshot);
 
-      const result = await updateSnapshot(mockSnapshotOneHour.id, updateData);
+      const result = await updateSnapshot(mockSnapshotOneHour.id, updateData, MOCK_USER_ID);
 
       expect(db.analyticsSnapshot.update).toHaveBeenCalledWith({
-        where: { id: mockSnapshotOneHour.id },
+        where: { id: mockSnapshotOneHour.id, userId: MOCK_USER_ID },
         data: updateData,
       });
       expect(result).toEqual(updatedSnapshot);
@@ -158,10 +161,10 @@ describe('DAL - Snapshots', () => {
     it('should delete a snapshot', async () => {
       vi.mocked(db.analyticsSnapshot.delete).mockResolvedValue(mockSnapshotOneHour);
 
-      const result = await deleteSnapshot(mockSnapshotOneHour.id);
+      const result = await deleteSnapshot(mockSnapshotOneHour.id, MOCK_USER_ID);
 
       expect(db.analyticsSnapshot.delete).toHaveBeenCalledWith({
-        where: { id: mockSnapshotOneHour.id },
+        where: { id: mockSnapshotOneHour.id, userId: MOCK_USER_ID },
       });
       expect(result).toEqual(mockSnapshotOneHour);
     });

@@ -5,19 +5,34 @@ import { NavigationClient } from './NavigationClient';
 // Mock next/navigation
 vi.mock('next/navigation', () => ({
   usePathname: vi.fn(),
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+  })),
 }));
 
 const { usePathname } = await import('next/navigation');
 
 const mockNotifications = [];
+const mockChannels = [{
+  id: 'channel-1',
+  userId: 'user-1',
+  name: 'Main Channel',
+  handle: 'mainhandle',
+  isDefault: true,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+}];
+const mockCurrentChannelId = 'channel-1';
 
 describe('NavigationClient', () => {
   it('should render navigation with all links', () => {
     vi.mocked(usePathname).mockReturnValue('/dashboard');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />);
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
-    expect(screen.getByText('TikTrack')).toBeInTheDocument();
+    expect(screen.getByAltText('TikTrack Logo')).toBeInTheDocument();
     const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
     expect(dashboardLinks.length).toBeGreaterThan(0);
     const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
@@ -31,7 +46,7 @@ describe('NavigationClient', () => {
   it('should render draft badge when drafts exist', () => {
     vi.mocked(usePathname).mockReturnValue('/dashboard');
 
-    render(<NavigationClient draftCount={5} notifications={mockNotifications} />);
+    render(<NavigationClient draftCount={5} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const badges = screen.getAllByText('5');
     expect(badges.length).toBeGreaterThan(0);
@@ -40,7 +55,7 @@ describe('NavigationClient', () => {
   it('should not render draft badge when no drafts exist', () => {
     vi.mocked(usePathname).mockReturnValue('/dashboard');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     // Should not have badge element
     const badgeElements = screen.queryAllByText('0');
@@ -53,7 +68,7 @@ describe('NavigationClient', () => {
   it('should highlight active route - dashboard', () => {
     vi.mocked(usePathname).mockReturnValue('/dashboard');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
     // Check if any dashboard link has text-white class (desktop nav) or is in active gradient container
@@ -67,7 +82,7 @@ describe('NavigationClient', () => {
   it('should highlight active route - new video', () => {
     vi.mocked(usePathname).mockReturnValue('/videos/new');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
     const desktopLink = newVideoLinks[0];
@@ -77,7 +92,7 @@ describe('NavigationClient', () => {
   it('should highlight active route - drafts', () => {
     vi.mocked(usePathname).mockReturnValue('/drafts');
 
-    render(<NavigationClient draftCount={3} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={3} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const draftsLinks = screen.getAllByRole('link', { name: /drafts/i });
     const desktopLink = draftsLinks[0];
@@ -87,7 +102,7 @@ describe('NavigationClient', () => {
   it('should highlight active route - hashtags', () => {
     vi.mocked(usePathname).mockReturnValue('/hashtags');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const hashtagsLinks = screen.getAllByRole('link', { name: /Hashtags/i });
     const desktopLink = hashtagsLinks[0];
@@ -97,7 +112,7 @@ describe('NavigationClient', () => {
   it('should highlight when on nested route under /videos', () => {
     vi.mocked(usePathname).mockReturnValue('/videos/new/step2');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const newVideoLinks = screen.getAllByRole('link', { name: /New Video/i });
     const desktopLink = newVideoLinks[0];
@@ -108,7 +123,7 @@ describe('NavigationClient', () => {
   it('should not highlight inactive routes', () => {
     vi.mocked(usePathname).mockReturnValue('/dashboard');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const hashtagsLinks = screen.getAllByRole('link', { name: /Hashtags/i });
     const desktopLink = hashtagsLinks[0];
@@ -120,16 +135,17 @@ describe('NavigationClient', () => {
   it('should render TikTrack logo as link to dashboard', () => {
     vi.mocked(usePathname).mockReturnValue('/hashtags');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
-    const logoLinks = screen.getAllByRole('link', { name: 'TikTrack' });
-    expect(logoLinks[0]).toHaveAttribute('href', '/dashboard');
+    const logo = screen.getByAltText('TikTrack Logo');
+    const logoLink = logo.closest('a');
+    expect(logoLink).toHaveAttribute('href', '/dashboard');
   });
 
   it('should have correct href attributes', () => {
     vi.mocked(usePathname).mockReturnValue('/');
 
-    render(<NavigationClient draftCount={0} notifications={mockNotifications} />;
+    render(<NavigationClient draftCount={0} notifications={mockNotifications} channels={mockChannels} currentChannelId={mockCurrentChannelId} />);
 
     const dashboardLinks = screen.getAllByRole('link', { name: /Dashboard/i });
     expect(dashboardLinks[0]).toHaveAttribute('href', '/dashboard');

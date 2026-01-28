@@ -37,9 +37,9 @@ describe('deleteVideo', () => {
 
     await deleteVideo(mockVideoPublished.id);
 
-    expect(findVideoById).toHaveBeenCalledWith(mockVideoPublished.id);
+    expect(findVideoById).toHaveBeenCalledWith(mockVideoPublished.id, mockUser.id);
     expect(db.video.delete).toHaveBeenCalledWith({
-      where: { id: mockVideoPublished.id },
+      where: { id: mockVideoPublished.id, userId: mockUser.id },
     });
   });
 

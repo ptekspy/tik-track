@@ -48,10 +48,11 @@ describe('createSnapshot', () => {
 
     const result = await createSnapshot(input);
 
-    expect(findVideoById).toHaveBeenCalledWith(mockVideoPublished.id);
+    expect(findVideoById).toHaveBeenCalledWith(mockVideoPublished.id, mockUser.id);
     expect(findSnapshotByVideoAndType).toHaveBeenCalledWith(
       mockVideoPublished.id,
-      SnapshotType.THREE_HOUR
+      SnapshotType.THREE_HOUR,
+      mockUser.id
     );
     expect(result.views).toBe(5000);
   });

@@ -14,7 +14,7 @@ import { mockVideoDraft, mockVideoPublished, mockVideoArchived, MOCK_USER_ID } f
 vi.mock('@/lib/database/client', () => ({
   db: {
     video: {
-      findFirst: vi.fn(),
+      findUnique: vi.fn(),
       findMany: vi.fn(),
       create: vi.fn(),
       update: vi.fn(),
@@ -33,11 +33,11 @@ describe('DAL - Videos', () => {
 
   describe('findVideoById', () => {
     it('should find a video by id', async () => {
-      vi.mocked(db.video.findFirst).mockResolvedValue(mockVideoPublished);
+      vi.mocked(db.video.findUnique).mockResolvedValue(mockVideoPublished);
 
       const result = await findVideoById(mockVideoPublished.id, MOCK_USER_ID);
 
-      expect(db.video.findFirst).toHaveBeenCalledWith({
+      expect(db.video.findUnique).toHaveBeenCalledWith({
         where: { id: mockVideoPublished.id, userId: MOCK_USER_ID },
       });
       expect(result).toEqual(mockVideoPublished);
@@ -69,7 +69,7 @@ describe('DAL - Videos', () => {
     it('should return empty array if no videos', async () => {
       vi.mocked(db.video.findMany).mockResolvedValue([]);
 
-      const result = await findAllVideos();
+      const result = await findAllVideos(MOCK_USER_ID);
 
       expect(result).toEqual([]);
     });
@@ -79,10 +79,10 @@ describe('DAL - Videos', () => {
     it('should find videos by DRAFT status', async () => {
       vi.mocked(db.video.findMany).mockResolvedValue([mockVideoDraft]);
 
-      const result = await findVideosByStatus(VideoStatus.DRAFT);
+      const result = await findVideosByStatus(VideoStatus.DRAFT, MOCK_USER_ID);
 
       expect(db.video.findMany).toHaveBeenCalledWith({
-        where: { status: VideoStatus.DRAFT },
+        where: { status: VideoStatus.DRAFT, userId: MOCK_USER_ID },
         orderBy: { createdAt: 'desc' },
       });
       expect(result).toEqual([mockVideoDraft]);
@@ -91,10 +91,10 @@ describe('DAL - Videos', () => {
     it('should find videos by PUBLISHED status', async () => {
       vi.mocked(db.video.findMany).mockResolvedValue([mockVideoPublished]);
 
-      const result = await findVideosByStatus(VideoStatus.PUBLISHED);
+      const result = await findVideosByStatus(VideoStatus.PUBLISHED, MOCK_USER_ID);
 
       expect(db.video.findMany).toHaveBeenCalledWith({
-        where: { status: VideoStatus.PUBLISHED },
+        where: { status: VideoStatus.PUBLISHED, userId: MOCK_USER_ID },
         orderBy: { createdAt: 'desc' },
       });
       expect(result).toEqual([mockVideoPublished]);
@@ -103,7 +103,7 @@ describe('DAL - Videos', () => {
     it('should find videos by ARCHIVED status', async () => {
       vi.mocked(db.video.findMany).mockResolvedValue([mockVideoArchived]);
 
-      const result = await findVideosByStatus(VideoStatus.ARCHIVED);
+      const result = await findVideosByStatus(VideoStatus.ARCHIVED, MOCK_USER_ID);
 
       expect(result).toEqual([mockVideoArchived]);
     });
@@ -121,12 +121,13 @@ describe('DAL - Videos', () => {
 
       vi.mocked(db.video.create).mockResolvedValue(mockVideoDraft);
 
-      const result = await createVideo(newVideoData, MOCK_USER_ID);
+      const result = await createVideo(newVideoData, MOCK_USER_ID, 'test-channel-id');
 
       expect(db.video.create).toHaveBeenCalledWith({
         data: {
           ...newVideoData,
-          user: { connect: { id: MOCK_USER_ID } },
+          userId: MOCK_USER_ID,
+          channelId: 'test-channel-id',
         },
       });
       expect(result).toEqual(mockVideoDraft);
@@ -143,10 +144,10 @@ describe('DAL - Videos', () => {
       const updatedVideo = { ...mockVideoDraft, ...updateData };
       vi.mocked(db.video.update).mockResolvedValue(updatedVideo);
 
-      const result = await updateVideo(mockVideoDraft.id, updateData);
+      const result = await updateVideo(mockVideoDraft.id, updateData, MOCK_USER_ID);
 
       expect(db.video.update).toHaveBeenCalledWith({
-        where: { id: mockVideoDraft.id },
+        where: { id: mockVideoDraft.id, userId: MOCK_USER_ID },
         data: updateData,
       });
       expect(result).toEqual(updatedVideo);
@@ -157,10 +158,10 @@ describe('DAL - Videos', () => {
     it('should delete a video', async () => {
       vi.mocked(db.video.delete).mockResolvedValue(mockVideoDraft);
 
-      const result = await deleteVideo(mockVideoDraft.id);
+      const result = await deleteVideo(mockVideoDraft.id, MOCK_USER_ID);
 
       expect(db.video.delete).toHaveBeenCalledWith({
-        where: { id: mockVideoDraft.id },
+        where: { id: mockVideoDraft.id, userId: MOCK_USER_ID },
       });
       expect(result).toEqual(mockVideoDraft);
     });
