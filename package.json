@@ -9,8 +9,9 @@
     "lint": "eslint",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
+    "db:generate:prod": "prisma generate --no-engine",
     "db:studio": "prisma studio",
-    "postinstall": "pnpm db:generate",
+    "postinstall": "pnpm db:generate:prod",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"

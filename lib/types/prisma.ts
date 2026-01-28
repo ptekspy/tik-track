@@ -10,6 +10,8 @@ import type {
   Hashtag,
   VideoHashtag,
   Prisma,
+  VideoStatus,
+  SnapshotType
 } from '@/lib/generated/client';
 
 // Export types
@@ -19,19 +21,7 @@ export type {
   Hashtag,
   VideoHashtag,
   Prisma,
+  VideoStatus,
+  SnapshotType
 };
-
-// Export enum types as string literal unions (safe for client components)
-// These match the Prisma enum values exactly but don't require runtime imports
-export type VideoStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
-export type SnapshotType = 
-  | 'ONE_HOUR'
-  | 'THREE_HOUR'
-  | 'SIX_HOUR'
-  | 'TWELVE_HOUR'
-  | 'ONE_DAY'
-  | 'TWO_DAY'
-  | 'SEVEN_DAY'
-  | 'FOURTEEN_DAY'
-  | 'THIRTY_DAY';
 
