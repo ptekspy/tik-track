@@ -10,6 +10,14 @@ const publicRoutes = new Set([
   '/forgot-password',
   '/reset-password',
   '/verify-email',
+  '/features',
+  '/pricing',
+  '/security',
+  '/about',
+  '/blog',
+  '/contact',
+  '/privacy',
+  '/terms',
 ]);
 
 export async function proxy(request: NextRequest) {
