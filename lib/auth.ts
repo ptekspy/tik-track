@@ -34,7 +34,13 @@ export const auth = betterAuth({
       },
     },
   },
-  trustedOrigins: [appUrl],
+  trustedOrigins: [appUrl, "https://www.tri-track.com", "https://tik-track.com"],
+  socialProviders: {
+        tiktok: { 
+            clientSecret: process.env.TIKTOK_CLIENT_SECRET as string, 
+            clientKey: process.env.TIKTOK_CLIENT_KEY as string, 
+        }, 
+    },
 });
 
 export type Session = typeof auth.$Infer.Session;
