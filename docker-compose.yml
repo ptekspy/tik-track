@@ -1,0 +1,23 @@
+services:
+  tiktrack:
+    build: .
+    container_name: tiktrack
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      # If using Postgres container later, use:
+      # DATABASE_URL: postgresql://tiktrack_user:PASS@postgres:5432/tiktrack
+      DATABASE_URL: ${DATABASE_URL}
+      # If you use NextAuth/BetterAuth/etc:
+      # NEXTAUTH_URL: https://tik-track.com
+      AUTH_SECRET: ${AUTH_SECRET}
+    networks:
+      - edge
+    # Caddy will talk to it over the docker network, no need to publish ports
+    expose:
+      - "3000"
+
+networks:
+  edge:
+    external: true
