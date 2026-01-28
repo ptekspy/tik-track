@@ -1,6 +1,7 @@
 import { updateVideoStatusSchema } from '@/lib/schemas/video';
 import { findVideoById, updateVideo as updateVideoDAL } from '@/lib/dal/videos';
 import { VideoStatus, type Video } from '@/lib/types/server';
+import { requireUser } from '@/lib/auth/server';
 
 /**
  * Update video status with forward-only validation
@@ -9,14 +10,17 @@ import { VideoStatus, type Video } from '@/lib/types/server';
  * @param videoId - Video ID
  * @param newStatus - New status to transition to
  * @returns Updated video
- * @throws Error if video not found or invalid transition
+ * @throws Error if video not found, user not authorized, or invalid transition
  */
 export const updateVideoStatus = async (
   videoId: string,
   newStatus: VideoStatus
 ): Promise<Video> => {
-  // Fetch current video
-  const video = await findVideoById(videoId);
+  // Get authenticated user
+  const user = await requireUser();
+  
+  // Fetch current video (ensures user owns it)
+  const video = await findVideoById(videoId, user.id);
   
   if (!video) {
     throw new Error(`Video with ID ${videoId} not found`);
@@ -29,5 +33,5 @@ export const updateVideoStatus = async (
   });
 
   // Update video status
-  return await updateVideoDAL(videoId, { status: newStatus });
+  return await updateVideoDAL(videoId, { status: newStatus }, user.id);
 };

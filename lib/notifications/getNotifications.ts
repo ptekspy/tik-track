@@ -4,6 +4,7 @@ import { getMissedSnapshots } from '@/lib/snapshots/getMissedSnapshots';
 import { getNextSuggestedSnapshot } from '@/lib/snapshots/getNextSuggestedSnapshot';
 import { calculateSignal } from '@/lib/metrics/calculateSignal';
 import type { VideoWithSnapshots } from '@/lib/types/video';
+import { requireUser } from '@/lib/auth/server';
 
 export type NotificationType = 
   | 'missed_snapshot' 
@@ -24,20 +25,27 @@ export interface Notification {
 }
 
 /**
- * Get all actionable notifications for the user
+ * Get all actionable notifications for the authenticated user
  */
 export async function getNotifications(): Promise<Notification[]> {
+  // Get authenticated user
+  const user = await requireUser();
+  
   const notifications: Notification[] = [];
   
-  // Get dismissed notification IDs
+  // Get dismissed notification IDs for this user
   const dismissedRecords = await db.dismissedNotification.findMany({
+    where: { userId: user.id },
     select: { notificationId: true },
   });
   const dismissedIds = new Set(dismissedRecords.map(d => d.notificationId));
   
-  // Get all published videos with snapshots
+  // Get all published videos with snapshots for this user
   const videos = await db.video.findMany({
-    where: { status: VideoStatus.PUBLISHED },
+    where: { 
+      status: VideoStatus.PUBLISHED,
+      userId: user.id 
+    },
     include: { snapshots: true },
     orderBy: { postDate: 'desc' },
   }) as VideoWithSnapshots[];

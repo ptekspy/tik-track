@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { VideoHeader, VideoMetrics } from '@/components/videos';
 import { SnapshotChart, SnapshotList } from '@/components/snapshots';
 import { VideoWithSnapshots, SerializedVideoWithSnapshots } from '@/lib/types/video';
+import { requireUser } from '@/lib/auth/server';
 
 // Force dynamic rendering - snapshots change frequently
 export const dynamic = 'force-dynamic';
@@ -14,9 +15,13 @@ interface VideoDetailPageProps {
 
 export default async function VideoDetailPage({ params }: VideoDetailPageProps) {
   const { id } = await params;
+  
+  // Get authenticated user
+  const user = await requireUser();
 
-  const video = await db.video.findUnique({
-    where: { id },
+  // Get video only if owned by this user
+  const video = await db.video.findFirst({
+    where: { id, userId: user.id },
     include: {
       snapshots: {
         orderBy: { recordedAt: 'asc' },

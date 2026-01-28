@@ -56,29 +56,46 @@ async function backfillOwnership() {
 
     console.log(`✅ Found owner account: ${owner.email} (${owner.id})\n`);
 
-    // Safety check: count total users
-    const totalUsers = await db.user.count();
-    if (totalUsers > 1 && !FORCE_MODE) {
-      console.error(`⚠️  Warning: Multiple users detected (${totalUsers} total)`);
-      console.error('   This backfill is designed for single-user initial setup.');
-      console.error('   Use --force flag if you want to proceed anyway.');
-      console.error('\n   Usage: tsx scripts/backfill-data-ownership.ts --force');
-      process.exit(1);
-    }
-
-    // Count orphaned records before backfill
+    // Count orphaned records (null userId)
     const videosWithoutOwner = await db.video.count({ where: { userId: null } });
     const snapshotsWithoutOwner = await db.analyticsSnapshot.count({ where: { userId: null } });
     const notificationsWithoutOwner = await db.dismissedNotification.count({ where: { userId: null } });
 
-    console.log('📊 Orphaned records found:');
+    // Count records assigned to OTHER users (in case owner was recreated)
+    const videosWithOtherOwner = await db.video.count({ 
+      where: { 
+        userId: { not: null, notIn: [owner.id] }
+      } 
+    });
+    const snapshotsWithOtherOwner = await db.analyticsSnapshot.count({ 
+      where: { 
+        userId: { not: null, notIn: [owner.id] }
+      } 
+    });
+    const notificationsWithOtherOwner = await db.dismissedNotification.count({ 
+      where: { 
+        userId: { not: null, notIn: [owner.id] }
+      } 
+    });
+
+    const totalOrphaned = videosWithoutOwner + snapshotsWithoutOwner + notificationsWithoutOwner;
+    const totalOtherOwner = videosWithOtherOwner + snapshotsWithOtherOwner + notificationsWithOtherOwner;
+
+    console.log('📊 Orphaned records (no owner):');
     console.log(`   Videos: ${videosWithoutOwner}`);
     console.log(`   Snapshots: ${snapshotsWithoutOwner}`);
     console.log(`   Dismissed Notifications: ${notificationsWithoutOwner}`);
+    
+    if (totalOtherOwner > 0) {
+      console.log('\n📊 Records with other owners (will be reassigned):');
+      console.log(`   Videos: ${videosWithOtherOwner}`);
+      console.log(`   Snapshots: ${snapshotsWithOtherOwner}`);
+      console.log(`   Dismissed Notifications: ${notificationsWithOtherOwner}`);
+    }
     console.log();
 
-    if (videosWithoutOwner === 0 && snapshotsWithoutOwner === 0 && notificationsWithoutOwner === 0) {
-      console.log('✨ No orphaned records found - all data already has ownership!');
+    if (totalOrphaned === 0 && totalOtherOwner === 0) {
+      console.log('✨ All data already belongs to the current owner!');
       console.log('   Backfill complete (nothing to do).');
       return;
     }
@@ -87,15 +104,21 @@ async function backfillOwnership() {
 
     // Backfill in transaction
     await db.$transaction(async (tx) => {
-      // Backfill Videos
-      if (videosWithoutOwner > 0) {
+      // Backfill Videos (both null and other owners)
+      const totalVideos = videosWithoutOwner + videosWithOtherOwner;
+      if (totalVideos > 0) {
         const result = await tx.video.updateMany({
-          where: { userId: null },
+          where: { 
+            OR: [
+              { userId: null },
+              { userId: { not: owner.id } }
+            ]
+          },
           data: { userId: owner.id },
         });
         stats.push({
           table: 'Video',
-          before: videosWithoutOwner,
+          before: totalVideos,
           after: 0,
           assigned: result.count,
         });
@@ -103,14 +126,20 @@ async function backfillOwnership() {
       }
 
       // Backfill AnalyticsSnapshots
-      if (snapshotsWithoutOwner > 0) {
+      const totalSnapshots = snapshotsWithoutOwner + snapshotsWithOtherOwner;
+      if (totalSnapshots > 0) {
         const result = await tx.analyticsSnapshot.updateMany({
-          where: { userId: null },
+          where: { 
+            OR: [
+              { userId: null },
+              { userId: { not: owner.id } }
+            ]
+          },
           data: { userId: owner.id },
         });
         stats.push({
           table: 'AnalyticsSnapshot',
-          before: snapshotsWithoutOwner,
+          before: totalSnapshots,
           after: 0,
           assigned: result.count,
         });
@@ -118,14 +147,20 @@ async function backfillOwnership() {
       }
 
       // Backfill DismissedNotifications
-      if (notificationsWithoutOwner > 0) {
+      const totalNotifications = notificationsWithoutOwner + notificationsWithOtherOwner;
+      if (totalNotifications > 0) {
         const result = await tx.dismissedNotification.updateMany({
-          where: { userId: null },
+          where: { 
+            OR: [
+              { userId: null },
+              { userId: { not: owner.id } }
+            ]
+          },
           data: { userId: owner.id },
         });
         stats.push({
           table: 'DismissedNotification',
-          before: notificationsWithoutOwner,
+          before: totalNotifications,
           after: 0,
           assigned: result.count,
         });

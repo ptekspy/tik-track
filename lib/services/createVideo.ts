@@ -4,6 +4,7 @@ import type { CreateVideoInput } from '@/lib/schemas/video';
 import type { Video } from '@/lib/types/server';
 import { findOrCreateHashtag, linkHashtagToVideo } from '@/lib/dal/hashtags';
 import { createVideo as createVideoDAL } from '@/lib/dal/videos';
+import { requireUser } from '@/lib/auth/server';
 
 /**
  * Create a new video with hashtags
@@ -11,8 +12,12 @@ import { createVideo as createVideoDAL } from '@/lib/dal/videos';
  * @param input - Video creation data (validated against schema)
  * @returns Created video
  * @throws ZodError if validation fails
+ * @throws Error if user not authenticated
  */
 export const createVideo = async (input: unknown): Promise<Video> => {
+  // Get authenticated user
+  const user = await requireUser();
+  
   // Validate input
   const validated = createVideoSchema.parse(input) as CreateVideoInput;
 
@@ -27,6 +32,7 @@ export const createVideo = async (input: unknown): Promise<Video> => {
         videoLengthSeconds: validated.videoLengthSeconds,
         postDate: validated.postDate ?? null,
         status: validated.status,
+        user: { connect: { id: user.id } },
       },
     });
 

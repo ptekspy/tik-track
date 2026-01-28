@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { SnapshotForm, SnapshotFormData } from '@/components/SnapshotForm/SnapshotForm';
 import { createSnapshotAction } from '@/actions/snapshots/createSnapshotAction';
 import { getExpectedSnapshots } from '@/lib/snapshots/getExpectedSnapshots';
+import { requireUser } from '@/lib/auth/server';
 
 interface NewSnapshotPageProps {
   params: Promise<{ id: string }>;
@@ -10,9 +11,13 @@ interface NewSnapshotPageProps {
 
 export default async function NewSnapshotPage({ params }: NewSnapshotPageProps) {
   const { id } = await params;
+  
+  // Get authenticated user
+  const user = await requireUser();
 
-  const video = await db.video.findUnique({
-    where: { id },
+  // Get video only if owned by this user
+  const video = await db.video.findFirst({
+    where: { id, userId: user.id },
     include: {
       snapshots: true,
     },
