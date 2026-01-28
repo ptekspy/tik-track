@@ -11,6 +11,7 @@ export interface SnapshotTimelineProps {
 
 const SNAPSHOT_LABELS = {
   [SnapshotType.ONE_HOUR]: '1h',
+  [SnapshotType.TWO_HOUR]: '2h',
   [SnapshotType.THREE_HOUR]: '3h',
   [SnapshotType.SIX_HOUR]: '6h',
   [SnapshotType.TWELVE_HOUR]: '12h',
@@ -42,8 +43,7 @@ export function SnapshotTimeline({ video, className = '' }: SnapshotTimelineProp
   
   // All possible snapshot types in chronological order
   const allTypes = [
-    SnapshotType.ONE_HOUR,
-    SnapshotType.THREE_HOUR,
+    SnapshotType.ONE_HOUR,    SnapshotType.TWO_HOUR,    SnapshotType.THREE_HOUR,
     SnapshotType.SIX_HOUR,
     SnapshotType.TWELVE_HOUR,
     SnapshotType.ONE_DAY,
@@ -68,8 +68,7 @@ export function SnapshotTimeline({ video, className = '' }: SnapshotTimelineProp
     
     // Grace period: snapshot is "upcoming" if within 2x its expected time
     const gracePeriods: Record<SnapshotType, number> = {
-      [SnapshotType.ONE_HOUR]: 2,
-      [SnapshotType.THREE_HOUR]: 6,
+      [SnapshotType.ONE_HOUR]: 2,      [SnapshotType.TWO_HOUR]: 3,      [SnapshotType.THREE_HOUR]: 6,
       [SnapshotType.SIX_HOUR]: 12,
       [SnapshotType.TWELVE_HOUR]: 24,
       [SnapshotType.ONE_DAY]: 48,

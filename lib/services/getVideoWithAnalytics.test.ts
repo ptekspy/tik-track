@@ -50,11 +50,11 @@ describe('getVideoWithAnalytics', () => {
       comments: 50,
       shares: 25,
       newFollowers: 10,
-      avgWatchTimeSeconds: 15,
+      avgWatchTimeSeconds: 15 as any, // Mock uses number instead of Decimal for simplicity
     };
 
     vi.mocked(findVideoById).mockResolvedValue(mockVideoPublished);
-    vi.mocked(findSnapshotsByVideoId).mockResolvedValue([testSnapshot]);
+    vi.mocked(findSnapshotsByVideoId).mockResolvedValue([testSnapshot] as any);
 
     const result = await getVideoWithAnalytics(mockVideoPublished.id);
     const snapshot = result.snapshots[0];

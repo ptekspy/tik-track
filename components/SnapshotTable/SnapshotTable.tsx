@@ -1,10 +1,10 @@
-import type { AnalyticsSnapshot } from '@/lib/types/prisma';
+import type { SerializedSnapshot } from '@/lib/types/snapshot';
 import { SnapshotType } from '@/lib/constants';
 import { formatDate } from '@/lib/utils/dateUtils';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
 
 export interface SnapshotTableProps {
-  snapshots: AnalyticsSnapshot[];
+  snapshots: SerializedSnapshot[];
 }
 
 export function SnapshotTable({ snapshots }: SnapshotTableProps) {
@@ -22,8 +22,7 @@ export function SnapshotTable({ snapshots }: SnapshotTableProps) {
   );
 
   const snapshotTypeLabels: Record<SnapshotType, string> = {
-    ONE_HOUR: '1 Hour',
-    THREE_HOUR: '3 Hours',
+    ONE_HOUR: '1 Hour',    TWO_HOUR: '2 Hours',    THREE_HOUR: '3 Hours',
     SIX_HOUR: '6 Hours',
     TWELVE_HOUR: '12 Hours',
     ONE_DAY: '1 Day',
@@ -96,7 +95,7 @@ export function SnapshotTable({ snapshots }: SnapshotTableProps) {
         <tbody className="bg-white divide-y divide-gray-200">
           {sortedSnapshots.map((snapshot, index) => {
             const previousSnapshot = sortedSnapshots[index + 1];
-            const engagementRate = calculateEngagementRate(snapshot);
+            const engagementRate = calculateEngagementRate(snapshot as any); // Accept both Decimal and number types
 
             return (
               <tr key={snapshot.id} className="hover:bg-gray-50">

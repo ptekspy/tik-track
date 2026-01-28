@@ -1,6 +1,7 @@
 import { findVideoById } from '@/lib/dal/videos';
 import { findSnapshotsByVideoId } from '@/lib/dal/snapshots';
-import type { Video, AnalyticsSnapshot, Prisma } from '@/lib/types/server';
+import type { Video, AnalyticsSnapshot } from '@/lib/types/server';
+import { Prisma } from '@/lib/types/server';
 import type { VideoWithAll } from '@/lib/types/video';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
 import { calculateShareRate } from '@/lib/metrics/calculateShareRate';
@@ -44,8 +45,14 @@ export const getVideoWithAnalytics = async (videoId: string): Promise<VideoWithA
           : snapshot.completionRate)
       : null;
     
-    const retentionRate = snapshot.avgWatchTimeSeconds
-      ? calculateRetentionRate(snapshot.avgWatchTimeSeconds, video.videoLengthSeconds)
+    const avgWatchTimeNum = snapshot.avgWatchTimeSeconds
+      ? (snapshot.avgWatchTimeSeconds instanceof Prisma.Decimal
+          ? snapshot.avgWatchTimeSeconds.toNumber()
+          : snapshot.avgWatchTimeSeconds)
+      : null;
+    
+    const retentionRate = avgWatchTimeNum
+      ? calculateRetentionRate(avgWatchTimeNum, video.videoLengthSeconds)
       : null;
 
     // Detect signal

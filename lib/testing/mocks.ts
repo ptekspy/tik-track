@@ -3,27 +3,9 @@
  * These mocks match Prisma-inferred types and should be reused across all tests
  */
 
-import type { Video, AnalyticsSnapshot, Hashtag, Prisma } from '@/lib/types/server';
+import type { Video, AnalyticsSnapshot, Hashtag } from '@/lib/types/server';
+import { VideoStatus, SnapshotType, Prisma } from '@/lib/types/server';
 
-// Video status enum for type safety
-export enum VideoStatus {
-  DRAFT = 'DRAFT',
-  PUBLISHED = 'PUBLISHED',
-  ARCHIVED = 'ARCHIVED',
-}
-
-// Snapshot type enum
-export enum SnapshotType {
-  ONE_HOUR = 'ONE_HOUR',
-  THREE_HOUR = 'THREE_HOUR',
-  SIX_HOUR = 'SIX_HOUR',
-  TWELVE_HOUR = 'TWELVE_HOUR',
-  ONE_DAY = 'ONE_DAY',
-  TWO_DAY = 'TWO_DAY',
-  SEVEN_DAY = 'SEVEN_DAY',
-  FOURTEEN_DAY = 'FOURTEEN_DAY',
-  THIRTY_DAY = 'THIRTY_DAY',
-}
 
 // Mock Video - DRAFT
 export const mockVideoDraft: Video = {
@@ -72,7 +54,7 @@ export const mockSnapshotOneHour: AnalyticsSnapshot = {
   snapshotType: SnapshotType.ONE_HOUR,
   views: 1500,
   totalPlayTimeSeconds: 67800, // 18h 50m
-  avgWatchTimeSeconds: 45,
+  avgWatchTimeSeconds: new Prisma.Decimal(45),
   completionRate: new Prisma.Decimal(0.75), // 75%
   newFollowers: 25,
   likes: 180,
@@ -91,7 +73,7 @@ export const mockSnapshotTwentyFourHours: AnalyticsSnapshot = {
   snapshotType: SnapshotType.ONE_DAY,
   views: 12500,
   totalPlayTimeSeconds: 562500, // 156h 15m
-  avgWatchTimeSeconds: 45,
+  avgWatchTimeSeconds: new Prisma.Decimal(45),
   completionRate: new Prisma.Decimal(0.68), // 68%
   newFollowers: 145,
   likes: 1250,
@@ -112,7 +94,7 @@ export const mockSnapshotSevenDay: AnalyticsSnapshot = {
   snapshotType: SnapshotType.SEVEN_DAY,
   views: 45000,
   totalPlayTimeSeconds: 2025000, // 562h 30m
-  avgWatchTimeSeconds: 45,
+  avgWatchTimeSeconds: new Prisma.Decimal(45),
   completionRate: new Prisma.Decimal(0.62), // 62%
   newFollowers: 420,
   likes: 4200,

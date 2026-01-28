@@ -2,8 +2,7 @@ import { SnapshotType } from '@/lib/types/server';
 import { getMissedSnapshots } from './getMissedSnapshots';
 
 const SNAPSHOT_ORDER: SnapshotType[] = [
-  SnapshotType.ONE_HOUR,
-  SnapshotType.THREE_HOUR,
+  SnapshotType.ONE_HOUR,  SnapshotType.TWO_HOUR,  SnapshotType.THREE_HOUR,
   SnapshotType.SIX_HOUR,
   SnapshotType.TWELVE_HOUR,
   SnapshotType.ONE_DAY,

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { VideoHeader, VideoMetrics } from '@/components/videos';
 import { SnapshotChart, SnapshotList } from '@/components/snapshots';
-import { VideoWithSnapshots } from '@/lib/types/video';
+import { VideoWithSnapshots, SerializedVideoWithSnapshots } from '@/lib/types/video';
 
 interface VideoDetailPageProps {
   params: Promise<{ id: string }>;
@@ -25,7 +25,7 @@ export default async function VideoDetailPage({ params }: VideoDetailPageProps) 
   }
 
   // Serialize Decimal values for client components
-  const serializedVideo = {
+  const serializedVideo: SerializedVideoWithSnapshots = {
     ...video,
     snapshots: video.snapshots.map(snapshot => ({
       ...snapshot,

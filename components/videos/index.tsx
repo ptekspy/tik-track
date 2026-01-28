@@ -4,11 +4,11 @@ export { VideoGrid } from '../VideoGrid/VideoGrid';
 
 // Create wrapper components for page usage
 import Link from 'next/link';
-import { VideoWithSnapshots } from '@/lib/types/video';
+import { SerializedVideoWithSnapshots } from '@/lib/types/video';
 import { StatusBadge } from '../StatusBadge/StatusBadge';
 import { formatDate } from '@/lib/utils/dateUtils';
 
-export function VideoHeader({ video }: { video: VideoWithSnapshots }) {
+export function VideoHeader({ video }: { video: SerializedVideoWithSnapshots }) {
   return (
     <div className="flex items-start justify-between">
       <div className="flex-1">
@@ -39,7 +39,7 @@ export function VideoHeader({ video }: { video: VideoWithSnapshots }) {
   );
 }
 
-export function VideoMetrics({ video }: { video: VideoWithSnapshots }) {
+export function VideoMetrics({ video }: { video: SerializedVideoWithSnapshots }) {
   const latestSnapshot = video.snapshots.length > 0
     ? [...video.snapshots].sort((a, b) => b.recordedAt.getTime() - a.recordedAt.getTime())[0]
     : null;

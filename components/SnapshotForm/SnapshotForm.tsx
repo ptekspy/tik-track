@@ -32,8 +32,7 @@ export interface SnapshotFormProps {
 }
 
 const SNAPSHOT_TYPE_LABELS: Record<SnapshotType, string> = {
-  [SnapshotType.ONE_HOUR]: '1 Hour',
-  [SnapshotType.THREE_HOUR]: '3 Hours',
+  [SnapshotType.ONE_HOUR]: '1 Hour',  [SnapshotType.TWO_HOUR]: '2 Hours',  [SnapshotType.THREE_HOUR]: '3 Hours',
   [SnapshotType.SIX_HOUR]: '6 Hours',
   [SnapshotType.TWELVE_HOUR]: '12 Hours',
   [SnapshotType.ONE_DAY]: '1 Day',

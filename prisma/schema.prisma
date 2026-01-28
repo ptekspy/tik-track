@@ -20,6 +20,7 @@ enum VideoStatus {
 
 enum SnapshotType {
   ONE_HOUR
+  TWO_HOUR
   THREE_HOUR
   SIX_HOUR
   TWELVE_HOUR

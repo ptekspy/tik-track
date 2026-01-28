@@ -15,6 +15,7 @@ export const getExpectedSnapshots = (postDate: Date): SnapshotType[] => {
   const expected: SnapshotType[] = [];
 
   if (hoursElapsed >= 1) expected.push(SnapshotType.ONE_HOUR);
+  if (hoursElapsed >= 2) expected.push(SnapshotType.TWO_HOUR);
   if (hoursElapsed >= 3) expected.push(SnapshotType.THREE_HOUR);
   if (hoursElapsed >= 6) expected.push(SnapshotType.SIX_HOUR);
   if (hoursElapsed >= 12) expected.push(SnapshotType.TWELVE_HOUR);

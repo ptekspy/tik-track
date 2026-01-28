@@ -1,6 +1,6 @@
 'use client';
 
-import type { AnalyticsSnapshot } from '@/lib/types/prisma';
+import type { SerializedSnapshot } from '@/lib/types/snapshot';
 import {
   LineChart,
   Line,
@@ -17,7 +17,7 @@ import { formatDate } from '@/lib/utils/dateUtils';
 import { calculateEngagementRate } from '@/lib/metrics/calculateEngagementRate';
 
 interface VideoChartsProps {
-  snapshots: AnalyticsSnapshot[];
+  snapshots: SerializedSnapshot[];
 }
 
 export function VideoCharts({ snapshots }: VideoChartsProps) {
@@ -33,7 +33,7 @@ export function VideoCharts({ snapshots }: VideoChartsProps) {
     likes: snapshot.likes,
     shares: snapshot.shares,
     comments: snapshot.comments,
-    engagementRate: calculateEngagementRate(snapshot),
+    engagementRate: calculateEngagementRate(snapshot as any), // Accept both Decimal and number types
   }));
 
   return (

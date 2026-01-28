@@ -1,4 +1,5 @@
 import type { Prisma, Video } from '@/lib/generated/client/client';
+import type { SerializedSnapshot } from './snapshot';
 
 export type { Video };
 
@@ -8,6 +9,11 @@ export type VideoWithSnapshots = Prisma.VideoGetPayload<{
     snapshots: true;
   };
 }>;
+
+// Client-safe video with serialized snapshots
+export type SerializedVideoWithSnapshots = Omit<VideoWithSnapshots, 'snapshots'> & {
+  snapshots: SerializedSnapshot[];
+};
 
 // Video with hashtags included
 export type VideoWithHashtags = Prisma.VideoGetPayload<{

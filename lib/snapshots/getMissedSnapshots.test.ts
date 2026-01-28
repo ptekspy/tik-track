@@ -6,7 +6,7 @@ import { subHours, subDays } from 'date-fns';
 describe('getMissedSnapshots', () => {
   it('should return empty array if all expected snapshots exist', () => {
     const postDate = subHours(new Date(), 3);
-    const existingTypes = [SnapshotType.ONE_HOUR, SnapshotType.THREE_HOUR];
+    const existingTypes = [SnapshotType.ONE_HOUR, SnapshotType.TWO_HOUR, SnapshotType.THREE_HOUR];
 
     const result = getMissedSnapshots(postDate, existingTypes);
 
@@ -19,7 +19,7 @@ describe('getMissedSnapshots', () => {
 
     const result = getMissedSnapshots(postDate, existingTypes);
 
-    expect(result).toHaveLength(5); // 4 hour + 1 day
+    expect(result).toHaveLength(6); // 5 hour + 1 day
     expect(result).toContain(SnapshotType.ONE_HOUR);
     expect(result).toContain(SnapshotType.ONE_DAY);
   });
@@ -34,7 +34,8 @@ describe('getMissedSnapshots', () => {
 
     const result = getMissedSnapshots(postDate, existingTypes);
 
-    expect(result).toHaveLength(4);
+    expect(result).toHaveLength(5);
+    expect(result).toContain(SnapshotType.TWO_HOUR);
     expect(result).toContain(SnapshotType.THREE_HOUR);
     expect(result).toContain(SnapshotType.TWELVE_HOUR);
     expect(result).toContain(SnapshotType.TWO_DAY);
@@ -57,7 +58,8 @@ describe('getMissedSnapshots', () => {
 
     const result = getMissedSnapshots(postDate, existingTypes);
 
-    expect(result).toHaveLength(4);
+    expect(result).toHaveLength(5);
+    expect(result).toContain(SnapshotType.TWO_HOUR);
     expect(result).toContain(SnapshotType.THREE_HOUR);
     expect(result).toContain(SnapshotType.SIX_HOUR);
     expect(result).toContain(SnapshotType.TWELVE_HOUR);
@@ -70,6 +72,6 @@ describe('getMissedSnapshots', () => {
 
     const result = getMissedSnapshots(postDate, existingTypes);
 
-    expect(result).toHaveLength(9); // all snapshot types
+    expect(result).toHaveLength(10); // all snapshot types
   });
 });

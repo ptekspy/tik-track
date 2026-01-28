@@ -85,8 +85,8 @@ describe('TimeInput', () => {
     await user.clear(secondsInput);
     await user.type(secondsInput, '99');
 
-    // Should be clamped to 59
-    expect(onChange).toHaveBeenCalledWith(59); // 59 seconds
+    // Should be clamped to 59.9 (supports decimals now)
+    expect(onChange).toHaveBeenCalledWith(59.9);
   });
 
   it('should handle disabled state', () => {

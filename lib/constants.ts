@@ -11,6 +11,7 @@ export const VideoStatus = {
 
 export const SnapshotType = {
   ONE_HOUR: 'ONE_HOUR',
+  TWO_HOUR: 'TWO_HOUR',
   THREE_HOUR: 'THREE_HOUR',
   SIX_HOUR: 'SIX_HOUR',
   TWELVE_HOUR: 'TWELVE_HOUR',
