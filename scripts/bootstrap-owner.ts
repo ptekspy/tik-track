@@ -45,32 +45,31 @@ async function bootstrapOwner() {
       console.log(`   Email: ${existingUser.email}`);
       console.log(`   Role: ${existingUser.role}`);
       console.log(`   Created: ${existingUser.createdAt.toISOString()}`);
-      console.log('\n✨ No action needed - owner account ready!');
+      console.log('\n⚠️  If you need to reset the password, delete the user and run this script again.');
       return;
     }
 
-    // Import hash function from better-auth (we'll need to set this up)
-    // For now, we'll use a basic approach - this will be replaced when we integrate better-auth properly
-    const bcrypt = await import('bcryptjs');
-    const hashedPassword = await bcrypt.hash(bootstrapPassword, 10);
-
-    // Create owner user
-    const user = await db.user.create({
-      data: {
+    // Use Better Auth's signup to create user with proper password hashing
+    const { auth } = await import('../lib/auth');
+    
+    const result = await auth.api.signUpEmail({
+      body: {
         email: OWNER_EMAIL,
+        password: bootstrapPassword,
         name: 'Paddy Kenneally',
-        role: UserRole.OWNER,
-        emailVerified: true, // Owner account is pre-verified
       },
     });
 
-    // Create credential account
-    await db.account.create({
-      data: {
-        userId: user.id,
-        accountId: user.email,
-        providerId: 'credential',
-        password: hashedPassword,
+    if (!result) {
+      throw new Error('Failed to create user account');
+    }
+
+    // Update user role to OWNER
+    const user = await db.user.update({
+      where: { email: OWNER_EMAIL },
+      data: { 
+        role: UserRole.OWNER,
+        emailVerified: true, // Owner account is pre-verified
       },
     });
 

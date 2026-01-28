@@ -17,6 +17,7 @@
     "db:clear": "tsx scripts/clear-production-db.ts",
     "bootstrap:owner": "tsx scripts/bootstrap-owner.ts",
     "backfill:ownership": "tsx scripts/backfill-data-ownership.ts",
+    "reset:owner": "tsx scripts/reset-owner.ts",
     "postinstall": "pnpm db:generate",
     "test": "vitest run",
     "test:watch": "vitest",
