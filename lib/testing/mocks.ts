@@ -6,10 +6,13 @@
 import type { Video, AnalyticsSnapshot, Hashtag } from '@/lib/types/server';
 import { VideoStatus, SnapshotType, Prisma } from '@/lib/types/server';
 
+// Mock user ID for testing
+export const MOCK_USER_ID = '90000000-0000-4000-8000-000000000001';
 
 // Mock Video - DRAFT
 export const mockVideoDraft: Video = {
   id: '00000000-0000-4000-8000-000000000001',
+  userId: MOCK_USER_ID,
   title: 'Draft Video Title',
   script: 'This is a draft video script for testing purposes.',
   description: 'Draft video description with #test #draft',
@@ -23,6 +26,7 @@ export const mockVideoDraft: Video = {
 // Mock Video - PUBLISHED
 export const mockVideoPublished: Video = {
   id: '00000000-0000-4000-8000-000000000002',
+  userId: MOCK_USER_ID,
   title: 'Published Video Title',
   script: 'This is a published video script about productivity tips.',
   description: 'Learn how to be more productive! #productivity #tips #tiktok',
@@ -36,6 +40,7 @@ export const mockVideoPublished: Video = {
 // Mock Video - ARCHIVED
 export const mockVideoArchived: Video = {
   id: '00000000-0000-4000-8000-000000000003',
+  userId: MOCK_USER_ID,
   title: 'Archived Video Title',
   script: 'This is an archived video script.',
   description: 'Old content #archived',
@@ -50,6 +55,7 @@ export const mockVideoArchived: Video = {
 export const mockSnapshotOneHour: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000001',
   videoId: '00000000-0000-4000-8000-000000000002',
+  userId: MOCK_USER_ID,
   recordedAt: new Date('2026-01-20T15:30:00Z'),
   snapshotType: SnapshotType.ONE_HOUR,
   views: 1500,
@@ -69,6 +75,7 @@ export const mockSnapshotOneHour: AnalyticsSnapshot = {
 export const mockSnapshotTwentyFourHours: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000002',
   videoId: '00000000-0000-4000-8000-000000000002',
+  userId: MOCK_USER_ID,
   recordedAt: new Date('2026-01-21T14:30:00Z'),
   snapshotType: SnapshotType.ONE_DAY,
   views: 12500,
@@ -90,6 +97,7 @@ export const mockSnapshotOneDay = mockSnapshotTwentyFourHours;
 export const mockSnapshotSevenDay: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000003',
   videoId: '00000000-0000-4000-8000-000000000002',
+  userId: MOCK_USER_ID,
   recordedAt: new Date('2026-01-27T14:30:00Z'),
   snapshotType: SnapshotType.SEVEN_DAY,
   views: 45000,
@@ -109,6 +117,7 @@ export const mockSnapshotSevenDay: AnalyticsSnapshot = {
 export const mockSnapshotMinimal: AnalyticsSnapshot = {
   id: '10000000-0000-4000-8000-000000000004',
   videoId: '00000000-0000-4000-8000-000000000002',
+  userId: MOCK_USER_ID,
   recordedAt: new Date('2026-01-20T15:30:00Z'),
   snapshotType: SnapshotType.THREE_HOUR,
   views: 100,
